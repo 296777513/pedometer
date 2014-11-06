@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 默认时的图片 -->
+    <item android:drawable="@android:color/transparent" android:state_checked="false"/>
+    <!-- 选择时的图片 -->
+    <item android:drawable="@color/tab_selected_bg" android:state_checked="true"/>
+
+</selector>

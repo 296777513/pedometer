@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">test6</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="history">历史</string>
+    <string name="analysis">分析</string>
+    <string name="pk">PK</string>
+    <string name="set">设置</string>
+    <string name="pedometer">记步</string>
+
+</resources>
