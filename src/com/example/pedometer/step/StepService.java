@@ -1,7 +1,6 @@
-package com.example.test6.step;
+package com.example.pedometer.step;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -24,6 +23,7 @@ public class StepService extends Service {
 		return null;
 	}
 
+	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public void onCreate() {
 		super.onCreate();

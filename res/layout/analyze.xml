@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal" >
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map1"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="40dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map2"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map3"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map4"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map5"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map6"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+
+        <com.example.pedometer.widet.HistogramView
+            android:id="@+id/map7"
+            android:layout_width="30dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10dp"/>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:textSize="13sp"
+            android:text="@string/Monday" />
+         <TextView
+            android:id="@+id/Tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="13sp"
+            android:text="@string/Tuesday" />
+         <TextView
+            android:id="@+id/Wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:textSize="13sp"
+            android:text="@string/Wednesday" />
+         <TextView
+            android:id="@+id/Thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:textSize="13sp"
+            android:text="@string/Thursday" />
+         <TextView
+            android:id="@+id/Friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:textSize="13sp"
+            android:text="@string/Friday" />
+         <TextView
+            android:id="@+id/Saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:textSize="13sp"
+            android:text="@string/Saturday" />
+         <TextView
+            android:id="@+id/Sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:textSize="13sp"
+            android:text="@string/Sunday" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,9 +1,9 @@
-package com.example.test6.widet;
+package com.example.pedometer.widet;
 
 
 
 
-import com.example.test6.widet.CircularProgressBar.onProgressChangeListener;
+import com.example.pedometer.widet.CircularProgressBar.onProgressChangeListener;
 
 import android.content.Context;
 import android.graphics.Color;

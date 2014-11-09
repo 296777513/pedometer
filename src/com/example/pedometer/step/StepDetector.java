@@ -1,4 +1,4 @@
-package com.example.test6.step;
+package com.example.pedometer.step;
 
 import android.content.Context;
 import android.hardware.Sensor;

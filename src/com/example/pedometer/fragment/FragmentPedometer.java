@@ -1,18 +1,18 @@
-package com.example.test6.fragment;
+package com.example.pedometer.fragment;
 
+import com.example.pedometer.step.StepDetector;
+import com.example.pedometer.step.StepService;
+import com.example.pedometer.widet.RateTextCircularProgressBar;
 import com.example.test6.R;
-import com.example.test6.step.StepDetector;
-import com.example.test6.step.StepService;
-import com.example.test6.widet.RateTextCircularProgressBar;
 
-import android.R.integer;
+
+
+import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +37,7 @@ public class FragmentPedometer extends Fragment {
 		return total_step;
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg); 
@@ -61,6 +62,8 @@ public class FragmentPedometer extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		Intent intent = new Intent(getActivity(), StepService.class);
+		getActivity().startService(intent);
 		init();
 		mThread();
 	}

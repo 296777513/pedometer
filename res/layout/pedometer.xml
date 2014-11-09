@@ -10,11 +10,11 @@
         android:layout_weight="1"
         android:gravity="center">
 
-        <com.example.test6.widet.RateTextCircularProgressBar
+        <com.example.pedometer.widet.RateTextCircularProgressBar
             android:id="@+id/progress_pedometer"
             android:layout_width="300dp"
-            android:layout_height="300dp" >
-        </com.example.test6.widet.RateTextCircularProgressBar>
+            android:layout_height="300dp" />
+        
 
     </LinearLayout>
 

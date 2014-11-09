@@ -1,4 +1,4 @@
-package com.example.test6.fragment;
+package com.example.pedometer.fragment;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class FragmentAdapter implements RadioGroup.OnCheckedChangeListener {
+public class FragmentAdapter implements OnCheckedChangeListener {
 	private List<Fragment> fragments;
 	private RadioGroup rGroup;
 	private Activity activity;
@@ -41,6 +42,7 @@ public class FragmentAdapter implements RadioGroup.OnCheckedChangeListener {
 					ft.add(fgContentId, fragment);
 				}
 				showFragment(i);
+				ft.commit();
 			}
 			
 		}

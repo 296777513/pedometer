@@ -1,4 +1,4 @@
-package com.example.test6.widet;
+package com.example.pedometer.widet;
 
 
 import android.content.Context;

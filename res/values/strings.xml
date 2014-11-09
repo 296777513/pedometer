@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">test6</string>
+    <string name="app_name">pedometer</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="history">历史</string>
@@ -9,5 +9,12 @@
     <string name="pk">PK</string>
     <string name="set">设置</string>
     <string name="pedometer">记步</string>
+    <string name="Monday">"周一 "</string>
+    <string name="Tuesday">周二</string>
+    <string name="Wednesday">周三</string>
+    <string name="Thursday">周四</string>
+    <string name="Friday">周五</string>
+    <string name="Saturday">周六</string>
+    <string name="Sunday">周日</string>
 
 </resources>

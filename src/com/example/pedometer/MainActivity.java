@@ -1,17 +1,17 @@
-package com.example.test6;
+package com.example.pedometer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.test6.fragment.FragmentAdapter;
-import com.example.test6.fragment.FragmentPedometer;
-import com.example.test6.step.StepService;
+import com.example.pedometer.fragment.FragmentAdapter;
+import com.example.pedometer.fragment.FragmentAnalysis;
+import com.example.pedometer.fragment.FragmentPedometer;
+import com.example.test6.R;
 
 import android.os.Bundle;
 import android.widget.RadioGroup;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 
 public class MainActivity extends Activity {
 	private RadioGroup rgs;
@@ -21,10 +21,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.page_mian);
-		Intent intent = new Intent(this, StepService.class);
-		startService(intent);
+
 		rgs = (RadioGroup) findViewById(R.id.radioGroup);
 		fragments.add(new FragmentPedometer());
+		fragments.add(new FragmentAnalysis());
 		new FragmentAdapter(this, fragments, R.id.Fragment, rgs);
 
 	}
