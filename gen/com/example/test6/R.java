@@ -32,32 +32,36 @@ public final class R {
         public static final int tablatestalert=0x7f020005;
         public static final int tabrecommd=0x7f020006;
         public static final int tabsearch=0x7f020007;
+        public static final int title_pedometer=0x7f020008;
     }
     public static final class id {
-        public static final int Fragment=0x7f09000f;
-        public static final int Friday=0x7f09000c;
-        public static final int Monday=0x7f090008;
-        public static final int Saturday=0x7f09000d;
-        public static final int Sunday=0x7f09000e;
-        public static final int Thursday=0x7f09000b;
-        public static final int Tuesday=0x7f090009;
-        public static final int Wednesday=0x7f09000a;
-        public static final int action_settings=0x7f090017;
-        public static final int btn1=0x7f090011;
-        public static final int btn2=0x7f090012;
-        public static final int btn3=0x7f090013;
-        public static final int btn4=0x7f090014;
-        public static final int btn5=0x7f090015;
-        public static final int map1=0x7f090000;
-        public static final int map2=0x7f090001;
-        public static final int map3=0x7f090002;
-        public static final int map4=0x7f090003;
-        public static final int map5=0x7f090004;
-        public static final int map6=0x7f090005;
-        public static final int map7=0x7f090006;
-        public static final int progressBar1=0x7f090007;
-        public static final int progress_pedometer=0x7f090016;
-        public static final int radioGroup=0x7f090010;
+        public static final int Fragment=0x7f090010;
+        public static final int Friday=0x7f09000d;
+        public static final int Monday=0x7f090009;
+        public static final int Saturday=0x7f09000e;
+        public static final int Sunday=0x7f09000f;
+        public static final int Thursday=0x7f09000c;
+        public static final int Tuesday=0x7f09000a;
+        public static final int Wednesday=0x7f09000b;
+        public static final int action_settings=0x7f09001a;
+        public static final int analysis=0x7f090000;
+        public static final int btn1=0x7f090012;
+        public static final int btn2=0x7f090013;
+        public static final int btn3=0x7f090014;
+        public static final int btn4=0x7f090015;
+        public static final int btn5=0x7f090016;
+        public static final int map1=0x7f090001;
+        public static final int map2=0x7f090002;
+        public static final int map3=0x7f090003;
+        public static final int map4=0x7f090004;
+        public static final int map5=0x7f090005;
+        public static final int map6=0x7f090006;
+        public static final int map7=0x7f090007;
+        public static final int progressBar1=0x7f090008;
+        public static final int progress_pedometer=0x7f090019;
+        public static final int radioGroup=0x7f090011;
+        public static final int sport=0x7f090018;
+        public static final int title_pedometer=0x7f090017;
     }
     public static final class layout {
         public static final int analyze=0x7f030000;
@@ -83,6 +87,7 @@ public final class R {
         public static final int pedometer=0x7f060007;
         public static final int pk=0x7f060005;
         public static final int set=0x7f060006;
+        public static final int sport=0x7f06000f;
     }
     public static final class style {
         /** 

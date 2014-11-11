@@ -33,6 +33,7 @@ public class FragmentPedometer extends Fragment {
 		return mRateTextCircularProgressBar;
 	}
 
+	@SuppressLint("HandlerLeak")
 	public int getTotal_step() {
 		return total_step;
 	}
