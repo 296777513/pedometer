@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.pedometer.fragment.FragmentAdapter;
 import com.example.pedometer.fragment.FragmentAnalysis;
+import com.example.pedometer.fragment.FragmentHistory;
 import com.example.pedometer.fragment.FragmentPedometer;
 import com.example.test6.R;
 
@@ -23,8 +24,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.page_mian);
 
 		rgs = (RadioGroup) findViewById(R.id.radioGroup);
-		fragments.add(new FragmentPedometer());
+		fragments.add(new FragmentHistory());
 		fragments.add(new FragmentAnalysis());
+		fragments.add(new FragmentPedometer());
 		new FragmentAdapter(this, fragments, R.id.Fragment, rgs);
 
 	}

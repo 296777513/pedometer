@@ -51,7 +51,28 @@
         <com.example.pedometer.widet.RateTextCircularProgressBar
             android:id="@+id/progress_pedometer"
             android:layout_width="300dp"
-            android:layout_height="300dp" />
+            android:layout_height="300dp" >
+
+            <TextView
+                android:id="@+id/pedometer_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
+                android:text="@string/step"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/pedometer_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="60dp"
+                android:text="@string/_10000"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp" />
+        </com.example.pedometer.widet.RateTextCircularProgressBar>
     </LinearLayout>
 
 </LinearLayout>

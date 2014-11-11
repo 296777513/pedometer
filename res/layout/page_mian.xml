@@ -10,6 +10,10 @@
         android:layout_height="0dp"
         android:layout_weight="1" >
     </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -25,8 +29,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab"
             android:button="@null"
-            android:checked="true"
-            android:drawableTop="@drawable/tababoutus"
+            android:drawableTop="@drawable/main_history"
             android:gravity="center"
             android:text="@string/history"
             android:textColor="#000000"
@@ -39,7 +42,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab"
             android:button="@null"
-            android:drawableTop="@drawable/tabconfigicon"
+            android:drawableTop="@drawable/main_analysis"
             android:gravity="center"
             android:text="@string/analysis"
             android:textColor="#000000"
@@ -52,7 +55,8 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab"
             android:button="@null"
-            android:drawableTop="@drawable/tablatestalert"
+            android:checked="true"
+            android:drawableTop="@drawable/main_pedometer"
             android:gravity="center"
             android:text="@string/pedometer"
             android:textColor="#000000"
@@ -65,7 +69,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab"
             android:button="@null"
-            android:drawableTop="@drawable/tabrecommd"
+            android:drawableTop="@drawable/main_pk"
             android:gravity="center"
             android:text="@string/pk"
             android:textColor="#000000"
@@ -78,7 +82,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab"
             android:button="@null"
-            android:drawableTop="@drawable/tabsearch"
+            android:drawableTop="@drawable/main_set"
             android:gravity="center"
             android:text="@string/set"
             android:textColor="#000000"

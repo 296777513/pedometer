@@ -1,8 +1,5 @@
 package com.example.pedometer.widet;
 
-
-
-
 import com.example.pedometer.widet.CircularProgressBar.onProgressChangeListener;
 
 import android.content.Context;
@@ -41,7 +38,7 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 		mRateText.setLayoutParams(lp);
 		mRateText.setGravity(Gravity.CENTER);
 		mRateText.setTextColor(Color.BLACK);
-		mRateText.setTextSize(20);
+		mRateText.setTextSize(50);
 
 		mCircularProgressBar.setOnProgressChangeListener(this);
 	}
@@ -50,17 +47,14 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 		mCircularProgressBar.setMax(max);
 	}
 
-
 	public void setProgress(int progress, int type) {
 		this.type = type;
 		mCircularProgressBar.setProgress(progress);
 	}
 
-
 	public CircularProgressBar getCircularProgressBar() {
 		return mCircularProgressBar;
 	}
-
 
 	public void setTextSize(float size) {
 		mRateText.setTextSize(size);
@@ -72,19 +66,18 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 
 	@Override
 	public void onChange(int duration, int progress, float rate) {
-//		mRateText.setText(String.valueOf((int) (rate * 100) + "%"));
+		// mRateText.setText(String.valueOf((int) (rate * 100) + "%"));
 		switch (type) {
 		case 1:
-			mRateText.setText("当前步数: " + progress + "");
+			mRateText.setText(progress + "");
 			break;
 		case 2:
-			mRateText.setText("卡路里消耗: " + progress + "");
+			mRateText.setText(progress + "");
 			break;
 
 		default:
 			break;
 		}
-		
 
 	}
 

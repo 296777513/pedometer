@@ -24,7 +24,7 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 
 		FragmentTransaction fTransaction = activity.getFragmentManager()
 				.beginTransaction();
-		fTransaction.add(fgContentId, fragments.get(0));
+		fTransaction.add(fgContentId, fragments.get(2));
 		fTransaction.commit();
 		rGroup.setOnCheckedChangeListener(this);
 	}

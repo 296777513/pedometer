@@ -17,5 +17,11 @@
     <string name="Saturday">周六</string>
     <string name="Sunday">周日</string>
     <string name="sport">运动</string>
+    <string name="today">今天</string>
+    <string name="_0">0</string>
+    <string name="step">步数</string>
+    <string name="complete">已完成：</string>
+    <string name="_0_">0%</string>
+    <string name="_10000">目标：10000</string>
 
 </resources>

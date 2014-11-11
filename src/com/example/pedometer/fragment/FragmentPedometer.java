@@ -7,6 +7,7 @@ import com.example.test6.R;
 
 
 
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class FragmentPedometer extends Fragment {
 	View view;
@@ -25,7 +27,8 @@ public class FragmentPedometer extends Fragment {
 	private Thread thread; 
 	private int Type = 1;
 	private int calories = 0;
-
+	private TextView tView1;
+	private TextView tView2;
 	private int step_length = 50;
 	private int weight = 70;
 
@@ -44,8 +47,12 @@ public class FragmentPedometer extends Fragment {
 			super.handleMessage(msg); 
 			countStep(); 
 			if (Type == 1) {
+				tView1.setText("步数");
+				tView2.setText("目标：10000");
 				mRateTextCircularProgressBar.setProgress(total_step, Type);
 			} else if (Type == 2) {
+				tView1.setText("卡路里");
+				tView2.setText("目标：");
 				calories = (int) (weight * total_step * step_length * 0.01 * 0.01);
 				mRateTextCircularProgressBar.setProgress(calories, Type);
 			}
@@ -101,6 +108,8 @@ public class FragmentPedometer extends Fragment {
 	}
 
 	private void init() {
+		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
+		tView2 = (TextView) view.findViewById(R.id.pedometer_2);
 		mRateTextCircularProgressBar = (RateTextCircularProgressBar) view
 				.findViewById(R.id.progress_pedometer);
 		mRateTextCircularProgressBar.setOnClickListener(new OnClickListener() {
@@ -108,8 +117,10 @@ public class FragmentPedometer extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				if (Type == 1) {
+					
 					Type = 2;
 				} else if (Type == 2) {
+					
 					Type = 1;
 				}
 				Message msg = new Message();
