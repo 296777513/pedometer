@@ -1,5 +1,7 @@
 package com.example.pedometer.widet;
 
+import java.util.Locale;
+
 import com.example.test6.R;
 
 import android.annotation.SuppressLint;
@@ -8,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -22,7 +25,7 @@ public class HistogramView extends View implements Runnable {
 	private int AnimValue;
 	private double Progress;
 	private Handler handler = new Handler();
-	private int SpeedRatio = 1;
+	private int SpeedRatio = 5;
 	private int DelayTime = 1;
 	private Canvas canvas;
 
@@ -55,6 +58,8 @@ public class HistogramView extends View implements Runnable {
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setStyle(Paint.Style.FILL);
+		paint.setTextSize(20);
+
 		drawViewWithBitmap(paint);
 	}
 
@@ -65,7 +70,9 @@ public class HistogramView extends View implements Runnable {
 		handler.postDelayed(this, DelayTime);
 		dst = new RectF(0, Height - AnimValue, Width, Height);
 		if (Text) {
-			canvas.drawText((int)(Progress * 1000) + "", 0, (Height - AnimValue) - 2, paint);
+			canvas.drawText((int) (Progress * 1000) + "", 0,
+					(Height - AnimValue) - 2, paint);
+
 		}
 		canvas.drawBitmap(bitmap, null, dst, paint);
 	}
@@ -79,8 +86,7 @@ public class HistogramView extends View implements Runnable {
 		if (AnimValue <= mHeight) {
 			AnimValue += SpeedRatio;
 			invalidate();
-		}
-		else {
+		} else {
 			invalidate();
 		}
 

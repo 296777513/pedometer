@@ -23,5 +23,7 @@
     <string name="complete">已完成：</string>
     <string name="_0_">0%</string>
     <string name="_10000">目标：10000</string>
+    <string name="averagestep">平均步数</string>
+    <string name="sumstep">总步数</string>
 
 </resources>

@@ -28,10 +28,7 @@ public class WelcomeActivity extends Activity{
 		} else {
 			setContentView(R.layout.welcome);
 			(new Timer()).schedule(new TimerTask() {
-				
-				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					Intent intent = new Intent(WelcomeActivity.this, 
 							MainActivity.class);
 					startActivity(intent);

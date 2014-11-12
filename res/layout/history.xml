@@ -10,6 +10,7 @@
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/date_image"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="left"
@@ -18,7 +19,7 @@
             android:src="@drawable/title_history" />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/date_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
