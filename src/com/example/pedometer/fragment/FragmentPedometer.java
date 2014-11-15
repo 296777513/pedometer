@@ -5,9 +5,6 @@ import com.example.pedometer.step.StepService;
 import com.example.pedometer.widet.RateTextCircularProgressBar;
 import com.example.test6.R;
 
-
-
-
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
@@ -23,8 +20,8 @@ import android.widget.TextView;
 public class FragmentPedometer extends Fragment {
 	View view;
 	private RateTextCircularProgressBar mRateTextCircularProgressBar;
-	private int total_step = 0; 
-	private Thread thread; 
+	private int total_step = 0;
+	private Thread thread;
 	private int Type = 1;
 	private int calories = 0;
 	private TextView tView1;
@@ -44,8 +41,8 @@ public class FragmentPedometer extends Fragment {
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			super.handleMessage(msg); 
-			countStep(); 
+			super.handleMessage(msg);
+			total_step = StepDetector.CURRENT_SETP;
 			if (Type == 1) {
 				tView1.setText("步数");
 				tView2.setText("目标：10000");
@@ -74,15 +71,6 @@ public class FragmentPedometer extends Fragment {
 		getActivity().startService(intent);
 		init();
 		mThread();
-	}
-
-	private void countStep() {
-		if (StepDetector.CURRENT_SETP % 2 == 0) {
-			total_step = StepDetector.CURRENT_SETP / 2 * 3;
-		} else {
-			total_step = StepDetector.CURRENT_SETP / 2 * 3 + 1;
-		}
-
 	}
 
 	private void mThread() {
@@ -117,10 +105,10 @@ public class FragmentPedometer extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				if (Type == 1) {
-					
+
 					Type = 2;
 				} else if (Type == 2) {
-					
+
 					Type = 1;
 				}
 				Message msg = new Message();
@@ -128,10 +116,10 @@ public class FragmentPedometer extends Fragment {
 			}
 		});
 
-		mRateTextCircularProgressBar.setMax(100);
+		mRateTextCircularProgressBar.setMax(10000);
 		mRateTextCircularProgressBar.getCircularProgressBar()
 				.setCircleWidth(40);
-		countStep();
+		//countStep();
 	}
 
 }

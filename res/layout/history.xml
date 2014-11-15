@@ -15,6 +15,7 @@
             android:layout_height="40dp"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_tab"
             android:contentDescription="@string/app_name"
             android:src="@drawable/title_history" />
 
@@ -61,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:singleLine="true"
             android:text="@string/_0"
             android:textColor="#6DCAEC"
             android:textSize="90sp" />
@@ -78,7 +80,9 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        android:max="1000"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,22 +96,30 @@
             android:layout_marginLeft="10dp"
             android:text="@string/complete"
             android:textSize="15sp" />
-           <TextView
+
+        <TextView
+            android:id="@+id/ratio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="1dp"
             android:text="@string/_0_"
             android:textSize="15sp" />
-            <TextView
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
             android:text="@string/_10000"
             android:textSize="15sp" />
     </LinearLayout>
-    
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>
