@@ -3,7 +3,9 @@
     package="com.example.test6"
     android:versionCode="1"
     android:versionName="1.0" >
- <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="18" />
@@ -22,9 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="com.example.pedometer.MainActivity"></activity>
-        <service android:name="com.example.pedometer.step.StepService"></service>
+        <activity android:name="com.example.pedometer.MainActivity" >
+        </activity>
+
+        <service android:name="com.example.pedometer.service.StepService" >
+        </service>
+
+        <receiver android:name="com.example.pedometer.receiver.AutoSaveReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

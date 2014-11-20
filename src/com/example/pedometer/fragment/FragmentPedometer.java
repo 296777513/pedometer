@@ -1,7 +1,13 @@
 package com.example.pedometer.fragment;
 
-import com.example.pedometer.step.StepDetector;
-import com.example.pedometer.step.StepService;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.model.Step;
+import com.example.pedometer.service.StepDetector;
+import com.example.pedometer.service.StepService;
 import com.example.pedometer.widet.RateTextCircularProgressBar;
 import com.example.test6.R;
 
@@ -16,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentPedometer extends Fragment {
 	View view;
@@ -28,6 +35,13 @@ public class FragmentPedometer extends Fragment {
 	private TextView tView2;
 	private int step_length = 50;
 	private int weight = 70;
+
+	private Step step;
+	private PedometerDB pedometerDB;
+
+	private Calendar calendar;
+	SimpleDateFormat sdf;
+	private String today;
 
 	public RateTextCircularProgressBar getmRateTextCircularProgressBar() {
 		return mRateTextCircularProgressBar;
@@ -57,45 +71,45 @@ public class FragmentPedometer extends Fragment {
 		}
 	};
 
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.view = inflater.inflate(R.layout.pedometer, container, false);
+		init();
+		if ((step = pedometerDB.loadSteps(1, today)) != null) {
+			StepDetector.CURRENT_SETP = step.getNumber();
+		}
 		return view;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Intent intent = new Intent(getActivity(), StepService.class);
-		getActivity().startService(intent);
-		init();
+
 		mThread();
 	}
 
-	private void mThread() {
-		if (thread == null) {
-
-			thread = new Thread(new Runnable() {
-				public void run() {
-					while (true) {
-						try {
-							Thread.sleep(300);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						if (StepService.flag) {
-							Message msg = new Message();
-							handler.sendMessage(msg);
-						}
-					}
-				}
-			});
-			thread.start();
-		}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		step.setNumber(total_step);
+		step.setDate(today);
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void init() {
+		Intent intent = new Intent(getActivity(), StepService.class);
+		getActivity().startService(intent);
+
+		calendar = Calendar.getInstance();
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		today = sdf.format(calendar.getTime());
+
+		step = new Step();
+		pedometerDB = PedometerDB.getInstance(getActivity());
 		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
 		tView2 = (TextView) view.findViewById(R.id.pedometer_2);
 		mRateTextCircularProgressBar = (RateTextCircularProgressBar) view
@@ -119,7 +133,29 @@ public class FragmentPedometer extends Fragment {
 		mRateTextCircularProgressBar.setMax(10000);
 		mRateTextCircularProgressBar.getCircularProgressBar()
 				.setCircleWidth(40);
-		//countStep();
+		// countStep();
+	}
+
+	private void mThread() {
+		if (thread == null) {
+
+			thread = new Thread(new Runnable() {
+				public void run() {
+					while (true) {
+						try {
+							Thread.sleep(300);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						if (StepService.flag) {
+							Message msg = new Message();
+							handler.sendMessage(msg);
+						}
+					}
+				}
+			});
+			thread.start();
+		}
 	}
 
 }

@@ -57,15 +57,15 @@ public class PedometerDB {
 		}
 	}
 
-	public Step loadSteps(int userId, int date) {
+	public Step loadSteps(int userId, String date) {
 		Step step = new Step();
 		Cursor cursor = db.query("step", null, "userId = ? and date = ?",
-				new String[] { String.valueOf(userId), String.valueOf(date) },
+				new String[] { String.valueOf(userId), date},
 				null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
-				step.setDate(cursor.getInt(cursor.getColumnIndex("date")));
+				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
 				step.setUserId(userId);
 			} while (cursor.moveToNext());
 

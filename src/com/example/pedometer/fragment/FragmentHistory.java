@@ -1,19 +1,16 @@
 package com.example.pedometer.fragment;
 
 import java.util.Calendar;
-
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Step;
 import com.example.test6.R;
-
-import android.R.integer;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.StaticLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,7 +36,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private int year;
 	private int month;
 	private int day;
-	private int date;
+	private String date;
 
 	private PedometerDB pedometerDB;
 	private Step step;
@@ -49,6 +46,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 
 	private Thread thread;
 	private int count;
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -69,6 +67,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
+		insert();
 	}
 
 	private void init() {
@@ -85,7 +84,6 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		month = calendar.get(Calendar.MONTH);
 		day = calendar.get(Calendar.DAY_OF_MONTH);
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		insert();
 	}
 
 	@Override
@@ -94,7 +92,8 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 
 			public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
 				tView.setText(arg1 + "/" + (arg2 + 1) + "/" + arg3);
-				date = arg3 + ((arg2 + 1) * 100) + (arg1 * 10000);
+				date = arg1 + "" + (arg2 + 1) + "" + arg3;
+				
 				queryStep();
 			}
 		}, year, month, day);
@@ -106,11 +105,26 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	}
 
 	private void insert() {
-		// Step step = new Step();
-		// step.setNumber(1000);
-		// step.setDate(20141115);
-		// step.setUserId(1);
-		// pedometerDB.saveStep(step);
+		 Step step = new Step();
+		 step.setNumber(1000);
+		 step.setDate("20141115");
+		 step.setUserId(1);
+		 pedometerDB.saveStep(step);
+		 
+		 step.setNumber(1234);
+		 step.setDate("20141118");
+		 step.setUserId(1);
+		 pedometerDB.saveStep(step);
+		 
+		 step.setNumber(4321);
+		 step.setDate("20141117");
+		 step.setUserId(1);
+		 pedometerDB.saveStep(step);
+		 
+		 step.setNumber(5421);
+		 step.setDate("20141116");
+		 step.setUserId(1);
+		 pedometerDB.saveStep(step);
 	}
 
 	/**
@@ -144,7 +158,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	 */
 	private void setNumber() {
 		if (count < step.getNumber()) {
-			count++;
+			count += 2;
 			number.setText(count + "");
 		}
 	}

@@ -4,7 +4,7 @@ public class Step {
 
 	private int id;
 	private int number;
-	private int date;
+	private String date;
 	private int userId;
 
 	public int getId() {
@@ -23,11 +23,11 @@ public class Step {
 		this.number = number;
 	}
 
-	public int getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(int date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

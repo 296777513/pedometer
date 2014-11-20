@@ -9,7 +9,7 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 	
 	public static final String CREATE_STEP = "create table step("
 			+ "id integer primary key autoincrement,"
-			+ "number integer,"
+			+ "number text,"
 			+ "date integer,"
 			+ "userId integer)";
 	

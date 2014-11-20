@@ -1,4 +1,4 @@
-package com.example.pedometer.step;
+package com.example.pedometer.service;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -96,9 +96,13 @@ public class StepDetector implements SensorEventListener {
 		}
 	}
 
+
 	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
 		// TODO Auto-generated method stub
+		
 	}
+
+
 
 }

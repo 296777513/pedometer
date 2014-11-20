@@ -1,21 +1,15 @@
-package com.example.pedometer.step;
+package com.example.pedometer.service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-
-
 
 public class StepService extends Service {
 	public static Boolean flag = false;
 	private SensorManager sensorManager;
 	private StepDetector stepDetector;
-	private PowerManager powerManager;
-	private WakeLock wakeLock;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -23,23 +17,28 @@ public class StepService extends Service {
 		return null;
 	}
 
-	@SuppressWarnings({ "static-access", "deprecation" })
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		//stopForeground(true);
+
+		new Thread(new Runnable() {
+
+			public void run() {
+				startStepDetector();
+			}
+		}).start();
+
+	}
+
+	private void startStepDetector() {
 		flag = true;
 		stepDetector = new StepDetector(this);
 		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
-		sensorManager.registerListener(stepDetector, 
+		sensorManager.registerListener(stepDetector,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_FASTEST);
-		powerManager = (PowerManager) this.getSystemService(this.POWER_SERVICE);
-		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
-				| PowerManager.ACQUIRE_CAUSES_WAKEUP, "Jackie");
-		wakeLock.acquire();
-		
 	}
+
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
@@ -49,8 +48,5 @@ public class StepService extends Service {
 			sensorManager.unregisterListener(stepDetector);
 		}
 
-		if (wakeLock != null) {
-			wakeLock.release();
-		}
 	}
 }

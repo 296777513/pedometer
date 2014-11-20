@@ -52,7 +52,7 @@ public final class R {
         public static final int Wednesday=0x7f09000d;
         public static final int action_settings=0x7f090023;
         public static final int analysis=0x7f090000;
-        public static final int average_step=0x7f090001;
+        public static final int average_step=0x7f090002;
         public static final int btn1=0x7f090019;
         public static final int btn2=0x7f09001a;
         public static final int btn3=0x7f09001b;
@@ -76,7 +76,7 @@ public final class R {
         public static final int radioGroup=0x7f090018;
         public static final int ratio=0x7f090016;
         public static final int sport=0x7f09001f;
-        public static final int sum_step=0x7f090002;
+        public static final int sum_step=0x7f090001;
         public static final int title_pedometer=0x7f09001e;
     }
     public static final class layout {
