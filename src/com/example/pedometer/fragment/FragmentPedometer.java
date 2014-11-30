@@ -2,9 +2,11 @@ package com.example.pedometer.fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+import cn.sharesdk.framework.ShareSDK;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.onekeyshare.OnekeyShare;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.service.StepDetector;
 import com.example.pedometer.service.StepService;
@@ -21,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +36,10 @@ public class FragmentPedometer extends Fragment {
 	private int calories = 0;
 	private TextView tView1;
 	private TextView tView2;
+	private ImageView sharekey;
 	private int step_length = 50;
 	private int weight = 70;
+	private int flag;
 
 	private Step step;
 	private PedometerDB pedometerDB;
@@ -71,7 +76,6 @@ public class FragmentPedometer extends Fragment {
 		}
 	};
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -101,6 +105,7 @@ public class FragmentPedometer extends Fragment {
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
+		flag = 1;
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
@@ -112,6 +117,7 @@ public class FragmentPedometer extends Fragment {
 		pedometerDB = PedometerDB.getInstance(getActivity());
 		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
 		tView2 = (TextView) view.findViewById(R.id.pedometer_2);
+		sharekey = (ImageView) view.findViewById(R.id.title_pedometer);
 		mRateTextCircularProgressBar = (RateTextCircularProgressBar) view
 				.findViewById(R.id.progress_pedometer);
 		mRateTextCircularProgressBar.setOnClickListener(new OnClickListener() {
@@ -133,7 +139,32 @@ public class FragmentPedometer extends Fragment {
 		mRateTextCircularProgressBar.setMax(10000);
 		mRateTextCircularProgressBar.getCircularProgressBar()
 				.setCircleWidth(40);
-		// countStep();
+
+		ShareSDK.initSDK(getActivity());
+		sharekey.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				OnekeyShare oks = new OnekeyShare();
+				oks.setText("今天已经走了" + total_step + "步");
+				oks.setSilent(false);
+				// 显示
+				oks.show(getActivity());
+				flag = 0;
+			}
+		});
+
+	}
+	
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (flag == 0) {
+			Toast.makeText(getActivity(), "分享成功", Toast.LENGTH_SHORT)
+			.show();
+		}
 	}
 
 	private void mThread() {

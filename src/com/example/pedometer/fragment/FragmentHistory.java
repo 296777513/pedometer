@@ -1,9 +1,12 @@
 package com.example.pedometer.fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Step;
 import com.example.test6.R;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -70,12 +73,14 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		insert();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void init() {
 		iView = (ImageView) view.findViewById(R.id.date_image);
 		tView = (TextView) view.findViewById(R.id.date_text);
 		number = (TextView) view.findViewById(R.id.number);
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 		ratio = (TextView) view.findViewById(R.id.ratio);
+		step = new Step();
 
 		iView.setOnClickListener(this);
 
@@ -84,6 +89,17 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		month = calendar.get(Calendar.MONTH);
 		day = calendar.get(Calendar.DAY_OF_MONTH);
 		pedometerDB = PedometerDB.getInstance(getActivity());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String date1 = sdf.format(calendar.getTime());
+		Toast.makeText(getActivity(), date1, Toast.LENGTH_SHORT).show();
+		step = pedometerDB.loadSteps(1, date1);
+		number.setText(step.getNumber() + "");
+		progressBar
+				.setProgress((int) ((step.getNumber() / (double) 10000) * progressBar
+						.getMax()));
+		ratio.setText(((int) ((step.getNumber() / (double) 10000) * 100)) + "%");
+
 	}
 
 	@Override
@@ -93,7 +109,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 			public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
 				tView.setText(arg1 + "/" + (arg2 + 1) + "/" + arg3);
 				date = arg1 + "" + (arg2 + 1) + "" + arg3;
-				
+
 				queryStep();
 			}
 		}, year, month, day);
@@ -105,26 +121,26 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	}
 
 	private void insert() {
-		 Step step = new Step();
-		 step.setNumber(1000);
-		 step.setDate("20141115");
-		 step.setUserId(1);
-		 pedometerDB.saveStep(step);
-		 
-		 step.setNumber(1234);
-		 step.setDate("20141118");
-		 step.setUserId(1);
-		 pedometerDB.saveStep(step);
-		 
-		 step.setNumber(4321);
-		 step.setDate("20141117");
-		 step.setUserId(1);
-		 pedometerDB.saveStep(step);
-		 
-		 step.setNumber(5421);
-		 step.setDate("20141116");
-		 step.setUserId(1);
-		 pedometerDB.saveStep(step);
+		Step step = new Step();
+		step.setNumber(1000);
+		step.setDate("20141129");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+
+		step.setNumber(1234);
+		step.setDate("20141128");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+
+		step.setNumber(4321);
+		step.setDate("20141127");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+
+		step.setNumber(5421);
+		step.setDate("20141126");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
 	}
 
 	/**
@@ -134,9 +150,11 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		step = pedometerDB.loadSteps(1, date);
 		if (step != null) {
 			count = 0;
+			pNumber = 0;
+			rNumber = 0;
+			progressBar.setProgress(0);
+			number.setText(count + "");
 			mThread();
-		} else {
-			Toast.makeText(getActivity(), "没有这天的数据", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -144,7 +162,9 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	 * 设置progressbar
 	 */
 	private void setProgressbar() {
+
 		double ratio = (step.getNumber() / (double) 10000);
+
 		int progress = (int) (ratio * progressBar.getMax());
 
 		if (pNumber < progress) {

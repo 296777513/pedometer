@@ -41,7 +41,6 @@ public class StepService extends Service {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		flag = false;
 		if (stepDetector != null) {

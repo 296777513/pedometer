@@ -2,6 +2,7 @@ package com.example.pedometer.fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.widet.HistogramView;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentAnalysis extends Fragment implements OnClickListener {
 	private HistogramView hv1;
@@ -109,6 +111,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 	private void setProgress() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		day = sdf.format(calendar.getTime());
+		Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
 		step = pedometerDB.loadSteps(1, day);
 		hv1.setProgress((step.getNumber() / 10000.0));
 		sum += step.getNumber();
@@ -156,6 +159,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 		int day = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
 		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		day += 1; 
 		day1.setText(week(day));
 		day2.setText(week(day - 1));
 		day3.setText(week(day - 2));
