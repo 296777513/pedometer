@@ -12,19 +12,19 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentHistory extends Fragment implements OnClickListener {
+	private AllAnimation ani;
 	private View view;
 	private ImageView iView;
 	private TextView tView;
@@ -44,20 +44,9 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private PedometerDB pedometerDB;
 	private Step step;
 
-	private int pNumber = 0;
-	private int rNumber = 0;
-
-	private Thread thread;
 	private int count;
-	@SuppressLint("HandlerLeak")
-	Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			setNumber();
-			setProgressbar();
-			setRatio();
-		}
-	};
+	private int progress;
+	private int ratio1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +71,8 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		ratio = (TextView) view.findViewById(R.id.ratio);
 		step = new Step();
 
+		ani = new AllAnimation();
+		ani.setDuration(2000);
 		iView.setOnClickListener(this);
 
 		calendar = Calendar.getInstance();
@@ -92,13 +83,12 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String date1 = sdf.format(calendar.getTime());
-		Toast.makeText(getActivity(), date1, Toast.LENGTH_SHORT).show();
+
 		step = pedometerDB.loadSteps(1, date1);
-		number.setText(step.getNumber() + "");
-		progressBar
-				.setProgress((int) ((step.getNumber() / (double) 10000) * progressBar
-						.getMax()));
-		ratio.setText(((int) ((step.getNumber() / (double) 10000) * 100)) + "%");
+		view.startAnimation(ani);
+		number.setText(count + "");
+		progressBar.setProgress(progress);
+		ratio.setText(ratio1 + "%");
 
 	}
 
@@ -108,7 +98,12 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 
 			public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
 				tView.setText(arg1 + "/" + (arg2 + 1) + "/" + arg3);
-				date = arg1 + "" + (arg2 + 1) + "" + arg3;
+				if (arg3 < 10) {
+					date = arg1 + "" + (arg2 + 1) + "0" + arg3;
+				}else {
+					date = arg1 + "" + (arg2 + 1) + "" + arg3;
+				}
+				
 
 				queryStep();
 			}
@@ -123,7 +118,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private void insert() {
 		Step step = new Step();
 		step.setNumber(1000);
-		step.setDate("20141129");
+		step.setDate("20141204");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
@@ -149,67 +144,36 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private void queryStep() {
 		step = pedometerDB.loadSteps(1, date);
 		if (step != null) {
-			count = 0;
-			pNumber = 0;
-			rNumber = 0;
+			// count = 0;
+//			Toast.makeText(getActivity(), step.getNumber() + "---"+date,
+//					Toast.LENGTH_SHORT).show();
 			progressBar.setProgress(0);
 			number.setText(count + "");
-			mThread();
+			view.startAnimation(ani);
+
 		}
 	}
 
-	/**
-	 * 设置progressbar
-	 */
-	private void setProgressbar() {
-
-		double ratio = (step.getNumber() / (double) 10000);
-
-		int progress = (int) (ratio * progressBar.getMax());
-
-		if (pNumber < progress) {
-			pNumber++;
-			progressBar.incrementProgressBy(1);
-		}
-	}
-
-	/**
-	 * 设置显示的步数number
-	 */
-	private void setNumber() {
-		if (count < step.getNumber()) {
-			count += 2;
+	private class AllAnimation extends Animation {
+		@Override
+		protected void applyTransformation(float interpolatedTime,
+				Transformation t) {
+			super.applyTransformation(interpolatedTime, t);
+			if (interpolatedTime < 1.0f) {
+				count = (int) (step.getNumber() * interpolatedTime);
+				progress = (int) ((step.getNumber() / (double) 10000)
+						* progressBar.getMax() * interpolatedTime);
+				ratio1 = (int) ((step.getNumber() / (double) 10000) * 100 * interpolatedTime);
+			} else {
+				count = step.getNumber();
+				progress = (int) ((step.getNumber() / (double) 10000) * progressBar
+						.getMax());
+				ratio1 = (int) ((step.getNumber() / (double) 10000) * 100);
+			}
+			view.postInvalidate();
+			progressBar.setProgress(progress);
 			number.setText(count + "");
-		}
-	}
-
-	/**
-	 * 设置显示的比率
-	 */
-	private void setRatio() {
-		int ratio = (int) ((step.getNumber() / (double) 10000) * 100);
-		if (rNumber <= ratio) {
-			this.ratio.setText((rNumber++) + "%");
-		}
-	}
-
-	private void mThread() {
-		if (thread == null) {
-			thread = new Thread(new Runnable() {
-				public void run() {
-
-					while (true) {
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Message msg = new Message();
-						handler.sendMessage(msg);
-					}
-				}
-			});
-			thread.start();
+			ratio.setText(ratio1 + "%");
 		}
 	}
 

@@ -7,6 +7,7 @@ import com.example.pedometer.fragment.FragmentAdapter;
 import com.example.pedometer.fragment.FragmentAnalysis;
 import com.example.pedometer.fragment.FragmentHistory;
 import com.example.pedometer.fragment.FragmentPedometer;
+import com.example.pedometer.fragment.FragmentSet;
 import com.example.test6.R;
 
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity {
 		fragments.add(new FragmentHistory());
 		fragments.add(new FragmentAnalysis());
 		fragments.add(new FragmentPedometer());
+		fragments.add(new FragmentSet());
 		new FragmentAdapter(this, fragments, R.id.Fragment, rgs);
 
 	}

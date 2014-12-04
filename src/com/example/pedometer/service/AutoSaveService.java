@@ -6,6 +6,7 @@ import com.example.pedometer.model.Step;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 public class AutoSaveService extends Service {
 	private PedometerDB pedometerDB;
@@ -21,6 +22,11 @@ public class AutoSaveService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		init();
 
 		if (StepService.flag) {
@@ -35,14 +41,16 @@ public class AutoSaveService extends Service {
 			step.setUserId(userid);
 			pedometerDB.saveStep(step);
 		}
+		return super.onStartCommand(intent, flags, startId);
 
 	}
 
 	private void init() {
+		Log.i("info", "你好啊");
 		step = new Step();
 		pedometerDB = PedometerDB.getInstance(this);
 		userid = 1;
-		date = "20141119";
+		date = "20141130";
 
 	}
 

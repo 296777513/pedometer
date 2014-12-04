@@ -9,11 +9,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
-public class HistogramView extends View implements Runnable {
+public class HistogramView extends View {
 	private boolean Text = false;
 	private int Height;
 	private int Width;
@@ -21,21 +22,28 @@ public class HistogramView extends View implements Runnable {
 	private int mHeight;
 	private int AnimValue;
 	private double Progress;
-	private Handler handler = new Handler();
-	private int SpeedRatio = 10;
-	private int DelayTime = 1;
-	private Canvas canvas;
 
+	private Canvas canvas;
+	HistogramAnimation ani;
+	
+	
+	
 	public void setText(boolean mText) {
 		this.Text = mText;
+		invalidate();
+		
 	}
 
 	public HistogramView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
+		ani = new HistogramAnimation();
+		ani.setDuration(2000);
 	}
 
 	public HistogramView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		ani = new HistogramAnimation();
+		ani.setDuration(2000);
 	}
 
 	@Override
@@ -43,7 +51,8 @@ public class HistogramView extends View implements Runnable {
 		super.onSizeChanged(w, h, oldw, oldh);
 		Width = w;
 		Height = h;
-		mHeight = (int) (h * Progress * 0.5);
+		mHeight = (int) (h * Progress * 1.5 );
+
 
 	}
 
@@ -57,37 +66,36 @@ public class HistogramView extends View implements Runnable {
 		paint.setAntiAlias(true);
 		paint.setStyle(Paint.Style.FILL);
 		paint.setTextSize(15);
-		drawViewWithBitmap(paint);
-	}
-
-	private void drawViewWithBitmap(Paint paint) {
-		RectF dst = null;
+		RectF dst = new RectF(0, Height - AnimValue, Width, Height);
 		bitmap = BitmapFactory
 				.decodeResource(getResources(), R.drawable.column);
-		handler.postDelayed(this, DelayTime);
-		dst = new RectF(0, Height - AnimValue, Width, Height);
 		if (Text) {
-			canvas.drawText((int) (Progress * 10000) + "", -1,
+			this.canvas.drawText((int) (Progress * 10000) + "", -1,
 					(Height - AnimValue) - 10, paint);
-			
-
 		}
-		canvas.drawBitmap(bitmap, null, dst, paint);
+		this.canvas.drawBitmap(bitmap, null, dst, paint);
 	}
+
+
 
 	public void setProgress(double Progress) {
 		this.Progress = Progress;
+		this.startAnimation(ani);
 	}
 
-	@Override
-	public void run() {
-		if (AnimValue <= mHeight) {
-			AnimValue += SpeedRatio;
-			invalidate();
-		} else {
-			invalidate();
+
+	private class HistogramAnimation extends Animation{
+		@Override
+		protected void applyTransformation(float interpolatedTime,
+				Transformation t) {
+			super.applyTransformation(interpolatedTime, t);
+			if (interpolatedTime < 1.0f) {
+				AnimValue = (int) (mHeight * interpolatedTime);
+			}else {
+				AnimValue = mHeight;
+			}
+			postInvalidate();
 		}
-
-	}
+	} 
 
 }

@@ -157,9 +157,9 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	private void setWeek() {
 
-		int day = calendar.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
-		day += 1; 
+		int day = calendar.get(Calendar.DAY_OF_WEEK);
+		Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		day -= 1; 
 		day1.setText(week(day));
 		day2.setText(week(day - 1));
 		day3.setText(week(day - 2));
@@ -180,6 +180,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(false);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map2:
 			hv1.setText(false);
@@ -189,6 +190,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(false);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map3:
 			hv1.setText(false);
@@ -198,6 +200,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(false);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map4:
 			hv1.setText(false);
@@ -207,6 +210,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(false);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map5:
 			hv1.setText(false);
@@ -216,6 +220,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(true);
 			hv6.setText(false);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map6:
 			hv1.setText(false);
@@ -225,6 +230,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(true);
 			hv7.setText(false);
+			view.invalidate();
 			break;
 		case R.id.map7:
 			hv1.setText(false);
@@ -234,6 +240,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			hv5.setText(false);
 			hv6.setText(false);
 			hv7.setText(true);
+			view.invalidate();
 			break;
 
 		default:

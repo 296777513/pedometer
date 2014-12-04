@@ -8,6 +8,7 @@ import cn.sharesdk.framework.ShareSDK;
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.onekeyshare.OnekeyShare;
 import com.example.pedometer.model.Step;
+import com.example.pedometer.model.User;
 import com.example.pedometer.service.StepDetector;
 import com.example.pedometer.service.StepService;
 import com.example.pedometer.widet.RateTextCircularProgressBar;
@@ -39,18 +40,14 @@ public class FragmentPedometer extends Fragment {
 	private ImageView sharekey;
 	private int step_length = 50;
 	private int weight = 70;
-	private int flag;
 
 	private Step step;
+	private User user;
 	private PedometerDB pedometerDB;
 
 	private Calendar calendar;
 	SimpleDateFormat sdf;
 	private String today;
-
-	public RateTextCircularProgressBar getmRateTextCircularProgressBar() {
-		return mRateTextCircularProgressBar;
-	}
 
 	@SuppressLint("HandlerLeak")
 	public int getTotal_step() {
@@ -81,17 +78,9 @@ public class FragmentPedometer extends Fragment {
 			Bundle savedInstanceState) {
 		this.view = inflater.inflate(R.layout.pedometer, container, false);
 		init();
-		if ((step = pedometerDB.loadSteps(1, today)) != null) {
-			StepDetector.CURRENT_SETP = step.getNumber();
-		}
-		return view;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
 		mThread();
+
+		return view;
 	}
 
 	@Override
@@ -105,7 +94,6 @@ public class FragmentPedometer extends Fragment {
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
-		flag = 1;
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
@@ -146,25 +134,34 @@ public class FragmentPedometer extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 				OnekeyShare oks = new OnekeyShare();
+				oks.setNotification(R.drawable.ic_launcher,
+						"ShareSDK notification content");
 				oks.setText("今天已经走了" + total_step + "步");
 				oks.setSilent(false);
 				// 显示
 				oks.show(getActivity());
-				flag = 0;
 			}
 		});
+		
+		if ((step = pedometerDB.loadSteps(1, today)) != null) {
 
-	}
-	
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		if (flag == 0) {
-			Toast.makeText(getActivity(), "分享成功", Toast.LENGTH_SHORT)
-			.show();
+			StepDetector.CURRENT_SETP = step.getNumber();
+			Toast.makeText(
+					getActivity(),
+					step.getNumber()+"", Toast.LENGTH_SHORT)
+					.show();
 		}
+		user = pedometerDB.loadUser("李垭超");
+		if (user.getStep_length() != 0 && user.getWeight() != 0
+				) {
+			step_length = user.getStep_length();
+			weight = user.getWeight();
+			StepDetector.SENSITIVITY = user.getSensitivity();
+			
+		} else {
+			Toast.makeText(getActivity(), "123", Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
 	private void mThread() {

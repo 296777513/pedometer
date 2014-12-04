@@ -50,6 +50,7 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 	public void setProgress(int progress, int type) {
 		this.type = type;
 		mCircularProgressBar.setProgress(progress);
+		mRateText.setText(progress + "");
 	}
 
 	public CircularProgressBar getCircularProgressBar() {

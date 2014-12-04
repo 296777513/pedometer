@@ -1,7 +1,5 @@
 package com.example.pedometer.db;
 
-
-
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 
@@ -60,9 +58,9 @@ public class PedometerDB {
 
 	public Step loadSteps(int userId, String date) {
 		Step step = new Step();
-		Cursor cursor = db.query("step", null, "userId = ? and date = ?",
-				new String[] { String.valueOf(userId), date},
-				null, null, null);
+		Cursor cursor = db
+				.query("step", null, "userId = ? and date = ?", new String[] {
+						String.valueOf(userId), date }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
@@ -70,9 +68,33 @@ public class PedometerDB {
 				step.setUserId(userId);
 			} while (cursor.moveToNext());
 
-		}else {
+		} else {
 			Log.i("tag", "step is null!");
 		}
 		return step;
+	}
+
+	public User loadUser(String name) {
+		User user = new User();
+		Cursor cursor = db.query("user", null, "name = ?",
+				new String[] { name }, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				user.setName(cursor.getString(cursor.getColumnIndex("name")));
+				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
+				user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				user.setBirthday(cursor.getInt(cursor
+						.getColumnIndex("birthday")));
+				user.setHeight(cursor.getInt(cursor.getColumnIndex("height")));
+				user.setSensitivity(cursor.getInt(cursor
+						.getColumnIndex("sensitivity")));
+				user.setStep_length(cursor.getInt(cursor
+						.getColumnIndex("step_length")));
+				user.setWeight(cursor.getInt(cursor.getColumnIndex("weight")));
+			} while (cursor.moveToNext());
+		} else {
+			Log.i("tag", "User is null!");
+		}
+		return user;
 	}
 }

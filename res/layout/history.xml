@@ -6,13 +6,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/date_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:background="@drawable/selector_tab"
@@ -31,8 +31,8 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:contentDescription="@string/app_name" />
@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:singleLine="true"
+            android:typeface="normal"
             android:text="@string/_0"
             android:textColor="#6DCAEC"
             android:textSize="90sp" />

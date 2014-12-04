@@ -113,5 +113,19 @@
   	<string name="qq_share_way">请选择分享方式</string>
   	<string name="qq_share_from_qqlogin">QQ/QZone登录发微博</string>
   	<string name="qq_share_from_tlogin">腾讯微博登录发微博</string>
+  	<string name="sex">性别</string>
+  	<string name="birthday">出生年份</string>
+  	<string name="weight">体重</string>
+  	<string name="height">身高</string>
+  	<string name="sensitivy">灵敏度</string>
+  	<string name="LengthOfStep">步伐长度</string>
+  	<string name="_1981">1981</string>
+  	<string name="_55">55</string>
+  	<string name="kg">kg</string>
+  	<string name="cm">cm</string>
+  	<string name="_1">一级</string>
+  	<string name="male">男</string>
+  	<string name="female">女</string>
+  	<string name="_170">170</string>
 
 </resources>

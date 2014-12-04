@@ -8,10 +8,17 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 public class CircularProgressBar extends View {
+
+
 	private int mDuration = 100;
 	private int mProgress = 30;
+	private float mRatio = 0;
+	
+//	BarAnimation ani;
 
 	private Paint mPaint = new Paint();
 	private RectF mRectF = new RectF();
@@ -30,23 +37,20 @@ public class CircularProgressBar extends View {
 		monChangeListener = l;
 	}
 
-	public CircularProgressBar(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
 
 	public CircularProgressBar(Context context) {
 		super(context);
+//		 ani = new BarAnimation();
+//		 ani.setDuration(2000);
 	}
+	
+
 
 	public void setMax(int max) {
 		if (max < 0) {
 			max = 0;
 		}
 		mDuration = max;
-	}
-
-	public int getMax() {
-		return mDuration;
 	}
 
 	public void setProgress(int progress) {
@@ -65,9 +69,6 @@ public class CircularProgressBar extends View {
 		return mProgress;
 	}
 
-	public void setmPrimaryColor(int mPrimaryColor) {
-		this.mPrimaryColor = mPrimaryColor;
-	}
 	public void setCircleWidth(float width) {
 		mStrokeWidth = width;
 
@@ -90,6 +91,7 @@ public class CircularProgressBar extends View {
 
 		canvas.drawCircle(halfWidth, halfHeight, radius - halfStrokeWidth,
 				mPaint);
+		
 		mPaint.setColor(mPrimaryColor); // 改变画笔颜色
 		mRectF.top = halfHeight - radius + halfStrokeWidth;
 		mRectF.bottom = halfHeight + radius - halfStrokeWidth;
@@ -103,5 +105,20 @@ public class CircularProgressBar extends View {
 	private float getRateOfProgress() {
 		return (float) mProgress / mDuration;
 	}
+	
+//	public class BarAnimation extends Animation{
+//		@Override
+//		protected void applyTransformation(float interpolatedTime,
+//				Transformation t) {
+//			super.applyTransformation(interpolatedTime, t);
+//			if (interpolatedTime < 1.0f) {
+//				mRatio = getRateOfProgress() * 360 * interpolatedTime;
+//			}else {
+//				mRatio = getRateOfProgress() * 360;
+//			}
+//			postInvalidate();
+//			
+//		}
+//	}
 
 }

@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/welcome">
-    
+    android:orientation="vertical" >
+    <ImageView 
+        android:contentDescription="@string/_0"
+        android:id="@+id/welcome"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:src="@drawable/welcome"/>
 
 </LinearLayout>

@@ -26,6 +26,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.pedometer.WelcomeActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,10 +47,13 @@
 
         <service android:name="com.example.pedometer.service.StepService" >
         </service>
+        <service android:name="com.example.pedometer.service.AutoSaveService" >
+        </service>
 
         <receiver android:name="com.example.pedometer.receiver.AutoSaveReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />
+                <!-- android.intent.action.DATE_CHANGED -->
             </intent-filter>
         </receiver>
     </application>
