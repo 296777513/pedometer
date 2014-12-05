@@ -25,11 +25,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.page_mian);
-
 		rgs = (RadioGroup) findViewById(R.id.radioGroup);
 		fragments.add(new FragmentHistory());
 		fragments.add(new FragmentAnalysis());
 		fragments.add(new FragmentPedometer());
+		fragments.add(new FragmentSet());
 		fragments.add(new FragmentSet());
 		new FragmentAdapter(this, fragments, R.id.Fragment, rgs);
 

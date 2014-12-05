@@ -10,6 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" >
     </FrameLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -19,73 +20,77 @@
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/btn1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/selector_tab"
+            android:background="#00000000"
             android:button="@null"
-            android:drawableTop="@drawable/main_history"
+            android:drawableTop="@drawable/selector_history"
             android:gravity="center"
             android:text="@string/history"
-            android:textColor="#000000"
+            android:textColor="@drawable/selector_color"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/btn2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/selector_tab"
+            android:background="#00000000"
             android:button="@null"
-            android:drawableTop="@drawable/main_analysis"
+            android:drawableTop="@drawable/selector_analysis"
             android:gravity="center"
             android:text="@string/analysis"
-            android:textColor="#000000"
+            android:textColor="@drawable/selector_color"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/btn3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/selector_tab"
+            android:background="#00000000"
             android:button="@null"
             android:checked="true"
-            android:drawableTop="@drawable/main_pedometer"
+            android:drawableTop="@drawable/selector_pedometer"
             android:gravity="center"
             android:text="@string/pedometer"
-            android:textColor="#000000"
+            android:textColor="@drawable/selector_color"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/btn4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/selector_tab"
+            android:background="#00000000"
             android:button="@null"
-            android:drawableTop="@drawable/main_pk"
+            android:drawableTop="@drawable/selector_pk"
             android:gravity="center"
             android:text="@string/pk"
-            android:textColor="#000000"
+            android:textColor="@drawable/selector_color"
             android:textSize="13sp" />
 
         <RadioButton
             android:id="@+id/btn5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/selector_tab"
+            android:background="#00000000"
             android:button="@null"
-            android:drawableTop="@drawable/main_set"
+            android:drawableTop="@drawable/selector_set"
             android:gravity="center"
             android:text="@string/set"
-            android:textColor="#000000"
+            android:textColor="@drawable/selector_color"
             android:textSize="13sp" />
     </RadioGroup>
 

@@ -16,7 +16,7 @@
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/title_pedometer" />
+            android:src="@drawable/selector_image" />
 
         <TextView
             android:id="@+id/sport"
@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="@string/sport"
             android:textColor="#6DCAEC"
-            android:textSize="35sp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="50dp"
@@ -50,8 +50,8 @@
 
         <com.example.pedometer.widet.RateTextCircularProgressBar
             android:id="@+id/progress_pedometer"
-            android:layout_width="300dp"
-            android:layout_height="300dp" >
+            android:layout_width="250dp"
+            android:layout_height="250dp" >
 
             <TextView
                 android:id="@+id/pedometer_1"

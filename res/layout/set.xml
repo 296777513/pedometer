@@ -10,14 +10,14 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/sport"
+            android:id="@+id/set"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/set"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="35sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -40,7 +40,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/sex"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <RadioGroup
             android:id="@+id/sex_"
@@ -58,7 +58,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/male"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/female"
-                android:textSize="25sp" />
+                android:textSize="20sp" />
         </RadioGroup>
     </LinearLayout>
 
@@ -93,7 +93,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/birthday"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/birthday_"
@@ -105,7 +105,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/_1981"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -130,7 +130,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/weight"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/weight_"
@@ -142,7 +142,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/_55"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/kg"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -177,7 +177,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/height"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/height_"
@@ -189,7 +189,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/_170"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -199,7 +199,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/cm"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -224,7 +224,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/sensitivy"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/sensitivy_"
@@ -236,7 +236,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/_1"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -261,7 +261,7 @@
             android:gravity="left|center_vertical"
             android:text="@string/LengthOfStep"
             android:textColor="#7B7B7B"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/lengh_step_"
@@ -273,7 +273,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/_55"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -283,7 +283,7 @@
             android:gravity="right|center_vertical"
             android:text="@string/cm"
             android:textColor="@android:color/holo_blue_light"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView

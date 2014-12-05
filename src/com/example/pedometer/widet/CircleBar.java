@@ -2,35 +2,35 @@ package com.example.pedometer.widet;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
+
 import android.graphics.Canvas;
-import android.graphics.Color;
+
 import android.graphics.Paint;
-import android.graphics.Path;
+
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Typeface;
+
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
-import android.graphics.drawable.Drawable;
+
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
 public class CircleBar extends View {
 	
-	private static int flag = 0;
+	//private static int flag = 0;
 	
-	private Paint mPaint = new Paint();
+	//private Paint mPaint = new Paint();
 	private RectF mColorWheelRectangle = new RectF();//圆圈的矩形范围
 	private Paint mDefaultWheelPaint;//绘制底部灰色圆圈的画笔
 	private Paint mColorWheelPaint;//绘制蓝色扇形的画笔
 	private Paint textPaint;//中间文字的画笔
-	private float mColorWheelRadius;// 圆圈普通状态下的半径
+	//private float mColorWheelRadius;// 圆圈普通状态下的半径
 	private float circleStrokeWidth;// 圆圈的线条粗细 
-	private float pressExtraStrokeWidth;//按下状态下增加的圆圈线条增加的粗细   
+	//private float pressExtraStrokeWidth;//按下状态下增加的圆圈线条增加的粗细   
 	private int progress;//中间文字内容
 	private int mCount;//为了达到数字增加效果而添加的变量，他和mText其实代表一个意思
 	private float mSweepAnglePer;//为了达到蓝色扇形增加效果而添加的变量，他和mSweepAngle其实代表一个意思  
@@ -56,7 +56,7 @@ public class CircleBar extends View {
 	private void init(AttributeSet attrs, int defStyle) {
 		
 		circleStrokeWidth = dip2px(getContext(), 10);// 圆圈的线条粗细 
-		pressExtraStrokeWidth = dip2px(getContext(), 2);//按下状态下增加的圆圈线条增加的粗细 
+	//	pressExtraStrokeWidth = dip2px(getContext(), 2);//按下状态下增加的圆圈线条增加的粗细 
 		mTextSize = dip2px(getContext(), 40);//文字大小
 		
 		//绘制蓝色扇形的画笔

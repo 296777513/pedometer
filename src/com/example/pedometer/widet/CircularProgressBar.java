@@ -6,17 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.AttributeSet;
+
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
+
 
 public class CircularProgressBar extends View {
 
 
 	private int mDuration = 100;
 	private int mProgress = 30;
-	private float mRatio = 0;
+//	private float mRatio = 0;
 	
 //	BarAnimation ani;
 

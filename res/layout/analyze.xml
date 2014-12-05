@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="@string/analysis"
             android:textColor="#6DCAEC"
-            android:textSize="35sp" />
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="50dp"
@@ -43,21 +43,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/sumstep"
             android:textSize="20sp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/averagestep"
             android:textSize="20sp" />
     </LinearLayout>
@@ -69,35 +70,37 @@
 
         <TextView
             android:id="@+id/sum_step"
-            android:layout_width="140dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/_0"
-            android:typeface="normal"
             android:textColor="#6DCAEC"
-            android:textSize="40sp" />
+            android:textSize="30sp"
+            android:typeface="normal" />
 
         <TextView
             android:id="@+id/average_step"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/_0"
             android:textColor="#6DCAEC"
-            android:typeface="normal"
-            android:textSize="40sp" />
+            android:textSize="30sp"
+            android:typeface="normal" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="15"
+        android:layout_weight="10"
         android:orientation="horizontal" >
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map1"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="30dp" />
@@ -105,120 +108,129 @@
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map2"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map3"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map4"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map5"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map6"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
 
         <com.example.pedometer.widet.HistogramView
             android:id="@+id/map7"
             android:layout_width="30dp"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <ProgressBar
-            android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="300dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="20dp"
+            android:text="@string/_0k"
+            android:textSize="15sp" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="40dp"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/Monday"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_marginLeft="40dp"
+            android:text="@string/Monday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Monday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:text="@string/Monday"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/Tuesday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Tuesday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Tuesday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Tuesday"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/Wednesday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Wednesday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Wednesday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Wednesday"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/Thursday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Thursday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Thursday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Thursday"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/Friday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Friday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Friday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Friday"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/Saturday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Saturday"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/Saturday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Saturday"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/Sunday"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/Sunday"
-                android:textSize="13sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/Sunday"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/Sunday"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

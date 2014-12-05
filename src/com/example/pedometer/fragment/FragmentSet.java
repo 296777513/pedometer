@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class FragmentSet extends Fragment implements OnClickListener {
 	private View view;
-	private LinearLayout sexLayout;
+//	private LinearLayout sexLayout;
 	private LinearLayout birthdayLayout;
 	private LinearLayout weightLayout;
 	private LinearLayout heightLayout;
@@ -69,7 +69,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	}
 
 	private void init() {
-		sexLayout = (LinearLayout) view.findViewById(R.id.sex);
+//		sexLayout = (LinearLayout) view.findViewById(R.id.sex);
 		birthdayLayout = (LinearLayout) view.findViewById(R.id.birthday);
 		weightLayout = (LinearLayout) view.findViewById(R.id.weight);
 		heightLayout = (LinearLayout) view.findViewById(R.id.height);

@@ -29,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentPedometer extends Fragment {
-	View view;
+	private View view;
 	private RateTextCircularProgressBar mRateTextCircularProgressBar;
 	private int total_step = 0;
 	private Thread thread;

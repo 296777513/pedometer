@@ -117,23 +117,23 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 
 	private void insert() {
 		Step step = new Step();
-		step.setNumber(1000);
+		step.setNumber(10000);
 		step.setDate("20141204");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
-		step.setNumber(1234);
-		step.setDate("20141128");
+		step.setNumber(6234);
+		step.setDate("20141201");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
 		step.setNumber(4321);
-		step.setDate("20141127");
+		step.setDate("20141202");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
 		step.setNumber(5421);
-		step.setDate("20141126");
+		step.setDate("20141203");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 	}

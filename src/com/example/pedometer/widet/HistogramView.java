@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -37,13 +38,13 @@ public class HistogramView extends View {
 	public HistogramView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		ani = new HistogramAnimation();
-		ani.setDuration(2000);
+		ani.setDuration(1000);
 	}
 
 	public HistogramView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		ani = new HistogramAnimation();
-		ani.setDuration(2000);
+		ani.setDuration(1000);
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class HistogramView extends View {
 		super.onSizeChanged(w, h, oldw, oldh);
 		Width = w;
 		Height = h;
-		mHeight = (int) (h * Progress * 1.5 );
+		mHeight = (int) (h * Progress * 1.0 );
 
 
 	}
@@ -65,15 +66,17 @@ public class HistogramView extends View {
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setTextSize(15);
+		paint.setTextSize(20);
+		paint.setColor(Color.parseColor("#6DCAEC"));
 		RectF dst = new RectF(0, Height - AnimValue, Width, Height);
 		bitmap = BitmapFactory
 				.decodeResource(getResources(), R.drawable.column);
+		
+		this.canvas.drawBitmap(bitmap, null, dst, paint);
 		if (Text) {
 			this.canvas.drawText((int) (Progress * 10000) + "", -1,
 					(Height - AnimValue) - 10, paint);
 		}
-		this.canvas.drawBitmap(bitmap, null, dst, paint);
 	}
 
 

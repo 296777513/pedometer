@@ -127,5 +127,6 @@
   	<string name="male">男</string>
   	<string name="female">女</string>
   	<string name="_170">170</string>
+  	<string name="_0k">0k</string>
 
 </resources>
