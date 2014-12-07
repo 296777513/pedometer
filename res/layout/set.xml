@@ -52,22 +52,30 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_weight="1"
+                android:id="@+id/male"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_male"
                 android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:text="@string/male"
-                android:textSize="20sp" />
+                android:textColor="@drawable/selector_color_set"
+                android:textSize="15sp" />
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_weight="1"
+                android:id="@+id/female"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="-15dp"
+                android:background="@drawable/selector_female"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/female"
-                android:textSize="20sp" />
+                android:textColor="@drawable/selector_color_set"
+                android:textSize="15sp" />
         </RadioGroup>
     </LinearLayout>
 

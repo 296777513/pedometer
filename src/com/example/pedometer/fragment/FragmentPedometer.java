@@ -77,7 +77,9 @@ public class FragmentPedometer extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.view = inflater.inflate(R.layout.pedometer, container, false);
+
 		init();
+		mRateTextCircularProgressBar.setProgress(StepDetector.CURRENT_SETP, 0);
 		mThread();
 
 		return view;
@@ -142,24 +144,22 @@ public class FragmentPedometer extends Fragment {
 				oks.show(getActivity());
 			}
 		});
-		
+
+		//Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
 		if ((step = pedometerDB.loadSteps(1, today)) != null) {
 
 			StepDetector.CURRENT_SETP = step.getNumber();
-			Toast.makeText(
-					getActivity(),
-					step.getNumber()+"", Toast.LENGTH_SHORT)
-					.show();
+			// Toast.makeText(getActivity(), step.getNumber() + "",
+			// Toast.LENGTH_SHORT).show();
 		}
 		user = pedometerDB.loadUser("李垭超");
-		if (user.getStep_length() != 0 && user.getWeight() != 0
-				) {
+		if (user.getStep_length() != 0 && user.getWeight() != 0) {
 			step_length = user.getStep_length();
 			weight = user.getWeight();
 			StepDetector.SENSITIVITY = user.getSensitivity();
-			
+
 		} else {
-			Toast.makeText(getActivity(), "123", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(getActivity(), "123", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -171,7 +171,7 @@ public class FragmentPedometer extends Fragment {
 				public void run() {
 					while (true) {
 						try {
-							Thread.sleep(300);
+							Thread.sleep(500);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}

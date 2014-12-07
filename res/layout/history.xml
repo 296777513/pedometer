@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:max="1000"
+        android:progressDrawable="@drawable/barcolor"
         />
 
     <LinearLayout

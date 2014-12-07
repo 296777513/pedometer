@@ -23,16 +23,15 @@ public class HistogramView extends View {
 	private int mHeight;
 	private int AnimValue;
 	private double Progress;
+	private double Progress1 = 0;
 
 	private Canvas canvas;
 	HistogramAnimation ani;
-	
-	
-	
+
 	public void setText(boolean mText) {
 		this.Text = mText;
 		invalidate();
-		
+
 	}
 
 	public HistogramView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -52,11 +51,9 @@ public class HistogramView extends View {
 		super.onSizeChanged(w, h, oldw, oldh);
 		Width = w;
 		Height = h;
-		mHeight = (int) (h * Progress * 1.0 );
-
+		mHeight = (int) (h * Progress * 0.9);
 
 	}
-
 
 	@SuppressLint("DrawAllocation")
 	@Override
@@ -71,34 +68,41 @@ public class HistogramView extends View {
 		RectF dst = new RectF(0, Height - AnimValue, Width, Height);
 		bitmap = BitmapFactory
 				.decodeResource(getResources(), R.drawable.column);
-		
+
 		this.canvas.drawBitmap(bitmap, null, dst, paint);
 		if (Text) {
-			this.canvas.drawText((int) (Progress * 10000) + "", -1,
-					(Height - AnimValue) - 10, paint);
+			if (Progress1 != 0) {
+				this.canvas.drawText((int) (Progress1 * 10000) + "", -1,
+						(Height - AnimValue) - 10, paint);
+			} else {
+				this.canvas.drawText((int) (Progress * 10000) + "", -1,
+						(Height - AnimValue) - 10, paint);
+			}
+
 		}
 	}
 
-
-
 	public void setProgress(double Progress) {
+		if (Progress < 0.03 && Progress != 0) {
+			this.Progress1 = Progress;
+			Progress = 0.03;
+		}
 		this.Progress = Progress;
 		this.startAnimation(ani);
 	}
 
-
-	private class HistogramAnimation extends Animation{
+	private class HistogramAnimation extends Animation {
 		@Override
 		protected void applyTransformation(float interpolatedTime,
 				Transformation t) {
 			super.applyTransformation(interpolatedTime, t);
 			if (interpolatedTime < 1.0f) {
 				AnimValue = (int) (mHeight * interpolatedTime);
-			}else {
+			} else {
 				AnimValue = mHeight;
 			}
 			postInvalidate();
 		}
-	} 
+	}
 
 }

@@ -87,8 +87,7 @@
             android:gravity="center"
             android:text="@string/_0"
             android:textColor="#6DCAEC"
-            android:textSize="30sp"
-            android:typeface="normal" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout

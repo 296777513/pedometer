@@ -6,6 +6,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -13,7 +15,10 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 		onProgressChangeListener {
 	private CircularProgressBar mCircularProgressBar;
 	private TextView mRateText;
-	private int type;
+	private CircleAnimation ani;
+	private int type = 1;
+	private int Progress1;
+	private int Progress;
 
 	public RateTextCircularProgressBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -40,6 +45,9 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 		mRateText.setTextColor(Color.BLACK);
 		mRateText.setTextSize(50);
 
+		ani = new CircleAnimation();
+		ani.setDuration(1000);
+
 		mCircularProgressBar.setOnProgressChangeListener(this);
 	}
 
@@ -48,9 +56,20 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 	}
 
 	public void setProgress(int progress, int type) {
-		this.type = type;
-		mCircularProgressBar.setProgress(progress);
-		mRateText.setText(progress + "");
+		Progress1 = progress;
+		if (this.type != type) {
+			if (type == 0) {
+				this.startAnimation(ani);
+			} else {
+				this.startAnimation(ani);
+				this.type = type;
+			}
+
+		} else {
+			mCircularProgressBar.setProgress(progress);
+			mRateText.setText(progress + "");
+		}
+
 	}
 
 	public CircularProgressBar getCircularProgressBar() {
@@ -80,6 +99,22 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 			break;
 		}
 
+	}
+
+	private class CircleAnimation extends Animation {
+		@Override
+		protected void applyTransformation(float interpolatedTime,
+				Transformation t) {
+			super.applyTransformation(interpolatedTime, t);
+			if (interpolatedTime < 1.0f) {
+				Progress = (int) (Progress1 * interpolatedTime);
+			} else {
+				Progress = Progress1;
+			}
+			postInvalidate();
+			mCircularProgressBar.setProgress(Progress);
+			mRateText.setText(Progress + "");
+		}
 	}
 
 }

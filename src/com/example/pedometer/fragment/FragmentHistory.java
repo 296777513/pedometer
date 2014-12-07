@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private int month;
 	private int day;
 	private String date;
+	private String date1;
 
 	private PedometerDB pedometerDB;
 	private Step step;
@@ -82,7 +84,7 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		pedometerDB = PedometerDB.getInstance(getActivity());
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String date1 = sdf.format(calendar.getTime());
+		date1 = sdf.format(calendar.getTime());
 
 		step = pedometerDB.loadSteps(1, date1);
 		view.startAnimation(ani);
@@ -97,20 +99,24 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		dialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
 
 			public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-				tView.setText(arg1 + "/" + (arg2 + 1) + "/" + arg3);
 				if (arg3 < 10) {
 					date = arg1 + "" + (arg2 + 1) + "0" + arg3;
-				}else {
+				} else {
 					date = arg1 + "" + (arg2 + 1) + "" + arg3;
 				}
-				
-
+				if (date.equals(date1)) {
+					tView.setText("今天");
+				} else {
+					tView.setText(arg1 + "/" + (arg2 + 1) + "/" + arg3);
+				}
 				queryStep();
 			}
 		}, year, month, day);
 		dPicker = dialog.getDatePicker();
 		dPicker.setSpinnersShown(false);
 		dPicker.setCalendarViewShown(true);
+		dPicker.setMaxDate(calendar.getTimeInMillis());
+
 		dialog.show();
 
 	}
@@ -123,16 +129,25 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		pedometerDB.saveStep(step);
 
 		step.setNumber(6234);
-		step.setDate("20141201");
+		step.setDate("20141206");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		step.setNumber(5213);
+		step.setDate("20141205");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
+		step.setNumber(3213);
+		step.setDate("20141201");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		
 		step.setNumber(4321);
 		step.setDate("20141202");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
-		step.setNumber(5421);
+		step.setNumber(5000);
 		step.setDate("20141203");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
@@ -145,8 +160,8 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		step = pedometerDB.loadSteps(1, date);
 		if (step != null) {
 			// count = 0;
-//			Toast.makeText(getActivity(), step.getNumber() + "---"+date,
-//					Toast.LENGTH_SHORT).show();
+			// Toast.makeText(getActivity(), step.getNumber() + "---"+date,
+			// Toast.LENGTH_SHORT).show();
 			progressBar.setProgress(0);
 			number.setText(count + "");
 			view.startAnimation(ani);

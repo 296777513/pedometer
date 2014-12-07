@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+       <!-- 默认时的图片 -->
+    <item android:color ="#6DCAEC" android:state_checked="false"/>
+    <!-- 选择时的图片 -->
+    <item android:color="#fffffb" android:state_checked="true"/>
+
+</selector>

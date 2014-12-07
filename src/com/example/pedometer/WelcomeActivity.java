@@ -26,6 +26,7 @@ public class WelcomeActivity extends Activity {
 			this.finish();
 		} else {
 			setContentView(R.layout.welcome);
+			
 //			animation = AnimationUtils.loadAnimation(WelcomeActivity.this,
 //					R.anim.animation_main);
 //			this.findViewById(R.id.welcome).setAnimation(animation);
