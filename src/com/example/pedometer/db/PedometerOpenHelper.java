@@ -23,6 +23,13 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 			+ "birthday integer,"
 			+ "sensitivity integer,"
 			+ "step_length integer)";
+	public static final String CREATE_WEATHER = "create table weather("
+			+ "cityid integer primary key,"
+			+ "city text,"
+			+ "temp1 text,"
+			+ "temp2 text,"
+			+ "weather text,"
+			+ "ptime text)";
 
 	public PedometerOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
@@ -33,6 +40,7 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(CREATE_STEP);
 		db.execSQL(CREATE_USER);
+		db.execSQL(CREATE_WEATHER);
 	}
 
 	@Override

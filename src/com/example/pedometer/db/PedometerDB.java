@@ -1,7 +1,10 @@
 package com.example.pedometer.db;
 
+
+
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
+import com.example.pedometer.model.Weather;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -56,6 +59,19 @@ public class PedometerDB {
 		}
 	}
 
+	public void saveWeather(Weather weather) {
+		if (weather != null) {
+			ContentValues values = new ContentValues();
+			values.put("cityid", weather.getCityid());
+			values.put("city", weather.getCity());
+			values.put("temp1", weather.getTemp1());
+			values.put("temp2", weather.getTemp2());
+			values.put("weather", weather.getWeather());
+			values.put("date", weather.getWeather());
+			db.insert("weather", null, values);
+		}
+	}
+
 	public Step loadSteps(int userId, String date) {
 		Step step = new Step();
 		Cursor cursor = db
@@ -96,5 +112,28 @@ public class PedometerDB {
 			Log.i("tag", "User is null!");
 		}
 		return user;
+	}
+
+	public Weather loadWeather(String date) {
+		Weather weather = new Weather();
+		Cursor cursor = db.query("weather", null, "date = ?",
+				new String[] { date }, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				weather.setCity(cursor.getString(cursor.getColumnIndex("city")));
+				weather.setTemp1(cursor.getString(cursor
+						.getColumnIndex("temp1")));
+				weather.setTemp2(cursor.getString(cursor
+						.getColumnIndex("temp2")));
+				weather.setWeather(cursor.getString(cursor
+						.getColumnIndex("weather")));
+			} while (cursor.moveToNext());
+
+		} else {
+
+		}
+
+		return weather;
+
 	}
 }

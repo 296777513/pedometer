@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
@@ -57,10 +58,17 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 
 	public void setProgress(int progress, int type) {
 		Progress1 = progress;
+		if (type == 3) {
+			mRateText.setVisibility(View.INVISIBLE);
+		}else {
+			mRateText.setVisibility(View.VISIBLE);
+		}
+
 		if (this.type != type) {
 			if (type == 0) {
 				this.startAnimation(ani);
 			} else {
+				
 				this.startAnimation(ani);
 				this.type = type;
 			}
@@ -112,8 +120,11 @@ public class RateTextCircularProgressBar extends FrameLayout implements
 				Progress = Progress1;
 			}
 			postInvalidate();
-			mCircularProgressBar.setProgress(Progress);
-			mRateText.setText(Progress + "");
+			
+				mCircularProgressBar.setProgress(Progress);
+				mRateText.setText(Progress + "");
+			
+			
 		}
 	}
 

@@ -63,7 +63,7 @@ public class HistogramView extends View {
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setTextSize(20);
+		paint.setTextSize(sp2px(getContext(), 12));
 		paint.setColor(Color.parseColor("#6DCAEC"));
 		RectF dst = new RectF(0, Height - AnimValue, Width, Height);
 		bitmap = BitmapFactory
@@ -72,10 +72,10 @@ public class HistogramView extends View {
 		this.canvas.drawBitmap(bitmap, null, dst, paint);
 		if (Text) {
 			if (Progress1 != 0) {
-				this.canvas.drawText((int) (Progress1 * 10000) + "", -1,
+				this.canvas.drawText((int) (Progress1 * 10000) + "", 0,
 						(Height - AnimValue) - 10, paint);
 			} else {
-				this.canvas.drawText((int) (Progress * 10000) + "", -1,
+				this.canvas.drawText((int) (Progress * 10000) + "", 0,
 						(Height - AnimValue) - 10, paint);
 			}
 
@@ -103,6 +103,11 @@ public class HistogramView extends View {
 			}
 			postInvalidate();
 		}
+	}
+
+	public static float sp2px(Context context, float pxValue) {
+		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+		return (pxValue * fontScale + 0.5f);
 	}
 
 }

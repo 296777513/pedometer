@@ -62,6 +62,15 @@
                 android:text="@string/step"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="20sp" />
+            <TextView
+                android:id="@+id/pedometer_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:text="@string/step"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/pedometer_2"
