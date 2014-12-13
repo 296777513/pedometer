@@ -9,14 +9,15 @@ import com.example.pedometer.widet.HistogramView;
 import com.example.test6.R;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentAnalysis extends Fragment implements OnClickListener {
 	private HistogramView hv1;
@@ -40,15 +41,19 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 	private TextView average_step;
 	private TextView sum_step;
 
-	private Step step;
+	private Step step = null;
 
 	private int average = 0;
 	private int sum = 0;
+	private int average1 = 0;
+	private int sum1 = 0;
 
 	private Calendar calendar;
 	private String day;
 
 	private View view;
+
+	private AllAnimation ani;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,13 +68,15 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 		init();
 		setWeek();
 		setProgress();
-		calculate();
+		view.startAnimation(ani);
 
 	}
 
 	private void init() {
 		average_step = (TextView) view.findViewById(R.id.average_step);
 		sum_step = (TextView) view.findViewById(R.id.sum_step);
+		ani = new AllAnimation();
+		ani.setDuration(1000);
 
 		calendar = Calendar.getInstance();
 
@@ -102,64 +109,99 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 	}
 
 	private void calculate() {
-		sum_step.setText(sum + "");
+		sum_step.setText(sum1 + "");
 		average = sum / 7;
-		average_step.setText(average + "");
+		average_step.setText(average1 + "");
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void setProgress() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		day = sdf.format(calendar.getTime());
-		Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		//Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
 		step = pedometerDB.loadSteps(1, day);
-		hv1.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv1.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv1.setProgress(0);
+			sum += 0;
+		}
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv2.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv2.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv2.setProgress(0);
+			sum += 0;
+		}
 		// Toast.makeText(getActivity(), day+"", Toast.LENGTH_LONG).show();
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv3.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv3.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv3.setProgress(0);
+			sum += 0;
+		}
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv4.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv4.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv4.setProgress(0);
+			sum += 0;
+		}
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv5.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv5.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv5.setProgress(0);
+			sum += 0;
+		}
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv6.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv6.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv6.setProgress(0);
+			sum += 0;
+		}
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
-		hv7.setProgress((step.getNumber() / 10000.0));
-		sum += step.getNumber();
+		if (step != null) {
+			hv7.setProgress((step.getNumber() / 10000.0));
+			sum += step.getNumber();
+		} else {
+			hv7.setProgress(0);
+			sum += 0;
+		}
 
 	}
 
 	private void setWeek() {
 
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
-		Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
-		day -= 1; 
+		//Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		day -= 1;
 		day1.setText(week(day));
 		day2.setText(week(day - 1));
 		day3.setText(week(day - 2));
@@ -270,6 +312,24 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			return "周日";
 		default:
 			return "";
+		}
+	}
+
+	private class AllAnimation extends Animation {
+		@Override
+		protected void applyTransformation(float interpolatedTime,
+				Transformation t) {
+			super.applyTransformation(interpolatedTime, t);
+			if (interpolatedTime < 1.0f) {
+				sum1 = (int) (sum * interpolatedTime);
+				average1 = (int) (average * interpolatedTime);
+			} else {
+				sum1 = sum;
+				average1 = average;
+			}
+			view.postInvalidate();
+			calculate();
+
 		}
 	}
 

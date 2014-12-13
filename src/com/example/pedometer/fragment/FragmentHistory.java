@@ -9,7 +9,7 @@ import com.example.test6.R;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -70,7 +70,6 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		number = (TextView) view.findViewById(R.id.number);
 		progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 		ratio = (TextView) view.findViewById(R.id.ratio);
-		step = new Step();
 
 		ani = new AllAnimation();
 		ani.setDuration(2000);
@@ -86,6 +85,9 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		date1 = sdf.format(calendar.getTime());
 
 		step = pedometerDB.loadSteps(1, date1);
+		if (step == null) {
+			step = new Step();
+		}
 		view.startAnimation(ani);
 		number.setText(count + "");
 		progressBar.setProgress(progress);
@@ -121,35 +123,68 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	}
 
 	private void insert() {
-		Step step = new Step();
-		step.setNumber(10000);
-		step.setDate("20141204");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-
-		step.setNumber(6234);
-		step.setDate("20141206");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		step.setNumber(5213);
-		step.setDate("20141205");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-
-		step.setNumber(3213);
-		step.setDate("20141201");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		
-		step.setNumber(4321);
-		step.setDate("20141202");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-
-		step.setNumber(5000);
-		step.setDate("20141203");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
+//		Step step = new Step();
+//		step.setNumber(10000);
+//		step.setDate("20141207");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		
+//		step.setNumber(8754);
+//		step.setDate("20141212");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		
+//		step.setNumber(4213);
+//		step.setDate("20141211");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(1234);
+//		step.setDate("20141210");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(4523);
+//		step.setDate("20141209");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(1342);
+//		step.setDate("20141208");
+//		step.setName("李垭超");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//
+//		step.setNumber(6234);
+//		step.setDate("20141213");
+//		step.setName("李名扬");
+//		step.setUserId(2);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(5213);
+//		step.setDate("20141213");
+//		step.setName("潘兆轩");
+//		step.setUserId(3);
+//		pedometerDB.saveStep(step);
+//
+//		step.setNumber(3213);
+//		step.setDate("20141213");
+//		step.setName("李楠");
+//		step.setUserId(4);
+//		pedometerDB.saveStep(step);
+//
+//		step.setNumber(4321);
+//		step.setDate("20141213");
+//		step.setName("陶冶");
+//		step.setUserId(5);
+//		pedometerDB.saveStep(step);
+//
+//		step.setNumber(5000);
+//		step.setDate("20141213");
+//		step.setName("李妍萌");
+//		step.setUserId(6);
+//		pedometerDB.saveStep(step);
 	}
 
 	/**
@@ -165,6 +200,10 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 			number.setText(count + "");
 			view.startAnimation(ani);
 
+		} else {
+			progressBar.setProgress(0);
+			number.setText(0 + "");
+			ratio.setText("0%");
 		}
 	}
 

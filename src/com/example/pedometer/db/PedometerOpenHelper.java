@@ -11,7 +11,8 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 			+ "id integer primary key autoincrement,"
 			+ "number text,"
 			+ "date integer,"
-			+ "userId integer)";
+			+ "userId integer,"
+			+ "name text)";
 	
 	
 	public static final String CREATE_USER = "create table user("

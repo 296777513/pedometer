@@ -1,13 +1,10 @@
 package com.example.pedometer.service;
 
-
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 
 public class StepDetector implements SensorEventListener {
 
@@ -41,7 +38,6 @@ public class StepDetector implements SensorEventListener {
 		mScale[0] = -(h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
 		mScale[1] = -(h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
 
-		
 		SENSITIVITY = 10;
 	}
 
@@ -78,8 +74,7 @@ public class StepDetector implements SensorEventListener {
 								&& isNotContra) {
 							end = System.currentTimeMillis();
 							if (end - start > 500) {// 此时判断为走了一步
-								Log.i("StepDetector", "CURRENT_SETP:"
-										+ CURRENT_SETP);
+
 								CURRENT_SETP++;
 								mLastMatch = extType;
 								start = end;

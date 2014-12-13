@@ -24,7 +24,7 @@ import com.example.pedometer.widet.RateTextCircularProgressBar;
 import com.example.test6.R;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,8 +36,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class FragmentPedometer extends Fragment {
+public class FragmentPedometer extends Fragment implements OnClickListener {
 	private View view;
 	private RateTextCircularProgressBar mRateTextCircularProgressBar;
 	private int total_step = 0;
@@ -51,13 +52,13 @@ public class FragmentPedometer extends Fragment {
 	private int step_length = 50;
 	private int weight = 70;
 
-	private Step step;
-	private User user;
+	private Step step = null;
+	private User user = null;
 	private Weather weather;
 	private PedometerDB pedometerDB;
 
 	private Calendar calendar;
-	SimpleDateFormat sdf;
+	private SimpleDateFormat sdf;
 	private String today;
 	private String test;
 
@@ -100,7 +101,7 @@ public class FragmentPedometer extends Fragment {
 					tView3.setVisibility(View.VISIBLE);
 					tView3.setTextColor(Color.parseColor("#6DCAEC"));
 					tView3.setText(test);
-				}else {
+				} else {
 					tView1.setVisibility(View.VISIBLE);
 					tView2.setVisibility(View.VISIBLE);
 					tView3.setVisibility(View.VISIBLE);
@@ -108,11 +109,12 @@ public class FragmentPedometer extends Fragment {
 					tView2.setTextColor(Color.parseColor("#6DCAEC"));
 					tView3.setTextColor(Color.parseColor("#6DCAEC"));
 					tView1.setText(weather.getPtime());
-					tView2.setText(weather.getTemp1()+" ~ "+ weather.getTemp2());
+					tView2.setText(weather.getTemp1() + " ~ "
+							+ weather.getTemp2());
 					tView3.setText(weather.getWeather());
-					
+
 				}
-				
+
 			}
 
 		}
@@ -134,14 +136,35 @@ public class FragmentPedometer extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		user = pedometerDB.loadUser();
 		step.setNumber(total_step);
-		step.setDate(today);
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
+		step.setName(user.getName());
+		pedometerDB.updateStep(step);
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		user = pedometerDB.loadUser();
+		step.setNumber(total_step);
+		step.setName(user.getName());
+		pedometerDB.updateStep(step);
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
+		pedometerDB = PedometerDB.getInstance(getActivity());
+		user = pedometerDB.loadUser();
+		if (user != null) {
+			step_length = user.getStep_length();
+			weight = user.getWeight();
+			StepDetector.SENSITIVITY = user.getSensitivity();
+		} else {
+			Toast.makeText(getActivity(), "this is my", Toast.LENGTH_SHORT)
+					.show();
+
+		}
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
@@ -149,74 +172,34 @@ public class FragmentPedometer extends Fragment {
 		sdf = new SimpleDateFormat("yyyyMMdd");
 		today = sdf.format(calendar.getTime());
 
-		step = new Step();
 		weather = new Weather();
-		pedometerDB = PedometerDB.getInstance(getActivity());
+
 		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
 		tView2 = (TextView) view.findViewById(R.id.pedometer_2);
 		tView3 = (TextView) view.findViewById(R.id.pedometer_3);
 		sharekey = (ImageView) view.findViewById(R.id.title_pedometer);
 		mRateTextCircularProgressBar = (RateTextCircularProgressBar) view
 				.findViewById(R.id.progress_pedometer);
-		mRateTextCircularProgressBar.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				if (Type == 1) {
-
-					Type = 2;
-				} else if (Type == 2) {
-					String address = "http://www.weather.com.cn/data/cityinfo"
-							+ "/101010100.html";
-					tView3.setText("同步中.....");
-					queryFromServer(address);
-					Type = 3;
-				} else if (Type == 3) {
-
-					Type = 1;
-				}
-				Message msg = new Message();
-				handler.sendMessage(msg);
-			}
-		});
+		mRateTextCircularProgressBar.setOnClickListener(this);
 
 		mRateTextCircularProgressBar.setMax(10000);
 		mRateTextCircularProgressBar.getCircularProgressBar()
 				.setCircleWidth(40);
 
 		ShareSDK.initSDK(getActivity());
-		sharekey.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				
-				OnekeyShare oks = new OnekeyShare();
-				oks.setNotification(R.drawable.ic_launcher,
-						"ShareSDK notification content");
-				oks.setText("今天已经走了" + total_step + "步");
-				oks.setSilent(false);
-				oks.disableSSOWhenAuthorize();
-				oks.setDialogMode();
-				// 显示
-				oks.show(getActivity());
-			}
-		});
+		sharekey.setOnClickListener(this);
 
 		// Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
 		if ((step = pedometerDB.loadSteps(1, today)) != null) {
-
 			StepDetector.CURRENT_SETP = step.getNumber();
-			// Toast.makeText(getActivity(), step.getNumber() + "",
-			// Toast.LENGTH_SHORT).show();
-		}
-		user = pedometerDB.loadUser("李垭超");
-		if (user.getStep_length() != 0 && user.getWeight() != 0) {
-			step_length = user.getStep_length();
-			weight = user.getWeight();
-			StepDetector.SENSITIVITY = user.getSensitivity();
-
+			step.setName(user.getName());
 		} else {
-			// Toast.makeText(getActivity(), "123", Toast.LENGTH_SHORT).show();
+			step = new Step();
+			step.setNumber(total_step);
+			step.setDate(today);
+			step.setUserId(1);
+			step.setName(user.getName());
+			pedometerDB.saveStep(step);
 		}
 
 	}
@@ -283,6 +266,43 @@ public class FragmentPedometer extends Fragment {
 			}
 		}).start();
 
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		switch (arg0.getId()) {
+		case R.id.title_pedometer:
+			OnekeyShare oks = new OnekeyShare();
+			oks.setNotification(R.drawable.ic_launcher,
+					"ShareSDK notification content");
+			oks.setText("今天已经走了" + total_step + "步");
+			oks.setSilent(false);
+			oks.disableSSOWhenAuthorize();
+			oks.setDialogMode();
+			// 显示
+			oks.show(getActivity());
+			break;
+		case R.id.progress_pedometer:
+			if (Type == 1) {
+
+				Type = 2;
+			} else if (Type == 2) {
+				String address = "http://www.weather.com.cn/data/cityinfo"
+						+ "/101010100.html";
+				tView3.setText("同步中.....");
+				queryFromServer(address);
+				Type = 3;
+			} else if (Type == 3) {
+
+				Type = 1;
+			}
+			Message msg = new Message();
+			handler.sendMessage(msg);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 }

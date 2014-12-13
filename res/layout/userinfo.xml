@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,7 +12,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/set"
+            android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -20,49 +22,13 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
-     <LinearLayout
-        android:id="@+id/set_name"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="left"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/name"
-            android:textColor="#7B7B7B"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/name_"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:text="@string/inputname"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp" />
-    </LinearLayout>
-     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="#d0d0d0" />
+-
 
     <LinearLayout
-        android:id="@+id/sex"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal" >
@@ -78,76 +44,15 @@
             android:textColor="#7B7B7B"
             android:textSize="20sp" />
 
-        <RadioGroup
-            android:id="@+id/sex_"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/male"
-                android:layout_width="65dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/selector_male"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="@string/male"
-                android:textColor="@drawable/selector_color_set"
-                android:textSize="15sp" />
-
-            <RadioButton
-                android:id="@+id/female"
-                android:layout_width="65dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="-15dp"
-                android:background="@drawable/selector_female"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/female"
-                android:textColor="@drawable/selector_color_set"
-                android:textSize="15sp" />
-        </RadioGroup>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="#d0d0d0" />
-
-    <LinearLayout
-        android:id="@+id/birthday"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal" >
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="left"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/birthday"
-            android:textColor="#7B7B7B"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/birthday_"
+            android:id="@+id/user_sex"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="@string/_1981"
+            android:text="@string/male"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20sp" />
     </LinearLayout>
@@ -158,9 +63,18 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#d0d0d0" />
+- 
+
+    
+
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#d0d0d0" />
 
     <LinearLayout
-        android:id="@+id/weight"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal" >
@@ -177,7 +91,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/weight_"
+            android:id="@+id/user_weight"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_gravity="right|center_vertical"
@@ -205,9 +119,9 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#d0d0d0" />
+- 
 
     <LinearLayout
-        android:id="@+id/height"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal" >
@@ -224,7 +138,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/height_"
+            android:id="@+id/user_height"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_gravity="right"
@@ -252,9 +166,9 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#d0d0d0" />
+- 
 
     <LinearLayout
-        android:id="@+id/sensitivy"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal" >
@@ -266,19 +180,28 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="@string/sensitivy"
+            android:text="@string/StepNumber"
             android:textColor="#7B7B7B"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/sensitivy_"
+            android:id="@+id/user_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="@string/_2"
+            android:layout_marginRight="5dp"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp" />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
-            android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="@string/_1"
+            android:text="@string/bu"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20sp" />
     </LinearLayout>
@@ -289,9 +212,9 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#d0d0d0" />
+- 
 
     <LinearLayout
-        android:id="@+id/lengh_step"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal" >
@@ -303,12 +226,12 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="@string/LengthOfStep"
+            android:text="@string/paiming"
             android:textColor="#7B7B7B"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/lengh_step_"
+            android:id="@+id/user_number"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_gravity="right"
@@ -325,7 +248,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
             android:gravity="right|center_vertical"
-            android:text="@string/cm"
+            android:text="@string/ming"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20sp" />
     </LinearLayout>

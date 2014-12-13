@@ -5,17 +5,17 @@ import com.example.pedometer.model.User;
 import com.example.test6.R;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class FragmentSet extends Fragment implements OnClickListener {
@@ -26,7 +26,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	private LinearLayout heightLayout;
 	private LinearLayout sensitivyLayout;
 	private LinearLayout lengthLayout;
-	private RadioGroup rGroup;
+	private LinearLayout nameLayout;
 	private RadioButton rButton1;
 	private RadioButton rButton2;
 
@@ -35,12 +35,14 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	private TextView heightText;
 	private TextView sensitivyText;
 	private TextView lengthText;
+	private TextView nameText;
+	private EditText editText;
 
 	private AlertDialog.Builder dialog;
 	private NumberPicker numberPicker;
 
 	private PedometerDB pedometerDB;
-	private User user;
+	private User user = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,26 +56,17 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	@Override
 	public void onPause() {
 		super.onPause();
-		user.setName("李垭超");
-		if (rGroup.getCheckedRadioButtonId() == R.id.male) {
-			user.setSex("男");
-		} else {
-			user.setSex("女");
-		}
+		pedometerDB.updateUser(user);
+		
 
-		pedometerDB.saveUser(user);
 	}
+
+	
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		user.setName("李垭超");
-		if (rGroup.getCheckedRadioButtonId() == R.id.male) {
-			user.setSex("男");
-		} else {
-			user.setSex("女");
-		}
-		pedometerDB.saveUser(user);
+		pedometerDB.updateUser(user);
 	}
 
 	private void init() {
@@ -83,29 +76,32 @@ public class FragmentSet extends Fragment implements OnClickListener {
 		heightLayout = (LinearLayout) view.findViewById(R.id.height);
 		sensitivyLayout = (LinearLayout) view.findViewById(R.id.sensitivy);
 		lengthLayout = (LinearLayout) view.findViewById(R.id.lengh_step);
+		nameLayout = (LinearLayout) view.findViewById(R.id.set_name);
 
 		birthdayText = (TextView) view.findViewById(R.id.birthday_);
 		weightText = (TextView) view.findViewById(R.id.weight_);
 		heightText = (TextView) view.findViewById(R.id.height_);
 		sensitivyText = (TextView) view.findViewById(R.id.sensitivy_);
 		lengthText = (TextView) view.findViewById(R.id.lengh_step_);
+		nameText = (TextView) view.findViewById(R.id.name_);
 
-		rGroup = (RadioGroup) view.findViewById(R.id.sex_);
 		rButton1 = (RadioButton) view.findViewById(R.id.male);
 		rButton2 = (RadioButton) view.findViewById(R.id.female);
 
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		user = new User();
 
 		birthdayLayout.setOnClickListener(this);
 		weightLayout.setOnClickListener(this);
 		heightLayout.setOnClickListener(this);
 		sensitivyLayout.setOnClickListener(this);
+		nameLayout.setOnClickListener(this);
 		lengthLayout.setOnClickListener(this);
+		rButton1.setOnClickListener(this);
+		rButton2.setOnClickListener(this);
 
-		user = pedometerDB.loadUser("李垭超");
-		if (user.getWeight() != 0 && user.getStep_length() != 0
-				&& user.getSensitivity() != 0) {
+		user = pedometerDB.loadUser();
+		if (user != null) {
+			nameText.setText(user.getName());
 			setSensitivity(user.getSensitivity());
 			weightText.setText(String.valueOf(user.getWeight()));
 			heightText.setText(String.valueOf(user.getHeight()));
@@ -113,11 +109,23 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			birthdayText.setText(String.valueOf(user.getBirthday()));
 			if (user.getSex().equals("男")) {
 				rButton1.setChecked(true);
-//				Toast.makeText(getActivity(), "111111111111",
-//						Toast.LENGTH_SHORT).show();
+				rButton2.setChecked(false);
 			} else {
+				rButton1.setChecked(false);
 				rButton2.setChecked(true);
 			}
+		} else {
+			user = new User();
+			user.setName(nameText.getText().toString());
+			user.setBirthday(Integer.valueOf(birthdayText.getText().toString()));
+			user.setHeight(Integer.valueOf(heightText.getText().toString()));
+			user.setWeight(Integer.valueOf(weightText.getText().toString()));
+			user.setSensitivity(10);
+			user.setSex("男");
+			user.setStep_length(Integer
+					.valueOf(lengthText.getText().toString()));
+			pedometerDB.saveUser(user);
+
 		}
 
 	}
@@ -125,6 +133,25 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
+		case R.id.set_name:
+			dialog = new AlertDialog.Builder(getActivity());
+			editText = new EditText(getActivity());
+			editText.setSingleLine(true);
+			dialog.setView(editText);
+
+			dialog.setTitle("填写姓名");
+			dialog.setPositiveButton("确认",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							nameText.setText(editText.getText().toString());
+							user.setName(editText.getText().toString());
+							pedometerDB.updateUser(user);
+						}
+					});
+			dialog.show();
+			break;
 		case R.id.birthday:
 			dialog = new AlertDialog.Builder(getActivity());
 			numberPicker = new NumberPicker(getActivity());
@@ -230,8 +257,13 @@ public class FragmentSet extends Fragment implements OnClickListener {
 					});
 			dialog.show();
 			break;
+		case R.id.male:
 
-		default:
+			user.setSex("男");
+
+			break;
+		case R.id.female:
+			user.setSex("女");
 			break;
 		}
 
@@ -274,5 +306,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			break;
 		}
 	}
+	
+
 
 }

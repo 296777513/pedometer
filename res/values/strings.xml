@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="history">历史</string>
     <string name="analysis">分析</string>
-    <string name="pk">PK</string>
+    <string name="pk">pk</string>
     <string name="set">设置</string>
     <string name="pedometer">记步</string>
     <string name="Monday">"周一 "</string>
@@ -128,5 +128,17 @@
   	<string name="female">女</string>
   	<string name="_170">170</string>
   	<string name="_0k">0k</string>
+  	<string name="_pk">分组PK</string>
+  	<string name="_pk1">多人PK</string>
+  	<string name="StepNumber">步数</string>
+  	<string name="paiming">排名</string>
+  	<string name="ming">名</string>
+  	<string name="bu">步</string>
+  	<string name="_2">2</string>
+  	<string name="stepNumber">步数</string>
+  	<string name="di">第</string>
+  	<string name="name">姓名</string>
+  	<string name="pleaseinputname">请输入姓名</string>
+  	<string name="inputname">填写您的姓名</string>
 
 </resources>

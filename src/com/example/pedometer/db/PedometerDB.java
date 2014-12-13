@@ -1,6 +1,7 @@
 package com.example.pedometer.db;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
@@ -49,13 +50,40 @@ public class PedometerDB {
 		}
 	}
 
+	public void updateUser(User user) {
+		if (user != null) {
+			ContentValues values = new ContentValues();
+			values.put("name", user.getName());
+			values.put("sex", user.getSex());
+			values.put("height", user.getHeight());
+			values.put("weight", user.getWeight());
+			values.put("birthday", user.getBirthday());
+			values.put("sensitivity", user.getSensitivity());
+			values.put("step_length", user.getStep_length());
+			db.update("user", values, null, null);
+		}
+	}
+
 	public void saveStep(Step step) {
 		if (step != null) {
 			ContentValues values = new ContentValues();
 			values.put("number", step.getNumber());
 			values.put("date", step.getDate());
 			values.put("userId", step.getUserId());
+			values.put("name", step.getName());
 			db.insert("step", null, values);
+		}
+	}
+
+	public void updateStep(Step step) {
+		if (step != null) {
+			ContentValues values = new ContentValues();
+			values.put("number", step.getNumber());
+			values.put("date", step.getDate());
+			values.put("userId", step.getUserId());
+			values.put("name", step.getName());
+			db.update("step", values, "userId = ? and date = ?", new String[] {
+					String.valueOf(step.getUserId()), step.getDate() });
 		}
 	}
 
@@ -73,14 +101,16 @@ public class PedometerDB {
 	}
 
 	public Step loadSteps(int userId, String date) {
-		Step step = new Step();
+		Step step = null;
 		Cursor cursor = db
 				.query("step", null, "userId = ? and date = ?", new String[] {
 						String.valueOf(userId), date }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
+				step = new Step();
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
 				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
+				step.setName(cursor.getString(cursor.getColumnIndex("name")));
 				step.setUserId(userId);
 			} while (cursor.moveToNext());
 
@@ -90,12 +120,35 @@ public class PedometerDB {
 		return step;
 	}
 
-	public User loadUser(String name) {
-		User user = new User();
-		Cursor cursor = db.query("user", null, "name = ?",
-				new String[] { name }, null, null, null);
+	public List<Step> loadListSteps(String date) {
+		List<Step> list = new ArrayList<Step>();
+
+		Cursor cursor = db.rawQuery(
+				"select * from step where date = ? order by number desc",
+				new String[] { date });
 		if (cursor.moveToFirst()) {
 			do {
+				Step step = new Step();
+				step.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
+				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
+				step.setName(cursor.getString(cursor.getColumnIndex("name")));
+				step.setUserId(cursor.getInt(cursor.getColumnIndex("userId")));
+				list.add(step);
+			} while (cursor.moveToNext());
+
+		}
+
+		return list;
+	}
+
+	public User loadUser() {
+		User user = null;
+		Cursor cursor = db.query("user", null, "id = ?",
+				new String[] { String.valueOf(1) }, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				user = new User();
 				user.setName(cursor.getString(cursor.getColumnIndex("name")));
 				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 				user.setId(cursor.getInt(cursor.getColumnIndex("id")));
