@@ -1,5 +1,6 @@
 package com.example.pedometer.fragment;
 
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.tools.ToRoundBitmap;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 import com.example.test6.R;
@@ -15,6 +17,16 @@ import com.example.test6.R;
 import android.support.v4.app.Fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +34,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
@@ -61,6 +75,18 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 				R.layout.item,
 				new String[] { "pic", "name", "steps", "number" }, new int[] {
 						R.id.pic, R.id.name, R.id.steps, R.id.number });
+		simpleAdapter.setViewBinder(new ViewBinder() {
+			@Override
+			public boolean setViewValue(View view, Object data,
+					String textRepresentation) {
+				if (view instanceof ImageView && data instanceof Bitmap) {
+					ImageView i = (ImageView) view;
+					i.setImageBitmap((Bitmap) data);
+					return true;
+				}
+				return false;
+			}
+		});
 		listView.setAdapter(simpleAdapter);
 		listView.setOnItemClickListener(this);
 		listView.setOnScrollListener(this);
@@ -69,12 +95,25 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 	private List<Map<String, Object>> getData() {
 
 		for (int i = 0; i < list.size(); i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("pic", R.drawable.logo_qq);
-			map.put("name", list.get(i).getName());
-			map.put("steps", list.get(i).getNumber());
-			map.put("number", (i + 1) + "");
-			dataList.add(map);
+
+			try {
+				Map<String, Object> map = new HashMap<String, Object>();
+
+				user = pedometerDB.loadUser(list.get(i).getUserId());
+				Bitmap bitmap = ToRoundBitmap
+						.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
+								.getContentResolver().openInputStream(
+										Uri.parse(user.getPicture()))));
+				map.put("pic", bitmap);
+				map.put("name", user.getName());
+				map.put("steps", list.get(i).getNumber());
+				map.put("number", (i + 1) + "");
+				dataList.add(map);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 		return dataList;
@@ -90,20 +129,21 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 	public void onScrollStateChanged(AbsListView arg0, int scrollState) {
 		switch (scrollState) {
 		case SCROLL_STATE_FLING:
-			
-			
+
 			Log.i("tag", "继续滑动");
 			break;
 		case SCROLL_STATE_IDLE:
 			Log.i("tag", "已经停止滑动");
-			
+
 			break;
 		case SCROLL_STATE_TOUCH_SCROLL:
+			dataList.clear();
 			list = pedometerDB.loadListSteps(sdf.format(new Date()));
 			for (int i = 0; i < list.size(); i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("pic", R.drawable.logo_qq);
-				map.put("name", list.get(i).getName());
+				user = pedometerDB.loadUser(list.get(i).getUserId());
+				map.put("name", user.getName());
 				map.put("steps", list.get(i).getNumber());
 				map.put("number", (i + 1) + "");
 				dataList.add(map);
@@ -124,13 +164,14 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		// Toast.makeText(getActivity(), "position=" + position + "text: " +
 		// str,
 		// Toast.LENGTH_SHORT).show();
-		user = pedometerDB.loadUser();
+		user = pedometerDB.loadUser(list.get(position).getUserId());
 		if (user == null) {
 			user = new User();
 		}
 
-		Toast.makeText(getActivity(), list.get(position).getName() + "",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), user.getName() + "", Toast.LENGTH_SHORT)
+				.show();
+
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View view = inflater.inflate(R.layout.userinfo, null);
@@ -139,16 +180,26 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		TextView number = (TextView) view.findViewById(R.id.user_number);
 		TextView sex = (TextView) view.findViewById(R.id.user_sex);
 		TextView weight = (TextView) view.findViewById(R.id.user_weight);
-		TextView height = (TextView) view.findViewById(R.id.user_height);
+		ImageView picture = (ImageView) view.findViewById(R.id.user_picture);
+
 		sex.setText(user.getSex());
 		weight.setText(user.getWeight() + "");
-		height.setText(user.getHeight() + "");
+		// height.setText(user.getPicture() + "");
+		try {
+			Bitmap bitmap = ToRoundBitmap
+					.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
+							.getContentResolver().openInputStream(
+									Uri.parse(user.getPicture()))));
+			picture.setImageBitmap(bitmap);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		steps.setText(list.get(position).getNumber() + "");
 		number.setText((position + 1) + "");
-		name.setText(list.get(position).getName());
+		name.setText(user.getName());
 		dialog.setView(view);
 		dialog.show();
-
 	}
 
 }

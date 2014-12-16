@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.page_mian);
 		btn1 = (RadioButton) findViewById(R.id.btn5);
-		if (PedometerDB.getInstance(this).loadUser() == null) {
+		if (PedometerDB.getInstance(this).loadUser(1) == null) {
 			btn1.setChecked(true);
 		}
 		rgs = (RadioGroup) findViewById(R.id.radioGroup);

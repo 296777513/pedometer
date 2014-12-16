@@ -140,5 +140,6 @@
   	<string name="name">姓名</string>
   	<string name="pleaseinputname">请输入姓名</string>
   	<string name="inputname">填写您的姓名</string>
+  	<string name="portrait">头像</string>
 
 </resources>

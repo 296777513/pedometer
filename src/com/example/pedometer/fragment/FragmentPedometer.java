@@ -136,9 +136,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		user = pedometerDB.loadUser();
+		user = pedometerDB.loadUser(1);
 		step.setNumber(total_step);
-		step.setName(user.getName());
 		pedometerDB.updateStep(step);
 
 	}
@@ -146,16 +145,15 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	@Override
 	public void onPause() {
 		super.onPause();
-		user = pedometerDB.loadUser();
+		user = pedometerDB.loadUser(1);
 		step.setNumber(total_step);
-		step.setName(user.getName());
 		pedometerDB.updateStep(step);
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		user = pedometerDB.loadUser();
+		user = pedometerDB.loadUser(1);
 		if (user != null) {
 			step_length = user.getStep_length();
 			weight = user.getWeight();
@@ -192,13 +190,11 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		// Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
 		if ((step = pedometerDB.loadSteps(1, today)) != null) {
 			StepDetector.CURRENT_SETP = step.getNumber();
-			step.setName(user.getName());
 		} else {
 			step = new Step();
 			step.setNumber(total_step);
 			step.setDate(today);
 			step.setUserId(1);
-			step.setName(user.getName());
 			pedometerDB.saveStep(step);
 		}
 

@@ -3,6 +3,7 @@ package com.example.pedometer.db;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 import com.example.pedometer.model.Weather;
@@ -41,9 +42,8 @@ public class PedometerDB {
 			ContentValues values = new ContentValues();
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
-			values.put("height", user.getHeight());
+			values.put("picture", user.getPicture());
 			values.put("weight", user.getWeight());
-			values.put("birthday", user.getBirthday());
 			values.put("sensitivity", user.getSensitivity());
 			values.put("step_length", user.getStep_length());
 			db.insert("user", null, values);
@@ -55,12 +55,12 @@ public class PedometerDB {
 			ContentValues values = new ContentValues();
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
-			values.put("height", user.getHeight());
+			values.put("picture", user.getPicture());
 			values.put("weight", user.getWeight());
-			values.put("birthday", user.getBirthday());
 			values.put("sensitivity", user.getSensitivity());
 			values.put("step_length", user.getStep_length());
-			db.update("user", values, null, null);
+			db.update("user", values, "id = ?",
+					new String[] { String.valueOf(user.getId()) });
 		}
 	}
 
@@ -70,7 +70,6 @@ public class PedometerDB {
 			values.put("number", step.getNumber());
 			values.put("date", step.getDate());
 			values.put("userId", step.getUserId());
-			values.put("name", step.getName());
 			db.insert("step", null, values);
 		}
 	}
@@ -81,9 +80,17 @@ public class PedometerDB {
 			values.put("number", step.getNumber());
 			values.put("date", step.getDate());
 			values.put("userId", step.getUserId());
-			values.put("name", step.getName());
 			db.update("step", values, "userId = ? and date = ?", new String[] {
 					String.valueOf(step.getUserId()), step.getDate() });
+		}
+	}
+
+	public void saveGroup(Group group) {
+		if (group != null) {
+			ContentValues values = new ContentValues();
+			values.put("average_number", group.getAverage_number());
+			values.put("member_number", group.getMember_number());
+			db.insert("group", null, values);
 		}
 	}
 
@@ -110,7 +117,6 @@ public class PedometerDB {
 				step = new Step();
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
 				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
-				step.setName(cursor.getString(cursor.getColumnIndex("name")));
 				step.setUserId(userId);
 			} while (cursor.moveToNext());
 
@@ -132,7 +138,6 @@ public class PedometerDB {
 				step.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
 				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
-				step.setName(cursor.getString(cursor.getColumnIndex("name")));
 				step.setUserId(cursor.getInt(cursor.getColumnIndex("userId")));
 				list.add(step);
 			} while (cursor.moveToNext());
@@ -142,19 +147,17 @@ public class PedometerDB {
 		return list;
 	}
 
-	public User loadUser() {
+	public User loadUser(int id) {
 		User user = null;
 		Cursor cursor = db.query("user", null, "id = ?",
-				new String[] { String.valueOf(1) }, null, null, null);
+				new String[] { String.valueOf(id) }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				user = new User();
 				user.setName(cursor.getString(cursor.getColumnIndex("name")));
 				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
-				user.setId(cursor.getInt(cursor.getColumnIndex("id")));
-				user.setBirthday(cursor.getInt(cursor
-						.getColumnIndex("birthday")));
-				user.setHeight(cursor.getInt(cursor.getColumnIndex("height")));
+				user.setId(id);
+				user.setPicture(cursor.getString(cursor.getColumnIndex("picture")));
 				user.setSensitivity(cursor.getInt(cursor
 						.getColumnIndex("sensitivity")));
 				user.setStep_length(cursor.getInt(cursor

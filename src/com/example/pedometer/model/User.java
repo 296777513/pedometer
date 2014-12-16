@@ -1,15 +1,35 @@
 package com.example.pedometer.model;
 
+import java.sql.Blob;
+
 public class User {
 
 	private int id;
 	private String name;
 	private String sex;
-	private int height;
 	private int weight;
-	private int birthday;
 	private int sensitivity;
 	private int step_length;
+	private int groupId;
+	private String picture;
+	
+	
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
 
 	public int getId() {
 		return id;
@@ -35,13 +55,7 @@ public class User {
 		this.sex = sex;
 	}
 
-	public int getHeight() {
-		return height;
-	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
 
 	public int getWeight() {
 		return weight;
@@ -51,13 +65,7 @@ public class User {
 		this.weight = weight;
 	}
 
-	public int getBirthday() {
-		return birthday;
-	}
 
-	public void setBirthday(int birthday) {
-		this.birthday = birthday;
-	}
 
 	public int getSensitivity() {
 		return sensitivity;

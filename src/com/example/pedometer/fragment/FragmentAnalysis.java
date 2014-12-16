@@ -108,11 +108,6 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	}
 
-	private void calculate() {
-		sum_step.setText(sum1 + "");
-		average = sum / 7;
-		average_step.setText(average1 + "");
-	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void setProgress() {
@@ -328,7 +323,9 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 				average1 = average;
 			}
 			view.postInvalidate();
-			calculate();
+			sum_step.setText(sum1 + "");
+			average = sum / 7;
+			average_step.setText(average1 + "");
 
 		}
 	}

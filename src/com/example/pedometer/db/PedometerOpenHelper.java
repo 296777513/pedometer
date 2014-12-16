@@ -13,17 +13,21 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 			+ "date integer,"
 			+ "userId integer,"
 			+ "name text)";
+	public static final String CREATE_GROUP = "create table group("
+			+ "id integer primary key autoincrement,"
+			+ "average_number integer,"
+			+ "member_number integer)";
 	
 	
 	public static final String CREATE_USER = "create table user("
 			+ "id integer primary key autoincrement,"
 			+ "name text,"
 			+ "sex text,"
-			+ "height integer,"
 			+ "weight integer,"
-			+ "birthday integer,"
+			+ "step_length integer,"
 			+ "sensitivity integer,"
-			+ "step_length integer)";
+			+ "picture text"
+			+ "groupId integer)";
 	public static final String CREATE_WEATHER = "create table weather("
 			+ "cityid integer primary key,"
 			+ "city text,"

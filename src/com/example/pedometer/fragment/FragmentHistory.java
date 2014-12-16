@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Step;
+import com.example.pedometer.model.User;
 import com.example.test6.R;
 
 import android.annotation.SuppressLint;
@@ -123,68 +124,93 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	}
 
 	private void insert() {
-//		Step step = new Step();
-//		step.setNumber(10000);
-//		step.setDate("20141207");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//		
-//		step.setNumber(8754);
-//		step.setDate("20141212");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//		
-//		step.setNumber(4213);
-//		step.setDate("20141211");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//		step.setNumber(1234);
-//		step.setDate("20141210");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//		step.setNumber(4523);
-//		step.setDate("20141209");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//		step.setNumber(1342);
-//		step.setDate("20141208");
-//		step.setName("李垭超");
-//		step.setUserId(1);
-//		pedometerDB.saveStep(step);
-//
-//		step.setNumber(6234);
-//		step.setDate("20141213");
-//		step.setName("李名扬");
-//		step.setUserId(2);
-//		pedometerDB.saveStep(step);
-//		step.setNumber(5213);
-//		step.setDate("20141213");
-//		step.setName("潘兆轩");
-//		step.setUserId(3);
-//		pedometerDB.saveStep(step);
-//
-//		step.setNumber(3213);
-//		step.setDate("20141213");
-//		step.setName("李楠");
-//		step.setUserId(4);
-//		pedometerDB.saveStep(step);
-//
-//		step.setNumber(4321);
-//		step.setDate("20141213");
-//		step.setName("陶冶");
-//		step.setUserId(5);
-//		pedometerDB.saveStep(step);
-//
-//		step.setNumber(5000);
-//		step.setDate("20141213");
-//		step.setName("李妍萌");
-//		step.setUserId(6);
-//		pedometerDB.saveStep(step);
+		Step step = new Step();
+		step.setNumber(10000);
+		step.setDate("20141213");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		
+		step.setNumber(8754);
+		step.setDate("20141212");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		
+		step.setNumber(4213);
+		step.setDate("20141211");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		step.setNumber(1234);
+		step.setDate("20141210");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		step.setNumber(4523);
+		step.setDate("20141209");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+		step.setNumber(1342);
+		step.setDate("20141208");
+		step.setUserId(1);
+		pedometerDB.saveStep(step);
+
+		User user = new User();
+
+		user.setName("李名扬");
+		user.setSensitivity(5);
+		user.setSex("男");
+		user.setStep_length(35);
+		user.setWeight(89);
+		pedometerDB.saveUser(user);
+		step.setNumber(6234);
+		step.setDate("20141214");
+		step.setUserId(2);
+		pedometerDB.saveStep(step);
+		
+
+		user.setName("潘兆轩");
+		user.setSensitivity(5);
+		user.setSex("男");
+		user.setStep_length(35);
+		user.setWeight(63);
+		pedometerDB.saveUser(user);
+		step.setNumber(5213);
+		step.setDate("20141214");
+		step.setUserId(3);
+		pedometerDB.saveStep(step);
+
+
+		user.setName("李楠");
+		user.setSensitivity(5);
+		user.setSex("男");
+		user.setStep_length(35);
+		user.setWeight(63);
+		pedometerDB.saveUser(user);
+		step.setNumber(3213);
+		step.setDate("20141214");
+		step.setUserId(4);
+		pedometerDB.saveStep(step);
+
+
+		user.setName("陶冶");
+		user.setSensitivity(5);
+		user.setSex("女");
+		user.setStep_length(30);
+		user.setWeight(53);
+		pedometerDB.saveUser(user);
+		step.setNumber(4321);
+		step.setDate("20141214");
+		step.setUserId(5);
+		pedometerDB.saveStep(step);
+
+		user.setName("李妍萌");
+		user.setSensitivity(5);
+		user.setSex("女");
+		user.setStep_length(30);
+		user.setWeight(53);
+		pedometerDB.saveUser(user);
+		step.setNumber(5000);
+		step.setDate("20141214");
+		step.setUserId(6);
+		pedometerDB.saveStep(step);
 	}
 
 	/**

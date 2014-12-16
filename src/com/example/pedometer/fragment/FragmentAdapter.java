@@ -26,7 +26,7 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 
 	public FragmentAdapter(FragmentActivity activity, final List<Fragment> fragments,
 			final int fgContentId, RadioGroup rGroup, Context context) {
-		user = PedometerDB.getInstance(context).loadUser();
+		user = PedometerDB.getInstance(context).loadUser(1);
 		this.activity = activity;
 		this.fragments = fragments;
 		this.rGroup = rGroup;
