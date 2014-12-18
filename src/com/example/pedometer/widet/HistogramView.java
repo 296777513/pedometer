@@ -1,6 +1,6 @@
 package com.example.pedometer.widet;
 
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

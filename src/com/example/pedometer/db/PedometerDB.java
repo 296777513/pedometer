@@ -46,6 +46,8 @@ public class PedometerDB {
 			values.put("weight", user.getWeight());
 			values.put("sensitivity", user.getSensitivity());
 			values.put("step_length", user.getStep_length());
+			values.put("groupId", user.getGroupId());
+			values.put("today_step", user.getToday_step());
 			db.insert("user", null, values);
 		}
 	}
@@ -59,6 +61,8 @@ public class PedometerDB {
 			values.put("weight", user.getWeight());
 			values.put("sensitivity", user.getSensitivity());
 			values.put("step_length", user.getStep_length());
+			values.put("groupId", user.getGroupId());
+			values.put("today_step", user.getToday_step());
 			db.update("user", values, "id = ?",
 					new String[] { String.valueOf(user.getId()) });
 		}
@@ -88,9 +92,9 @@ public class PedometerDB {
 	public void saveGroup(Group group) {
 		if (group != null) {
 			ContentValues values = new ContentValues();
-			values.put("average_number", group.getAverage_number());
+			values.put("total_number", group.getAverage_number());
 			values.put("member_number", group.getMember_number());
-			db.insert("group", null, values);
+			db.insert("group1", null, values);
 		}
 	}
 
@@ -105,6 +109,30 @@ public class PedometerDB {
 			values.put("date", weather.getWeather());
 			db.insert("weather", null, values);
 		}
+	}
+
+	/**
+	 * 根据组的id取数据
+	 * 
+	 * @param weather
+	 */
+	public Group loadGroup(int id) {
+		Group group = null;
+		Cursor cursor = db.query("group1", null, "id = ?",
+				new String[] { String.valueOf(id) }, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				group = new Group();
+				group.setID(cursor.getInt(cursor.getColumnIndex("id")));
+				group.setAverage_number(cursor.getInt(cursor
+						.getColumnIndex("total_number")));
+				group.setMember_number(cursor.getInt(cursor
+						.getColumnIndex("member_number")));
+			} while (cursor.moveToNext());
+
+		}
+		return group;
+
 	}
 
 	public Step loadSteps(int userId, String date) {
@@ -124,6 +152,54 @@ public class PedometerDB {
 			Log.i("tag", "step is null!");
 		}
 		return step;
+	}
+
+	public List<Group> loadListGroup() {
+		Group group = null;
+		List<Group> list = new ArrayList<Group>();
+		Cursor cursor = db.rawQuery("select * from group1", null);
+		if (cursor.moveToFirst()) {
+			do {
+				group = new Group();
+				group.setID(cursor.getInt(cursor.getColumnIndex("id")));
+				group.setAverage_number(cursor.getInt(cursor
+						.getColumnIndex("total_number")));
+				group.setMember_number(cursor.getInt(cursor
+						.getColumnIndex("member_number")));
+				list.add(group);
+			} while (cursor.moveToNext());
+
+		}
+		return list;
+
+	}
+
+	public List<User> lodListUsers() {
+		List<User> list = new ArrayList<User>();
+		Cursor cursor = db.rawQuery(
+				"select * from user  order by today_step desc",
+				null);
+		if (cursor.moveToFirst()) {
+			do {
+				User user = new User();
+				user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				user.setGroupId(cursor.getInt(cursor.getColumnIndex("groupId")));
+				user.setName(cursor.getString(cursor.getColumnIndex("name")));
+				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
+				user.setPicture(cursor.getString(cursor
+						.getColumnIndex("picture")));
+				user.setSensitivity(cursor.getInt(cursor
+						.getColumnIndex("sensitivity")));
+				user.setStep_length(cursor.getInt(cursor
+						.getColumnIndex("step_length")));
+				user.setWeight(cursor.getInt(cursor.getColumnIndex("weight")));
+				user.setToday_step(cursor.getInt(cursor
+						.getColumnIndex("today_step")));
+				list.add(user);
+			} while (cursor.moveToNext());
+		}
+		return list;
+
 	}
 
 	public List<Step> loadListSteps(String date) {
@@ -157,12 +233,16 @@ public class PedometerDB {
 				user.setName(cursor.getString(cursor.getColumnIndex("name")));
 				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
 				user.setId(id);
-				user.setPicture(cursor.getString(cursor.getColumnIndex("picture")));
+				user.setPicture(cursor.getString(cursor
+						.getColumnIndex("picture")));
 				user.setSensitivity(cursor.getInt(cursor
 						.getColumnIndex("sensitivity")));
 				user.setStep_length(cursor.getInt(cursor
 						.getColumnIndex("step_length")));
 				user.setWeight(cursor.getInt(cursor.getColumnIndex("weight")));
+				user.setGroupId(cursor.getInt(cursor.getColumnIndex("groupId")));
+				user.setToday_step(cursor.getInt(cursor
+						.getColumnIndex("today_step")));
 			} while (cursor.moveToNext());
 		} else {
 			Log.i("tag", "User is null!");

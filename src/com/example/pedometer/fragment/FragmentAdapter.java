@@ -44,10 +44,10 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 				
 				@Override
 				public void onClick(DialogInterface arg0, int arg1) {
+					
 					fTransaction.add(fgContentId, fragments.get(4));
 					fTransaction.show(fragments.get(4));
 					fTransaction.commit();
-					
 				}
 			});
 			dialog.show();

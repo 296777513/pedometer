@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import com.example.pedometer.service.StepDetector;
 import com.example.pedometer.service.StepService;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.app.Activity;
 import android.content.Intent;

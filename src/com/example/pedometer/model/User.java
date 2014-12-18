@@ -1,9 +1,12 @@
 package com.example.pedometer.model;
 
-import java.sql.Blob;
+import com.example.pedometer.db.PedometerDB;
+
 
 public class User {
 
+	private PedometerDB pd;
+	
 	private int id;
 	private String name;
 	private String sex;
@@ -12,8 +15,17 @@ public class User {
 	private int step_length;
 	private int groupId;
 	private String picture;
+	private int today_step;
 	
 	
+
+	public int getToday_step() {
+		return today_step;
+	}
+
+	public void setToday_step(int today_step) {
+		this.today_step = today_step;
+	}
 
 	public String getPicture() {
 		return picture;
@@ -27,7 +39,7 @@ public class User {
 		return groupId;
 	}
 
-	public void setGroupId(int groupId) {
+	public void setGroupId(int groupId) {		
 		this.groupId = groupId;
 	}
 

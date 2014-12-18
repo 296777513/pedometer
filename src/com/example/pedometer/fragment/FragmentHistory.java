@@ -4,9 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -124,93 +125,121 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	}
 
 	private void insert() {
-		Step step = new Step();
-		step.setNumber(10000);
-		step.setDate("20141213");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		
-		step.setNumber(8754);
-		step.setDate("20141212");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		
-		step.setNumber(4213);
-		step.setDate("20141211");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		step.setNumber(1234);
-		step.setDate("20141210");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		step.setNumber(4523);
-		step.setDate("20141209");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-		step.setNumber(1342);
-		step.setDate("20141208");
-		step.setUserId(1);
-		pedometerDB.saveStep(step);
-
-		User user = new User();
-
-		user.setName("李名扬");
-		user.setSensitivity(5);
-		user.setSex("男");
-		user.setStep_length(35);
-		user.setWeight(89);
-		pedometerDB.saveUser(user);
-		step.setNumber(6234);
-		step.setDate("20141214");
-		step.setUserId(2);
-		pedometerDB.saveStep(step);
-		
-
-		user.setName("潘兆轩");
-		user.setSensitivity(5);
-		user.setSex("男");
-		user.setStep_length(35);
-		user.setWeight(63);
-		pedometerDB.saveUser(user);
-		step.setNumber(5213);
-		step.setDate("20141214");
-		step.setUserId(3);
-		pedometerDB.saveStep(step);
-
-
-		user.setName("李楠");
-		user.setSensitivity(5);
-		user.setSex("男");
-		user.setStep_length(35);
-		user.setWeight(63);
-		pedometerDB.saveUser(user);
-		step.setNumber(3213);
-		step.setDate("20141214");
-		step.setUserId(4);
-		pedometerDB.saveStep(step);
-
-
-		user.setName("陶冶");
-		user.setSensitivity(5);
-		user.setSex("女");
-		user.setStep_length(30);
-		user.setWeight(53);
-		pedometerDB.saveUser(user);
-		step.setNumber(4321);
-		step.setDate("20141214");
-		step.setUserId(5);
-		pedometerDB.saveStep(step);
-
-		user.setName("李妍萌");
-		user.setSensitivity(5);
-		user.setSex("女");
-		user.setStep_length(30);
-		user.setWeight(53);
-		pedometerDB.saveUser(user);
-		step.setNumber(5000);
-		step.setDate("20141214");
-		step.setUserId(6);
-		pedometerDB.saveStep(step);
+//		Step step = new Step();
+//		step.setNumber(10000);
+//		step.setDate("20141213");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		
+//		step.setNumber(8754);
+//		step.setDate("20141212");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		
+//		step.setNumber(4213);
+//		step.setDate("20141214");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(1234);
+//		step.setDate("20141215");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(4523);
+//		step.setDate("20141216");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//		step.setNumber(1342);
+//		step.setDate("20141217");
+//		step.setUserId(1);
+//		pedometerDB.saveStep(step);
+//
+//		User user = new User();
+//
+//		user.setName("李名扬");
+//		user.setPicture("/storage/emulated/0/head1.jpg");
+//		user.setGroupId(2);
+//		user.setSensitivity(5);
+//		user.setSex("男");
+//		user.setStep_length(35);
+//		user.setToday_step(6234);
+//		user.setWeight(89);
+//		pedometerDB.saveUser(user);
+//		step.setNumber(6234);
+//		step.setDate("20141218");
+//		step.setUserId(2);
+//		pedometerDB.saveStep(step);
+//		
+//
+//		user.setName("潘兆轩");
+//		user.setPicture("/storage/emulated/0/head2.jpg");
+//		user.setGroupId(1);
+//		user.setSensitivity(5);
+//		user.setSex("男");
+//		user.setStep_length(35);
+//		user.setWeight(63);
+//		user.setToday_step(5213);
+//		pedometerDB.saveUser(user);
+//		step.setNumber(5213);
+//		step.setDate("20141218");
+//		step.setUserId(3);
+//		pedometerDB.saveStep(step);
+//
+//
+//		user.setName("李楠");
+//		user.setPicture("/storage/emulated/0/head3.jpg");
+//		user.setGroupId(3);
+//		user.setSensitivity(5);
+//		user.setSex("男");
+//		user.setStep_length(35);
+//		user.setWeight(63);
+//		user.setToday_step(3213);
+//		pedometerDB.saveUser(user);
+//		step.setNumber(3213);
+//		step.setDate("20141218");
+//		step.setUserId(4);
+//		pedometerDB.saveStep(step);
+//
+//
+//		user.setName("陶冶");
+//		user.setPicture("/storage/emulated/0/head4.jpg");
+//		user.setSensitivity(5);
+//		user.setSex("女");
+//		user.setGroupId(1);
+//		user.setToday_step(4321);
+//		user.setStep_length(30);
+//		user.setWeight(53);
+//		pedometerDB.saveUser(user);
+//		step.setNumber(4321);
+//		step.setDate("20141218");
+//		step.setUserId(5);
+//		pedometerDB.saveStep(step);
+//
+//		user.setName("李涛");
+//		user.setPicture("/storage/emulated/0/head5.jpg");
+//		user.setGroupId(2);
+//		user.setSensitivity(5);
+//		user.setToday_step(5000);
+//		user.setSex("女");
+//		user.setStep_length(30);
+//		user.setWeight(53);
+//		pedometerDB.saveUser(user);
+//		step.setNumber(5000);
+//		step.setDate("20141218");
+//		step.setUserId(6);
+//		pedometerDB.saveStep(step);
+//		
+//		Group group = new Group();
+//		group.setAverage_number(42311);
+//		group.setMember_number(8);
+//		pedometerDB.saveGroup(group);
+//		
+//		group.setAverage_number(24121);
+//		group.setMember_number(3);
+//		pedometerDB.saveGroup(group);
+//		
+//		group.setAverage_number(64121);
+//		group.setMember_number(12);
+//		pedometerDB.saveGroup(group);
 	}
 
 	/**

@@ -3,7 +3,7 @@ package com.example.pedometer.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;

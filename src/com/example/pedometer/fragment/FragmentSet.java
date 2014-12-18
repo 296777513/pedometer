@@ -3,12 +3,14 @@ package com.example.pedometer.fragment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.ToRoundBitmap;
+import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
-import com.example.test6.R;
-
+import com.example.pedometer.R;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.content.ContentResolver;
@@ -27,6 +29,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,8 +69,9 @@ public class FragmentSet extends Fragment implements OnClickListener {
 
 	private PedometerDB pedometerDB;
 	private User user = null;
+	private Step step = null;
 
-	private Intent pictureIntent;
+//	private Intent pictureIntent;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +95,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 		pedometerDB.updateUser(user);
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void init() {
 		// sexLayout = (LinearLayout) view.findViewById(R.id.sex);
 		weightLayout = (LinearLayout) view.findViewById(R.id.weight);
@@ -108,6 +113,8 @@ public class FragmentSet extends Fragment implements OnClickListener {
 		rButton2 = (RadioButton) view.findViewById(R.id.female);
 
 		pedometerDB = PedometerDB.getInstance(getActivity());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 		weightLayout.setOnClickListener(this);
 		sensitivyLayout.setOnClickListener(this);
@@ -121,14 +128,11 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			nameText.setText(user.getName());
 			setSensitivity(user.getSensitivity());
 			weightText.setText(String.valueOf(user.getWeight()));
-			try {
-				Bitmap bitmap =  ToRoundBitmap.toRoundBitmap(BitmapFactory
-						.decodeStream(getActivity().getContentResolver().openInputStream(
-								Uri.parse(user.getPicture()))));
+			
+				Bitmap bitmap = BitmapFactory.decodeFile(Environment
+						.getExternalStorageDirectory() + "/picture.jpg");
 				pictureImage.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			
 			lengthText.setText(String.valueOf(user.getStep_length()));
 
 			if (user.getSex().equals("男")) {
@@ -148,6 +152,12 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			user.setStep_length(Integer
 					.valueOf(lengthText.getText().toString()));
 			pedometerDB.saveUser(user);
+			
+			step = new Step();
+			step.setNumber(0);
+			step.setDate(sdf.format(new Date()));
+			step.setUserId(1);
+			pedometerDB.saveStep(step);
 
 		}
 
@@ -166,25 +176,29 @@ public class FragmentSet extends Fragment implements OnClickListener {
 						public void onClick(DialogInterface arg0, int arg1) {
 							switch (arg1) {
 							case 0:
-								File outputImage = new File(Environment
-										.getExternalStorageDirectory(),
+								File outputImage = new File(
+										Environment.getExternalStorageDirectory(),
 										"picture.jpg");
-							
+
 								imageUri = Uri.fromFile(outputImage);
+								// .parse("content://media/external/images/media/picture.jpg");
 								Intent intent = new Intent(
 										MediaStore.ACTION_IMAGE_CAPTURE);
+
 								intent.putExtra(MediaStore.EXTRA_OUTPUT,
 										imageUri);
 								startActivityForResult(intent, TAKE_PHOTO);
 
 								break;
 							case 1:
+
 								Intent intent1 = new Intent(
 										Intent.ACTION_GET_CONTENT);
 								intent1.setType("image/*");
 								intent1.putExtra("crop", true);
 								intent1.putExtra("scale", true);
-
+								intent1.putExtra(MediaStore.EXTRA_OUTPUT,
+										imageUri);
 								startActivityForResult(intent1, CROP_PHOTO);
 
 								break;
@@ -333,17 +347,18 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		this.pictureIntent = data;
+		//this.pictureIntent = data;
 		switch (requestCode) {
 		case TAKE_PHOTO:
 			if (resultCode == getActivity().RESULT_OK) {
 
-				Bitmap bitmap =  BitmapFactory
-						.decodeFile(Environment.getExternalStorageDirectory()
-								+ "/picture.jpg");
+				Bitmap bitmap = BitmapFactory.decodeFile(Environment
+						.getExternalStorageDirectory() + "/picture.jpg");
 				pictureImage.setImageBitmap(bitmap);
 				user.setPicture(Environment.getExternalStorageDirectory()
-								+ "/picture.jpg");
+						+ "/picture.jpg");
+				
+				
 			}
 			break;
 		case CROP_PHOTO:
@@ -354,9 +369,10 @@ public class FragmentSet extends Fragment implements OnClickListener {
 					// 照片的原始资源地址
 					Uri originalUri = data.getData();
 					user.setPicture(originalUri.toString());
-					Bitmap photo = ToRoundBitmap.toRoundBitmap(MediaStore.Images.Media
-							.getBitmap(resolver, originalUri));
-					pictureImage.setImageBitmap(photo);
+					Bitmap bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory
+							.decodeStream(getActivity().getContentResolver()
+									.openInputStream(originalUri)));
+					pictureImage.setImageBitmap(bitmap);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -369,7 +385,5 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			break;
 		}
 	}
-
-	
 
 }

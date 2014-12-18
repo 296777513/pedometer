@@ -6,7 +6,7 @@ import java.util.Calendar;
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.widet.HistogramView;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;

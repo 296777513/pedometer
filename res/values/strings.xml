@@ -141,5 +141,11 @@
   	<string name="pleaseinputname">请输入姓名</string>
   	<string name="inputname">填写您的姓名</string>
   	<string name="portrait">头像</string>
+  	<string name="average_steps">平均步数：</string>
+  	<string name="number_member">组成员数：</string>
+  	<string name="_00">第</string>
+  	<string name="_01">组</string>
+  	<string name="_02">姓名：</string>
+  	<string name="_03">步数：</string>
 
 </resources>

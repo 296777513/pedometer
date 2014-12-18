@@ -3,7 +3,7 @@ package com.example.pedometer.model;
 public class Group {
 
 	private int ID;
-	private int average_number;
+	private int total_number;
 	private int member_number;
 
 	public int getID() {
@@ -15,11 +15,11 @@ public class Group {
 	}
 
 	public int getAverage_number() {
-		return average_number;
+		return total_number;
 	}
 
-	public void setAverage_number(int average_number) {
-		this.average_number = average_number;
+	public void setAverage_number(int total_number) {
+		this.total_number = total_number;
 	}
 
 	public int getMember_number() {

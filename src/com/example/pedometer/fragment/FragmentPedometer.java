@@ -21,7 +21,7 @@ import com.example.pedometer.model.Weather;
 import com.example.pedometer.service.StepDetector;
 import com.example.pedometer.service.StepService;
 import com.example.pedometer.widet.RateTextCircularProgressBar;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
@@ -137,6 +137,10 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	public void onDestroy() {
 		super.onDestroy();
 		user = pedometerDB.loadUser(1);
+		step = pedometerDB.loadSteps(1, today);
+		
+		user.setToday_step(total_step);
+		pedometerDB.updateUser(user);
 		step.setNumber(total_step);
 		pedometerDB.updateStep(step);
 
@@ -146,6 +150,10 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	public void onPause() {
 		super.onPause();
 		user = pedometerDB.loadUser(1);
+		step = pedometerDB.loadSteps(1, today);
+		
+		user.setToday_step(total_step);
+		pedometerDB.updateUser(user);
 		step.setNumber(total_step);
 		pedometerDB.updateStep(step);
 	}
@@ -158,6 +166,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 			step_length = user.getStep_length();
 			weight = user.getWeight();
 			StepDetector.SENSITIVITY = user.getSensitivity();
+			StepDetector.CURRENT_SETP = user.getToday_step();
 		} else {
 			Toast.makeText(getActivity(), "this is my", Toast.LENGTH_SHORT)
 					.show();
@@ -188,15 +197,15 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		sharekey.setOnClickListener(this);
 
 		// Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
-		if ((step = pedometerDB.loadSteps(1, today)) != null) {
-			StepDetector.CURRENT_SETP = step.getNumber();
-		} else {
-			step = new Step();
-			step.setNumber(total_step);
-			step.setDate(today);
-			step.setUserId(1);
-			pedometerDB.saveStep(step);
-		}
+//		if ((step = pedometerDB.loadSteps(1, today)) != null) {
+//			StepDetector.CURRENT_SETP = step.getNumber();
+//		} else {
+//			step = new Step();
+//			step.setNumber(total_step);
+//			step.setDate(today);
+//			step.setUserId(1);
+//			pedometerDB.saveStep(step);
+//		}
 
 	}
 

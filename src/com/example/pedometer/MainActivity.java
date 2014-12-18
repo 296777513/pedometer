@@ -10,7 +10,7 @@ import com.example.pedometer.fragment.FragmentHistory;
 import com.example.pedometer.fragment.FragmentPK;
 import com.example.pedometer.fragment.FragmentPedometer;
 import com.example.pedometer.fragment.FragmentSet;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

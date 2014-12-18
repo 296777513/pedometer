@@ -1,26 +1,33 @@
 package com.example.pedometer.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.ExpandableListView;
+
 
 import com.example.pedometer.db.PedometerDB;
-import com.example.test6.R;
+import com.example.pedometer.fragment.tools.ExpandableListViewAdapter;
+import com.example.pedometer.model.Group;
+import com.example.pedometer.model.User;
+import com.example.pedometer.R;
 
 public class FragmentPK_2 extends Fragment {
 
 	private View view;
-	private ListView listView;
-	private SimpleAdapter simpleAdapter;
-	private List<Map<String, Object>> dataList;
+	private ExpandableListView listView;
+	private ExpandableListViewAdapter eAdapter;
+	private List<Group> list;
+	private HashMap<Group, List<User>> userMap;
+	private List<User> userList;
 	private PedometerDB pedometerDB;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +38,33 @@ public class FragmentPK_2 extends Fragment {
 	}
 
 	private void init() {
-		listView = (ListView) view.findViewById(R.layout.pk_2);
-		dataList = new ArrayList<Map<String,Object>>();
-		
+		listView = (ExpandableListView) view.findViewById(R.id.pk_2_listview);
+
+		userMap = new HashMap<Group, List<User>>();
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		
+		list = new ArrayList<Group>();
+		list = pedometerDB.loadListGroup();
+		userList = pedometerDB.lodListUsers();
+		prepareData();
+		eAdapter = new ExpandableListViewAdapter(getActivity(), list, userMap,
+				listView);
+		listView.setAdapter(eAdapter);
+
+	}
+
+	private void prepareData() {
+		for (int i = 0; i < list.size(); i++) {
+			List<User> mUser = new ArrayList<User>();
+			for (int j = 0; j < userList.size(); j++) {
+				if (userList.get(j).getGroupId() == list.get(i).getID()) {
+					mUser.add(userList.get(j));
+//					Toast.makeText(getActivity(), mUser.get(0).getName() + "",
+//							Toast.LENGTH_SHORT).show();
+					userMap.put(list.get(i), mUser);
+				}
+			}
+		}
+
 	}
 
 }

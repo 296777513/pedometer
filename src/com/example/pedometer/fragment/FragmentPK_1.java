@@ -1,33 +1,24 @@
 package com.example.pedometer.fragment;
 
-import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.example.pedometer.db.PedometerDB;
-import com.example.pedometer.fragment.tools.ToRoundBitmap;
-import com.example.pedometer.model.Step;
+
 import com.example.pedometer.model.User;
-import com.example.test6.R;
+import com.example.pedometer.R;
 
 import android.support.v4.app.Fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
-import android.net.Uri;
+
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +43,7 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 	private List<Map<String, Object>> dataList;
 	private PedometerDB pedometerDB;
 	private User user = null;
-	private SimpleDateFormat sdf;
-	private List<Step> list;
+	private List<User> list;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,12 +59,11 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		dataList = new ArrayList<Map<String, Object>>();
 
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		sdf = new SimpleDateFormat("yyyMMdd");
-		list = pedometerDB.loadListSteps(sdf.format(new Date()));
+		list = pedometerDB.lodListUsers();
 		simpleAdapter = new SimpleAdapter(getActivity(), getData(),
-				R.layout.item,
-				new String[] { "pic", "name", "steps", "number" }, new int[] {
-						R.id.pic, R.id.name, R.id.steps, R.id.number });
+				R.layout.member_list, new String[] { "pic", "name", "steps",
+						"number" }, new int[] { R.id.pic, R.id.name,
+						R.id.steps, R.id.number });
 		simpleAdapter.setViewBinder(new ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Object data,
@@ -96,23 +85,24 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 
 		for (int i = 0; i < list.size(); i++) {
 
-			try {
-				Map<String, Object> map = new HashMap<String, Object>();
+			// try {
+			Map<String, Object> map = new HashMap<String, Object>();
 
-				user = pedometerDB.loadUser(list.get(i).getUserId());
-				Bitmap bitmap = ToRoundBitmap
-						.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
-								.getContentResolver().openInputStream(
-										Uri.parse(user.getPicture()))));
+			user = pedometerDB.loadUser(i + 1);
+			if (user.getPicture() != null) {
+				Bitmap bitmap = BitmapFactory.decodeFile(user.getPicture());
 				map.put("pic", bitmap);
-				map.put("name", user.getName());
-				map.put("steps", list.get(i).getNumber());
-				map.put("number", (i + 1) + "");
-				dataList.add(map);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} else {
+				map.put("pic", R.drawable.logo_qq);
 			}
+			map.put("name", user.getName());
+			map.put("steps", user.getToday_step());
+			map.put("number", (i + 1) + "");
+			dataList.add(map);
+			// } catch (FileNotFoundException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 
 		}
 
@@ -137,19 +127,19 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 
 			break;
 		case SCROLL_STATE_TOUCH_SCROLL:
-			dataList.clear();
-			list = pedometerDB.loadListSteps(sdf.format(new Date()));
-			for (int i = 0; i < list.size(); i++) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("pic", R.drawable.logo_qq);
-				user = pedometerDB.loadUser(list.get(i).getUserId());
-				map.put("name", user.getName());
-				map.put("steps", list.get(i).getNumber());
-				map.put("number", (i + 1) + "");
-				dataList.add(map);
-			}
-			simpleAdapter.notifyDataSetChanged();
-			Log.i("tag", "正在滑动");
+			// dataList.clear();
+			// list = pedometerDB.loadListSteps(sdf.format(new Date()));
+			// for (int i = 0; i < list.size(); i++) {
+			// Map<String, Object> map = new HashMap<String, Object>();
+			// map.put("pic", R.drawable.logo_qq);
+			// user = pedometerDB.loadUser(list.get(i).getUserId());
+			// map.put("name", user.getName());
+			// map.put("steps", list.get(i).getNumber());
+			// map.put("number", (i + 1) + "");
+			// dataList.add(map);
+			// }
+			// simpleAdapter.notifyDataSetChanged();
+			// Log.i("tag", "正在滑动");
 			break;
 		default:
 			break;
@@ -164,7 +154,7 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		// Toast.makeText(getActivity(), "position=" + position + "text: " +
 		// str,
 		// Toast.LENGTH_SHORT).show();
-		user = pedometerDB.loadUser(list.get(position).getUserId());
+		user = pedometerDB.loadUser(position + 1);
 		if (user == null) {
 			user = new User();
 		}
@@ -185,17 +175,23 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		sex.setText(user.getSex());
 		weight.setText(user.getWeight() + "");
 		// height.setText(user.getPicture() + "");
-		try {
-			Bitmap bitmap = ToRoundBitmap
-					.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
-							.getContentResolver().openInputStream(
-									Uri.parse(user.getPicture()))));
+		// try {
+		if (user.getPicture() != null) {
+			// Bitmap bitmap = ToRoundBitmap
+			// .toRoundBitmap(BitmapFactory.decodeStream(getActivity()
+			// .getContentResolver().openInputStream(
+			// Uri.parse(user.getPicture()))));
+			Bitmap bitmap = BitmapFactory.decodeFile(user.getPicture());
 			picture.setImageBitmap(bitmap);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else {
+			picture.setImageResource(R.drawable.logo_qq);
 		}
-		steps.setText(list.get(position).getNumber() + "");
+
+		// } catch (FileNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		steps.setText(list.get(position).getToday_step() + "");
 		number.setText((position + 1) + "");
 		name.setText(user.getName());
 		dialog.setView(view);
