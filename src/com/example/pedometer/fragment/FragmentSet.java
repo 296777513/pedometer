@@ -138,7 +138,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			if (user.getSex().equals("男")) {
 				rButton1.setChecked(true);
 			} else {
-				rButton1.setChecked(false);
+				rButton2.setChecked(true);
 			}
 		} else {
 			user = new User();

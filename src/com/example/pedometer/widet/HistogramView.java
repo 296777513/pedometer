@@ -1,6 +1,7 @@
 package com.example.pedometer.widet;
 
 import com.example.pedometer.R;
+import com.example.pedometer.fragment.tools.DisplayUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -63,7 +64,7 @@ public class HistogramView extends View {
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setTextSize(sp2px(getContext(), 12));
+		paint.setTextSize(DisplayUtil.sp2px(getContext(), 12));
 		paint.setColor(Color.parseColor("#6DCAEC"));
 		RectF dst = new RectF(0, Height - AnimValue, Width, Height);
 		bitmap = BitmapFactory
@@ -105,9 +106,6 @@ public class HistogramView extends View {
 		}
 	}
 
-	public static float sp2px(Context context, float pxValue) {
-		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-		return (pxValue * fontScale + 0.5f);
-	}
+	
 
 }

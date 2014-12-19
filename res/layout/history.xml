@@ -17,7 +17,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/selector_tab"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/title_history" />
+            android:src="@drawable/selector_calendar" />
 
         <TextView
             android:id="@+id/date_text"

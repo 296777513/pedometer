@@ -1,11 +1,16 @@
 package com.example.pedometer.model;
 
-import com.example.pedometer.db.PedometerDB;
+import java.io.Serializable;
 
 
-public class User {
 
-	private PedometerDB pd;
+
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int id;
 	private String name;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.pedometer.R;
+import com.example.pedometer.fragment.PK.FragmentPK_1;
+import com.example.pedometer.fragment.PK.FragmentPK_2;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +33,7 @@ public class FragmentPK extends Fragment {
 	private ViewPager viewPager;
 	private ImageView imageView;
 	private int mScreen1_3;
+	private ImageView friend;
 	FragmentPK_1 fPk_1;
 	FragmentPK_2 fPk_2;
 
@@ -62,6 +66,7 @@ public class FragmentPK extends Fragment {
 		rButton2 = (RadioButton) view.findViewById(R.id.pk_2);
 		viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
+		friend = (ImageView) view.findViewById(R.id.friend);
 		rButton1.setClickable(false);
 		rButton2.setClickable(false);
 		fragments = new ArrayList<Fragment>();
@@ -126,6 +131,15 @@ public class FragmentPK extends Fragment {
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
 
+			}
+		});
+		
+		friend.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	

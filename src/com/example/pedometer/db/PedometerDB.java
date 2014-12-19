@@ -89,6 +89,16 @@ public class PedometerDB {
 		}
 	}
 
+	public void updateGroup(Group group) {
+		if (group != null) {
+			ContentValues values = new ContentValues();
+			values.put("total_number", group.getAverage_number());
+			values.put("member_number", group.getMember_number());
+			db.update("group1", values, "id = ?",
+					new String[] { String.valueOf(group.getID()) });
+		}
+	}
+
 	public void saveGroup(Group group) {
 		if (group != null) {
 			ContentValues values = new ContentValues();
@@ -177,8 +187,7 @@ public class PedometerDB {
 	public List<User> lodListUsers() {
 		List<User> list = new ArrayList<User>();
 		Cursor cursor = db.rawQuery(
-				"select * from user  order by today_step desc",
-				null);
+				"select * from user  order by today_step desc", null);
 		if (cursor.moveToFirst()) {
 			do {
 				User user = new User();

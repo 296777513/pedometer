@@ -78,10 +78,9 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.group_member_pic);
 
 		nameTextView.setText(childUser.getName());
-		stepsTextView.setText(step.getNumber() + "");
+		stepsTextView.setText(childUser.getToday_step() + "");
 		if (childUser.getPicture() != null) {
-			Bitmap bitmap = BitmapFactory
-					.decodeFile(childUser.getPicture());
+			Bitmap bitmap = BitmapFactory.decodeFile(childUser.getPicture());
 			imageView.setImageBitmap(bitmap);
 		} else {
 			imageView.setImageResource(R.drawable.logo_qq);
@@ -141,7 +140,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.average_number);
 
 		nameTextView.setText(headerTitle.getID() + "");
-		stepsTextView.setText(headerTitle.getAverage_number() + "");
+		stepsTextView.setText(headerTitle.getAverage_number()
+				/ headerTitle.getMember_number() + "");
 
 		return convertView;
 	}

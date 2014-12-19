@@ -57,7 +57,6 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	private Weather weather;
 	private PedometerDB pedometerDB;
 
-	private Calendar calendar;
 	private SimpleDateFormat sdf;
 	private String today;
 	private String test;
@@ -160,6 +159,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
+		sdf = new SimpleDateFormat("yyyyMMdd");
+		today = sdf.format(new Date());
 		pedometerDB = PedometerDB.getInstance(getActivity());
 		user = pedometerDB.loadUser(1);
 		if (user != null) {
@@ -175,9 +176,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
-		calendar = Calendar.getInstance();
-		sdf = new SimpleDateFormat("yyyyMMdd");
-		today = sdf.format(calendar.getTime());
+		
+		
 
 		weather = new Weather();
 

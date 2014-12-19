@@ -51,6 +51,7 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 				}
 			});
 			dialog.show();
+			
 		}
 		
 		

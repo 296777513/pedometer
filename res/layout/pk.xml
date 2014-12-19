@@ -69,11 +69,12 @@
             android:orientation="horizontal"
             android:gravity="right" >
             <ImageView
+                android:id="@+id/friend"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="fill_horizontal"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/selector_image" />
+                android:src="@drawable/selector_friend" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

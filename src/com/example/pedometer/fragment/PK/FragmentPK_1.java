@@ -1,4 +1,4 @@
-package com.example.pedometer.fragment;
+package com.example.pedometer.fragment.PK;
 
 
 import java.util.ArrayList;

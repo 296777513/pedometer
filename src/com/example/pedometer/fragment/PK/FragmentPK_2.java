@@ -1,18 +1,18 @@
-package com.example.pedometer.fragment;
+package com.example.pedometer.fragment.PK;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.List;
 
-
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-
+import android.widget.Toast;
+import android.widget.ExpandableListView.OnChildClickListener;
 
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.ExpandableListViewAdapter;
@@ -37,6 +37,12 @@ public class FragmentPK_2 extends Fragment {
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		init();
+	}
 	private void init() {
 		listView = (ExpandableListView) view.findViewById(R.id.pk_2_listview);
 
@@ -49,6 +55,25 @@ public class FragmentPK_2 extends Fragment {
 		eAdapter = new ExpandableListViewAdapter(getActivity(), list, userMap,
 				listView);
 		listView.setAdapter(eAdapter);
+		listView.setOnChildClickListener(new OnChildClickListener() {
+
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+
+				User user = userMap.get(list.get(groupPosition)).get(
+						childPosition);
+				Intent intent = new Intent(getActivity(),
+						FragmentPK_memberset.class);
+//				Toast.makeText(getActivity(), user.getName(),
+//						Toast.LENGTH_SHORT).show();
+				intent.putExtra("user_data", user);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.slide_bottom_in,
+						R.anim.slide_top_out);
+				return false;
+			}
+		});
 
 	}
 
@@ -58,8 +83,9 @@ public class FragmentPK_2 extends Fragment {
 			for (int j = 0; j < userList.size(); j++) {
 				if (userList.get(j).getGroupId() == list.get(i).getID()) {
 					mUser.add(userList.get(j));
-//					Toast.makeText(getActivity(), mUser.get(0).getName() + "",
-//							Toast.LENGTH_SHORT).show();
+					// Toast.makeText(getActivity(), mUser.get(0).getName() +
+					// "",
+					// Toast.LENGTH_SHORT).show();
 					userMap.put(list.get(i), mUser);
 				}
 			}
