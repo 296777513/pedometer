@@ -1,45 +1,48 @@
 package com.example.pedometer.fragment.PK;
 
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.example.pedometer.db.PedometerDB;
-
+import com.example.pedometer.fragment.tools.ReFlashListView;
+import com.example.pedometer.fragment.tools.ToRoundBitmap;
+import com.example.pedometer.fragment.tools.ReFlashListView.IReflashListener;
+import com.example.pedometer.model.Group;
 import com.example.pedometer.model.User;
 import com.example.pedometer.R;
 
 import android.support.v4.app.Fragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.net.Uri;
 import android.os.Bundle;
-
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FragmentPK_1 extends Fragment implements OnItemClickListener,
-		OnScrollListener {
+		IReflashListener {
 
 	private View view;
-	private ListView listView;
-	private SimpleAdapter simpleAdapter;
+	private ReFlashListView listView;
+	private SimpleAdapter simpleAdapter = null;
 	private List<Map<String, Object>> dataList;
 	private PedometerDB pedometerDB;
 	private User user = null;
@@ -50,152 +53,179 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.pk_1, container, false);
 		init();
+		setData();
+		showList();
 		return view;
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
-		listView = (ListView) view.findViewById(R.id.pk_1_listview);
+		listView = (ReFlashListView) view.findViewById(R.id.pk_1_listview);
 		dataList = new ArrayList<Map<String, Object>>();
-
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		list = pedometerDB.lodListUsers();
-		simpleAdapter = new SimpleAdapter(getActivity(), getData(),
-				R.layout.member_list, new String[] { "pic", "name", "steps",
-						"number" }, new int[] { R.id.pic, R.id.name,
-						R.id.steps, R.id.number });
-		simpleAdapter.setViewBinder(new ViewBinder() {
-			@Override
-			public boolean setViewValue(View view, Object data,
-					String textRepresentation) {
-				if (view instanceof ImageView && data instanceof Bitmap) {
-					ImageView i = (ImageView) view;
-					i.setImageBitmap((Bitmap) data);
-					return true;
-				}
-				return false;
-			}
-		});
-		listView.setAdapter(simpleAdapter);
-		listView.setOnItemClickListener(this);
-		listView.setOnScrollListener(this);
+
+		// listView.setOnScrollListener(this);
 	}
 
-	private List<Map<String, Object>> getData() {
+	private void showList() {
+		if (simpleAdapter == null) {
+			simpleAdapter = new SimpleAdapter(getActivity(), dataList,
+					R.layout.member_list, new String[] { "pic", "name",
+							"steps", "number" }, new int[] { R.id.pic,
+							R.id.name, R.id.steps, R.id.number });
+			simpleAdapter.setViewBinder(new ViewBinder() {
+				@Override
+				public boolean setViewValue(View view, Object data,
+						String textRepresentation) {
+					if (view instanceof ImageView && data instanceof Bitmap) {
+						ImageView i = (ImageView) view;
+						i.setImageBitmap((Bitmap) data);
+						return true;
+					}
+					return false;
+				}
+			});
+			listView.setAdapter(simpleAdapter);
+		} else {
+			simpleAdapter.notifyDataSetChanged();
+		}
+		listView.setInterface(this);
+		listView.setOnItemClickListener(this);
+	}
 
+	private List<Map<String, Object>> setData() {
+		if (list != null && dataList != null) {
+			list.clear();
+			dataList.clear();
+		}
+
+		list = pedometerDB.lodListUsers();
 		for (int i = 0; i < list.size(); i++) {
-
-			// try {
 			Map<String, Object> map = new HashMap<String, Object>();
+			Bitmap bitmap;
+			if (list.get(i).getPicture() != null) {
 
-			user = pedometerDB.loadUser(i + 1);
-			if (user.getPicture() != null) {
-				Bitmap bitmap = BitmapFactory.decodeFile(user.getPicture());
-				map.put("pic", bitmap);
+				try {
+					bitmap = ToRoundBitmap
+							.toRoundBitmap(BitmapFactory
+									.decodeStream(getActivity()
+											.getContentResolver()
+											.openInputStream(
+													Uri.parse(list.get(i)
+															.getPicture()))));
+
+					map.put("pic", bitmap);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			} else {
-				map.put("pic", R.drawable.logo_qq);
+				Resources default_picture = getActivity().getResources();
+				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory
+						.decodeResource(default_picture,
+								R.drawable.default_picture));
+
+				map.put("pic", bitmap);
 			}
-			map.put("name", user.getName());
-			map.put("steps", user.getToday_step());
+			map.put("name", list.get(i).getName());
+			map.put("steps", list.get(i).getToday_step());
 			map.put("number", (i + 1) + "");
 			dataList.add(map);
-			// } catch (FileNotFoundException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-
 		}
 
 		return dataList;
 	}
 
-	@Override
-	public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onScrollStateChanged(AbsListView arg0, int scrollState) {
-		switch (scrollState) {
-		case SCROLL_STATE_FLING:
-
-			Log.i("tag", "继续滑动");
-			break;
-		case SCROLL_STATE_IDLE:
-			Log.i("tag", "已经停止滑动");
-
-			break;
-		case SCROLL_STATE_TOUCH_SCROLL:
-			// dataList.clear();
-			// list = pedometerDB.loadListSteps(sdf.format(new Date()));
-			// for (int i = 0; i < list.size(); i++) {
-			// Map<String, Object> map = new HashMap<String, Object>();
-			// map.put("pic", R.drawable.logo_qq);
-			// user = pedometerDB.loadUser(list.get(i).getUserId());
-			// map.put("name", user.getName());
-			// map.put("steps", list.get(i).getNumber());
-			// map.put("number", (i + 1) + "");
-			// dataList.add(map);
-			// }
-			// simpleAdapter.notifyDataSetChanged();
-			// Log.i("tag", "正在滑动");
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		// String str = listView.getItemAtPosition(position) + "";
 		// Toast.makeText(getActivity(), "position=" + position + "text: " +
 		// str,
 		// Toast.LENGTH_SHORT).show();
-		user = pedometerDB.loadUser(position + 1);
-		if (user == null) {
-			user = new User();
-		}
+		// user = pedometerDB.loadUser(position);
+		// if (list.get(position) == null) {
+		// user = new User();
+		// }
+		final int pos = position - 1;
+		Toast.makeText(getActivity(), list.get(pos).getPicture() + "",
+				Toast.LENGTH_LONG).show();
+		Log.i("tag1", list.get(pos).getPicture() + "");
 
-		Toast.makeText(getActivity(), user.getName() + "", Toast.LENGTH_SHORT)
-				.show();
-
-		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		final AlertDialog.Builder dialog = new AlertDialog.Builder(
+				getActivity());
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View view = inflater.inflate(R.layout.userinfo, null);
 		TextView name = (TextView) view.findViewById(R.id.user_name);
 		TextView steps = (TextView) view.findViewById(R.id.user_steps);
 		TextView number = (TextView) view.findViewById(R.id.user_number);
 		TextView sex = (TextView) view.findViewById(R.id.user_sex);
-		TextView weight = (TextView) view.findViewById(R.id.user_weight);
 		ImageView picture = (ImageView) view.findViewById(R.id.user_picture);
 
-		sex.setText(user.getSex());
-		weight.setText(user.getWeight() + "");
-		// height.setText(user.getPicture() + "");
-		// try {
-		if (user.getPicture() != null) {
-			// Bitmap bitmap = ToRoundBitmap
-			// .toRoundBitmap(BitmapFactory.decodeStream(getActivity()
-			// .getContentResolver().openInputStream(
-			// Uri.parse(user.getPicture()))));
-			Bitmap bitmap = BitmapFactory.decodeFile(user.getPicture());
-			picture.setImageBitmap(bitmap);
+		sex.setText(list.get(pos).getSex());
+		Bitmap bitmap;
+		if (list.get(pos).getPicture() != null) {
+
+			try {
+				bitmap = ToRoundBitmap
+						.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
+								.getContentResolver().openInputStream(
+										Uri.parse(list.get(pos).getPicture()))));
+				picture.setImageBitmap(bitmap);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		} else {
-			picture.setImageResource(R.drawable.logo_qq);
+			Resources default_picture = getActivity().getResources();
+			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
+					default_picture, R.drawable.default_picture));
+			picture.setImageBitmap(bitmap);
 		}
 
-		// } catch (FileNotFoundException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		steps.setText(list.get(position).getToday_step() + "");
+		steps.setText(list.get(pos).getToday_step() + "");
 		number.setText((position + 1) + "");
-		name.setText(user.getName());
+
 		dialog.setView(view);
+		if (list.get(pos).getId() == 1) {
+			dialog.setPositiveButton("确认", null);
+			name.setText(list.get(pos).getName() + "(自己)");
+		} else {
+			name.setText(list.get(pos).getName());
+			dialog.setNegativeButton("删除",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface arg0, int arg1) {
+							pedometerDB.deleteUser(list.get(pos));
+						}
+					});
+			dialog.setPositiveButton("确认", null);
+		}
+
 		dialog.show();
+	}
+
+	@Override
+	public void onReflash() {
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Group group = pedometerDB.loadGroup(1);
+				User user = pedometerDB.loadUser(1);
+				group.setAverage_number(group.getAverage_number()
+						+ user.getToday_step());
+				pedometerDB.updateGroup(group);
+				// 获取最新数据
+				setData();
+				// 通知界面显示
+				showList();
+				// 通知listview 刷新数据完毕；
+				listView.reflashComplete();
+			}
+		}, 2000);
 	}
 
 }

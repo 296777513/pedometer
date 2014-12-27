@@ -14,8 +14,7 @@
             android:id="@+id/user_picture"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:contentDescription="@string/_0"
-             />
+            android:contentDescription="@string/_0" />
     </LinearLayout>
 
     <TextView
@@ -84,52 +83,6 @@
             android:layout_weight="1"
             android:gravity="right|center_vertical"
             android:text="@string/male"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="#d0d0d0" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="left"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/weight"
-            android:textColor="#7B7B7B"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/user_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:gravity="right|center_vertical"
-            android:text="@string/_55"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="15dp"
-            android:gravity="right|center_vertical"
-            android:text="@string/kg"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20sp" />
     </LinearLayout>
@@ -232,5 +185,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="#d0d0d0" />
+
+    
 
 </LinearLayout>

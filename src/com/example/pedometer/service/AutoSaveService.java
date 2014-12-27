@@ -36,9 +36,7 @@ public class AutoSaveService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		init();
-
-		
+		init();	
 		return super.onStartCommand(intent, flags, startId);
 
 	}
@@ -50,11 +48,12 @@ public class AutoSaveService extends Service {
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		sdf = new SimpleDateFormat("yyyyMMdd");
 		pedometerDB = PedometerDB.getInstance(this);
-		
-		step = new Step();
+		date = sdf.format(calendar.getTime());
+		Log.i("info", date);
+		step = pedometerDB.loadSteps(1, date);
 		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
-		
+		Log.i("info", "你好啊1");
 		
 		user = pedometerDB.loadUser(1);
 		user.setToday_step(0);

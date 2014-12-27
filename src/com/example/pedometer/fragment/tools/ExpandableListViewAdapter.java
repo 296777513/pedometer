@@ -1,5 +1,6 @@
 package com.example.pedometer.fragment.tools;
 
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,10 +12,13 @@ import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,11 +83,23 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
 		nameTextView.setText(childUser.getName());
 		stepsTextView.setText(childUser.getToday_step() + "");
+		Bitmap bitmap;
 		if (childUser.getPicture() != null) {
-			Bitmap bitmap = BitmapFactory.decodeFile(childUser.getPicture());
-			imageView.setImageBitmap(bitmap);
+			
+			try {
+				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeStream(context
+						.getContentResolver().openInputStream(
+								Uri.parse(childUser.getPicture()))));
+				imageView.setImageBitmap(bitmap);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
-			imageView.setImageResource(R.drawable.logo_qq);
+			Resources default_picture = context.getResources();
+			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
+					default_picture, R.drawable.default_picture));
+			imageView.setImageBitmap(bitmap);
 		}
 		// TextView txtListChild = (TextView) convertView
 		// .findViewById(R.id.lblListItem);
@@ -98,7 +114,12 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		// "childview called"
 		// + this.user.get(
 		// this.group.get(groupPosition)).size());
-		return this.user.get(this.group.get(groupPosition)).size();
+		List<User> j = this.user.get(group.get(groupPosition));
+		if (j != null ) {
+			return this.user.get(group.get(groupPosition)).size();
+		}else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -122,12 +143,8 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		// Toast.makeText(context,
-		// user.get(this.group.get(groupPosition)) + "",
-		// Toast.LENGTH_SHORT).show();
 		Group headerTitle = (Group) getGroup(groupPosition);
 		if (convertView == null) {
-			// Log.d("tag1", "in grp view");
 			LayoutInflater infalInflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.group_list, null);
@@ -140,8 +157,13 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 				.findViewById(R.id.average_number);
 
 		nameTextView.setText(headerTitle.getID() + "");
-		stepsTextView.setText(headerTitle.getAverage_number()
-				/ headerTitle.getMember_number() + "");
+		if (headerTitle.getMember_number() == 0) {
+			stepsTextView.setText("0");
+		}else {
+			stepsTextView.setText(headerTitle.getAverage_number()
+					/ headerTitle.getMember_number() + "");
+		}
+		
 
 		return convertView;
 	}

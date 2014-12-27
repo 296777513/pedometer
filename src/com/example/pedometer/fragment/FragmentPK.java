@@ -6,12 +6,14 @@ import java.util.List;
 import com.example.pedometer.R;
 import com.example.pedometer.fragment.PK.FragmentPK_1;
 import com.example.pedometer.fragment.PK.FragmentPK_2;
+import com.example.pedometer.fragment.PK.FragmentPK_addmember;
+import com.example.pedometer.fragment.tools.DisplayUtil;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -22,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-
 
 public class FragmentPK extends Fragment {
 	private View view;
@@ -50,13 +51,15 @@ public class FragmentPK extends Fragment {
 
 	private void initTabline() {
 		imageView = (ImageView) view.findViewById(R.id.pk_tabline);
-		Display display =  getActivity().getWindow().getWindowManager()
+		Display display = getActivity().getWindow().getWindowManager()
 				.getDefaultDisplay();
 		DisplayMetrics outMetrics = new DisplayMetrics();
 		display.getMetrics(outMetrics);
-		mScreen1_3 = outMetrics.widthPixels / 2 - dip2px(getActivity(),60);
-		LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) imageView.getLayoutParams();
-		lp.leftMargin = dip2px(getActivity(),60);
+		mScreen1_3 = outMetrics.widthPixels / 2
+				- DisplayUtil.dip2px(getActivity(), 60);
+		LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) imageView
+				.getLayoutParams();
+		lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60);
 		lp.width = mScreen1_3;
 		imageView.setLayoutParams(lp);
 	}
@@ -71,8 +74,8 @@ public class FragmentPK extends Fragment {
 		rButton2.setClickable(false);
 		fragments = new ArrayList<Fragment>();
 
-		 fPk_1 = new FragmentPK_1();
-		 fPk_2 = new FragmentPK_2();
+		fPk_1 = new FragmentPK_1();
+		fPk_2 = new FragmentPK_2();
 
 		fragments.add(fPk_1);
 		fragments.add(fPk_2);
@@ -117,12 +120,14 @@ public class FragmentPK extends Fragment {
 						.getLayoutParams();
 				if (mCurrentPageIndex == 0 && position == 0)// 0->1
 				{
-					lp.leftMargin = dip2px(getActivity(),60)+(int) (positionOffset * mScreen1_3 + mCurrentPageIndex
-							* mScreen1_3);
+					lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60)
+							+ (int) (positionOffset * mScreen1_3 + mCurrentPageIndex
+									* mScreen1_3);
 				} else if (mCurrentPageIndex == 1 && position == 0)// 1->0
 				{
-					lp.leftMargin = dip2px(getActivity(),60) +(int) (mCurrentPageIndex * mScreen1_3 + (positionOffset - 1)
-							* mScreen1_3);
+					lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60)
+							+ (int) (mCurrentPageIndex * mScreen1_3 + (positionOffset - 1)
+									* mScreen1_3);
 				}
 				imageView.setLayoutParams(lp);
 			}
@@ -133,21 +138,20 @@ public class FragmentPK extends Fragment {
 
 			}
 		});
-		
+
 		friend.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(getActivity(),
+						FragmentPK_addmember.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.slide_left_in,
+						R.anim.slide_left_out);
+
 			}
 		});
-	
 
 	}
-	public static int dip2px(Context context, float dipValue){
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int)(dipValue * scale + 0.5f);
-    }
 
 }

@@ -127,51 +127,40 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 	private void insert() {
 		Step step = new Step();
 		step.setNumber(10000);
-		step.setDate("20141213");
+		step.setDate("20141223");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 		
 		step.setNumber(8754);
-		step.setDate("20141212");
+		step.setDate("20141222");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 		
 		step.setNumber(4213);
-		step.setDate("20141214");
+		step.setDate("20141221");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 		step.setNumber(1234);
-		step.setDate("20141215");
+		step.setDate("20141220");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 		step.setNumber(4523);
-		step.setDate("20141216");
+		step.setDate("20141219");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 		step.setNumber(1342);
-		step.setDate("20141217");
+		step.setDate("20141218");
 		step.setUserId(1);
 		pedometerDB.saveStep(step);
 
 		User user = new User();
 
-		user.setName("李名扬");
-		user.setPicture("/storage/emulated/0/head1.jpg");
-		user.setGroupId(2);
-		user.setSensitivity(5);
-		user.setSex("男");
-		user.setStep_length(35);
-		user.setToday_step(6234);
-		user.setWeight(89);
-		pedometerDB.saveUser(user);
-		step.setNumber(6234);
-		step.setDate("20141219");
-		step.setUserId(2);
-		pedometerDB.saveStep(step);
+		
 		
 
 		user.setName("潘兆轩");
-		user.setPicture("/storage/emulated/0/head2.jpg");
+		user.setId(2);
+	//	user.setPicture("content://media/external/images/media/43");
 		user.setGroupId(1);
 		user.setSensitivity(5);
 		user.setSex("男");
@@ -180,28 +169,13 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		user.setToday_step(5213);
 		pedometerDB.saveUser(user);
 		step.setNumber(5213);
-		step.setDate("20141219");
+		step.setDate("20141227");
 		step.setUserId(3);
 		pedometerDB.saveStep(step);
 
-
-		user.setName("李楠");
-		user.setPicture("/storage/emulated/0/head3.jpg");
-		user.setGroupId(3);
-		user.setSensitivity(5);
-		user.setSex("男");
-		user.setStep_length(35);
-		user.setWeight(63);
-		user.setToday_step(3213);
-		pedometerDB.saveUser(user);
-		step.setNumber(3213);
-		step.setDate("20141219");
-		step.setUserId(4);
-		pedometerDB.saveStep(step);
-
-
 		user.setName("陶冶");
-		user.setPicture("/storage/emulated/0/head4.jpg");
+		user.setId(3);
+	//	user.setPicture("content://media/external/images/media/45");
 		user.setSensitivity(5);
 		user.setSex("女");
 		user.setGroupId(1);
@@ -210,12 +184,44 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		user.setWeight(53);
 		pedometerDB.saveUser(user);
 		step.setNumber(4321);
-		step.setDate("20141219");
+		step.setDate("20141227");
 		step.setUserId(5);
 		pedometerDB.saveStep(step);
 
+		user.setName("李楠");
+		user.setId(4);
+	//	user.setPicture("content://media/external/images/media/44");
+		user.setGroupId(3);
+		user.setSensitivity(5);
+		user.setSex("男");
+		user.setStep_length(35);
+		user.setWeight(63);
+		user.setToday_step(3213);
+		pedometerDB.saveUser(user);
+		step.setNumber(3213);
+		step.setDate("20141227");
+		step.setUserId(4);
+		pedometerDB.saveStep(step);
+
+
+		user.setName("李名扬");
+		user.setId(5);
+	//	user.setPicture("content://media/external/images/media/42");
+		user.setGroupId(2);
+		user.setSensitivity(5);
+		user.setSex("男");
+		user.setStep_length(35);
+		user.setToday_step(6234);
+		user.setWeight(89);
+		pedometerDB.saveUser(user);
+		step.setNumber(6234);
+		step.setDate("20141227");
+		step.setUserId(2);
+		pedometerDB.saveStep(step);
+
 		user.setName("李涛");
-		user.setPicture("/storage/emulated/0/head5.jpg");
+		user.setId(6);
+	//	user.setPicture("content://media/external/images/media/46");
 		user.setGroupId(2);
 		user.setSensitivity(5);
 		user.setToday_step(5000);
@@ -224,21 +230,51 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		user.setWeight(53);
 		pedometerDB.saveUser(user);
 		step.setNumber(5000);
-		step.setDate("20141219");
+		step.setDate("20141227");
 		step.setUserId(6);
 		pedometerDB.saveStep(step);
 		
+		user.setName("潘大轩");
+		user.setId(7);
+	//	user.setPicture("content://media/external/images/media/47");
+		user.setGroupId(3);
+		user.setSensitivity(5);
+		user.setToday_step(6400);
+		user.setSex("女");
+		user.setStep_length(30);
+		user.setWeight(53);
+		pedometerDB.saveUser(user);
+		step.setNumber(6400);
+		step.setDate("20141227");
+		step.setUserId(7);
+		pedometerDB.saveStep(step);
+		
+		user.setName("潘小轩");
+		user.setId(8);
+	//	user.setPicture("content://media/external/images/media/39");
+		user.setGroupId(3);
+		user.setSensitivity(5);
+		user.setToday_step(2400);
+		user.setSex("女");
+		user.setStep_length(30);
+		user.setWeight(53);
+		pedometerDB.saveUser(user);
+		step.setNumber(2400);
+		step.setDate("20141227");
+		step.setUserId(7);
+		pedometerDB.saveStep(step);
+		
 		Group group = new Group();
-		group.setAverage_number(42311);
-		group.setMember_number(8);
+		group.setAverage_number(9534);
+		group.setMember_number(2);
 		pedometerDB.saveGroup(group);
 		
-		group.setAverage_number(24121);
+		group.setAverage_number(12340);
+		group.setMember_number(2);
+		pedometerDB.saveGroup(group);
+		
+		group.setAverage_number(12013);
 		group.setMember_number(3);
-		pedometerDB.saveGroup(group);
-		
-		group.setAverage_number(64121);
-		group.setMember_number(12);
 		pedometerDB.saveGroup(group);
 	}
 

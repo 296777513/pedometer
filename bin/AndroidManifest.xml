@@ -38,6 +38,10 @@
         </activity>
         <activity android:name="com.example.pedometer.MainActivity" >
         </activity>
+        <activity
+            android:name="com.example.pedometer.fragment.PK.FragmentPK_addmember"
+            >
+        </activity>
 
         <!-- 这是进行授权页面的注册 -->
         <activity

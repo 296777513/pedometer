@@ -2,16 +2,15 @@ package com.example.pedometer.model;
 
 import java.io.Serializable;
 
+import cn.bmob.v3.BmobObject;
 
-
-
-public class User implements Serializable{
+public class User extends BmobObject implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String name;
 	private String sex;
@@ -21,8 +20,10 @@ public class User implements Serializable{
 	private int groupId;
 	private String picture;
 	private int today_step;
-	
-	
+
+	public User() {
+		this.setTableName("user");
+	}
 
 	public int getToday_step() {
 		return today_step;
@@ -44,7 +45,7 @@ public class User implements Serializable{
 		return groupId;
 	}
 
-	public void setGroupId(int groupId) {		
+	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
 
@@ -72,8 +73,6 @@ public class User implements Serializable{
 		this.sex = sex;
 	}
 
-
-
 	public int getWeight() {
 		return weight;
 	}
@@ -81,8 +80,6 @@ public class User implements Serializable{
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-
-
 
 	public int getSensitivity() {
 		return sensitivity;

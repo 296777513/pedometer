@@ -14,22 +14,36 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+/**
+ * 对数据库pedometer里的各个表进行增删改查
+ * 
+ * @author 李垭超
+ * 
+ */
 public class PedometerDB {
 
-	public static final String DB_NAME = "pedometer.db";
+	public static final String DB_NAME = "pedometer.db";// 数据库名称
 
-	public static final int VERSION = 1;
+	public static final int VERSION = 1;// 数据版本
 
 	private static PedometerDB pedometerDB;
 
 	private SQLiteDatabase db;
 
+	/**
+	 * 将PedometerDB的构造方法设置为私有方法，在别的类里不能通过new来创建这个对象
+	 * 
+	 * @param context
+	 */
 	private PedometerDB(Context context) {
 		PedometerOpenHelper pHelper = new PedometerOpenHelper(context, DB_NAME,
 				null, VERSION);
 		db = pHelper.getWritableDatabase();
 	}
 
+	/**
+	 * 使用单例模式创建数据库
+	 */
 	public synchronized static PedometerDB getInstance(Context context) {
 		if (pedometerDB == null) {
 			pedometerDB = new PedometerDB(context);
@@ -37,9 +51,15 @@ public class PedometerDB {
 		return pedometerDB;
 	}
 
+	/**
+	 * 增加user表里的数据
+	 * 
+	 * @param user
+	 */
 	public void saveUser(User user) {
 		if (user != null) {
 			ContentValues values = new ContentValues();
+			values.put("id", user.getId());
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
 			values.put("picture", user.getPicture());
@@ -52,9 +72,26 @@ public class PedometerDB {
 		}
 	}
 
+	/**
+	 * 根据user的id删除user表里的数据
+	 * @param user
+	 */
+	public void deleteUser(User user) {
+		if (user != null) {
+			db.delete("user", "id = ?",
+					new String[] { String.valueOf(user.getId()) });
+		}
+	}
+
+	/**
+	 * 升级user表里的数据
+	 * 
+	 * @param user
+	 */
 	public void updateUser(User user) {
 		if (user != null) {
 			ContentValues values = new ContentValues();
+
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
 			values.put("picture", user.getPicture());
@@ -68,6 +105,11 @@ public class PedometerDB {
 		}
 	}
 
+	/**
+	 * 增加step表里的数据
+	 * 
+	 * @param step
+	 */
 	public void saveStep(Step step) {
 		if (step != null) {
 			ContentValues values = new ContentValues();
@@ -78,6 +120,11 @@ public class PedometerDB {
 		}
 	}
 
+	/**
+	 * 升级step表里的数据
+	 * 
+	 * @param step
+	 */
 	public void updateStep(Step step) {
 		if (step != null) {
 			ContentValues values = new ContentValues();
@@ -89,6 +136,25 @@ public class PedometerDB {
 		}
 	}
 
+	/**
+	 * 增加group数据表里的数据
+	 * 
+	 * @param group
+	 */
+	public void saveGroup(Group group) {
+		if (group != null) {
+			ContentValues values = new ContentValues();
+			values.put("total_number", group.getAverage_number());
+			values.put("member_number", group.getMember_number());
+			db.insert("group1", null, values);
+		}
+	}
+
+	/**
+	 * 升级group表里的数据
+	 * 
+	 * @param group
+	 */
 	public void updateGroup(Group group) {
 		if (group != null) {
 			ContentValues values = new ContentValues();
@@ -99,15 +165,11 @@ public class PedometerDB {
 		}
 	}
 
-	public void saveGroup(Group group) {
-		if (group != null) {
-			ContentValues values = new ContentValues();
-			values.put("total_number", group.getAverage_number());
-			values.put("member_number", group.getMember_number());
-			db.insert("group1", null, values);
-		}
-	}
-
+	/**
+	 * 存储从网站上抓取的天气数据
+	 * 
+	 * @param weather
+	 */
 	public void saveWeather(Weather weather) {
 		if (weather != null) {
 			ContentValues values = new ContentValues();
@@ -122,7 +184,7 @@ public class PedometerDB {
 	}
 
 	/**
-	 * 根据组的id取数据
+	 * 根据group组的id取数据
 	 * 
 	 * @param weather
 	 */
@@ -145,6 +207,13 @@ public class PedometerDB {
 
 	}
 
+	/**
+	 * 根据user表的userid和date来取数据
+	 * 
+	 * @param userId
+	 * @param date
+	 * @return
+	 */
 	public Step loadSteps(int userId, String date) {
 		Step step = null;
 		Cursor cursor = db
@@ -164,6 +233,11 @@ public class PedometerDB {
 		return step;
 	}
 
+	/**
+	 * 取出group1中的所有数据 因为sqlit中自带group表，所以不能创建group组
+	 * 
+	 * @return
+	 */
 	public List<Group> loadListGroup() {
 		Group group = null;
 		List<Group> list = new ArrayList<Group>();
@@ -184,6 +258,11 @@ public class PedometerDB {
 
 	}
 
+	/**
+	 * 取出user中所有的数据，按照步数的降序取出
+	 * 
+	 * @return
+	 */
 	public List<User> lodListUsers() {
 		List<User> list = new ArrayList<User>();
 		Cursor cursor = db.rawQuery(
@@ -211,6 +290,12 @@ public class PedometerDB {
 
 	}
 
+	/**
+	 * 更具date取出所有的step数据
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public List<Step> loadListSteps(String date) {
 		List<Step> list = new ArrayList<Step>();
 
@@ -232,6 +317,12 @@ public class PedometerDB {
 		return list;
 	}
 
+	/**
+	 * 根据id取出user数据
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public User loadUser(int id) {
 		User user = null;
 		Cursor cursor = db.query("user", null, "id = ?",
@@ -259,6 +350,12 @@ public class PedometerDB {
 		return user;
 	}
 
+	/**
+	 * 更具日期取出天气数据
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public Weather loadWeather(String date) {
 		Weather weather = new Weather();
 		Cursor cursor = db.query("weather", null, "date = ?",
