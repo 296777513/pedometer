@@ -3,36 +3,29 @@ package com.example.pedometer.fragment;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.ToRoundBitmap;
 import com.example.pedometer.model.Group;
-import com.example.pedometer.model.Step;
+
 import com.example.pedometer.model.User;
 import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.support.v4.app.Fragment;
-import android.content.ContentResolver;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,6 +67,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 
 	private PedometerDB pedometerDB;
 	private User user = null;
+	private Group group = null;
 	private Uri originalUri;
 
 	// private Intent pictureIntent;
@@ -95,10 +89,12 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		pedometerDB.updateUser(user);
 	}
+
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
@@ -153,6 +149,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			}
 		} else {
 			user = new User();
+			user.setToday_step(0);
 			user.setId(1);
 			user.setName(nameText.getText().toString());
 			user.setWeight(Integer.valueOf(weightText.getText().toString()));
@@ -164,9 +161,9 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			user.setStep_length(Integer
 					.valueOf(lengthText.getText().toString()));
 			user.setGroupId(1);
-			Group group = pedometerDB.loadGroup(1);
+			group = pedometerDB.loadGroup(1);
 			group.setMember_number(group.getMember_number() + 1);
-			pedometerDB.saveGroup(group);
+			pedometerDB.updateGroup(group);
 			pedometerDB.saveUser(user);
 
 		}
@@ -375,7 +372,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 					user.setPicture(Environment.getExternalStorageDirectory()
 							+ "/picture.jpg");
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 

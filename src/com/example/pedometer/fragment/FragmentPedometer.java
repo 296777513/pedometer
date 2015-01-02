@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.json.JSONObject;
@@ -15,6 +14,7 @@ import cn.sharesdk.framework.ShareSDK;
 
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.onekeyshare.*;
+import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 import com.example.pedometer.model.Weather;
@@ -54,6 +54,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 	private Step step = null;
 	private User user = null;
+	private Group group = null;
 	private Weather weather;
 	private PedometerDB pedometerDB;
 
@@ -83,7 +84,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 				mRateTextCircularProgressBar.setProgress(total_step, Type);
 			} else if (Type == 2) {
 				tView1.setText("卡路里");
-				tView2.setText("目标：");
+				tView2.setText("目标：10000");
 				tView1.setVisibility(View.VISIBLE);
 				tView2.setVisibility(View.VISIBLE);
 				tView3.setVisibility(View.INVISIBLE);
@@ -133,28 +134,35 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		user = pedometerDB.loadUser(1);
-		step = pedometerDB.loadSteps(1, today);
-		
-		user.setToday_step(total_step);
-		pedometerDB.updateUser(user);
-		step.setNumber(total_step);
-		pedometerDB.updateStep(step);
-
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		saveDate();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
+		saveDate();
+	}
+
+	private void saveDate() {
 		user = pedometerDB.loadUser(1);
 		step = pedometerDB.loadSteps(1, today);
-		
-		user.setToday_step(total_step);
+		group = pedometerDB.loadGroup(user.getGroupId());
+
+		user.setToday_step(StepDetector.CURRENT_SETP);
 		pedometerDB.updateUser(user);
-		step.setNumber(total_step);
+
+		group.setTotal_number(group.getTotal_number()
+				+ (user.getToday_step() - step.getNumber()));
+//		Toast.makeText(getActivity(), user.getToday_step() + "",
+//				Toast.LENGTH_SHORT).show();
+		pedometerDB.updateGroup(group);
+
+		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
+
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -176,9 +184,6 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
-		
-		
-
 		weather = new Weather();
 
 		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
@@ -197,15 +202,15 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		sharekey.setOnClickListener(this);
 
 		// Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
-//		if ((step = pedometerDB.loadSteps(1, today)) != null) {
-//			StepDetector.CURRENT_SETP = step.getNumber();
-//		} else {
-//			step = new Step();
-//			step.setNumber(total_step);
-//			step.setDate(today);
-//			step.setUserId(1);
-//			pedometerDB.saveStep(step);
-//		}
+		// if ((step = pedometerDB.loadSteps(1, today)) != null) {
+		// StepDetector.CURRENT_SETP = step.getNumber();
+		// } else {
+		// step = new Step();
+		// step.setNumber(total_step);
+		// step.setDate(today);
+		// step.setUserId(1);
+		// pedometerDB.saveStep(step);
+		// }
 
 	}
 

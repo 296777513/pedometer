@@ -160,7 +160,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		if (headerTitle.getMember_number() == 0) {
 			stepsTextView.setText("0");
 		}else {
-			stepsTextView.setText(headerTitle.getAverage_number()
+			stepsTextView.setText(headerTitle.getTotal_number()
 					/ headerTitle.getMember_number() + "");
 		}
 		

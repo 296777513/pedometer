@@ -144,7 +144,7 @@ public class PedometerDB {
 	public void saveGroup(Group group) {
 		if (group != null) {
 			ContentValues values = new ContentValues();
-			values.put("total_number", group.getAverage_number());
+			values.put("total_number", group.getTotal_number());
 			values.put("member_number", group.getMember_number());
 			db.insert("group1", null, values);
 		}
@@ -158,7 +158,7 @@ public class PedometerDB {
 	public void updateGroup(Group group) {
 		if (group != null) {
 			ContentValues values = new ContentValues();
-			values.put("total_number", group.getAverage_number());
+			values.put("total_number", group.getTotal_number());
 			values.put("member_number", group.getMember_number());
 			db.update("group1", values, "id = ?",
 					new String[] { String.valueOf(group.getID()) });
@@ -196,7 +196,7 @@ public class PedometerDB {
 			do {
 				group = new Group();
 				group.setID(cursor.getInt(cursor.getColumnIndex("id")));
-				group.setAverage_number(cursor.getInt(cursor
+				group.setTotal_number(cursor.getInt(cursor
 						.getColumnIndex("total_number")));
 				group.setMember_number(cursor.getInt(cursor
 						.getColumnIndex("member_number")));
@@ -246,7 +246,7 @@ public class PedometerDB {
 			do {
 				group = new Group();
 				group.setID(cursor.getInt(cursor.getColumnIndex("id")));
-				group.setAverage_number(cursor.getInt(cursor
+				group.setTotal_number(cursor.getInt(cursor
 						.getColumnIndex("total_number")));
 				group.setMember_number(cursor.getInt(cursor
 						.getColumnIndex("member_number")));

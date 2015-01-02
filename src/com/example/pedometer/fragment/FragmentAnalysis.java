@@ -19,27 +19,21 @@ import android.view.animation.Transformation;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author 李垭超  2015/1/1
+ *
+ */
 public class FragmentAnalysis extends Fragment implements OnClickListener {
-	private HistogramView hv1;
-	private HistogramView hv2;
-	private HistogramView hv3;
-	private HistogramView hv4;
-	private HistogramView hv5;
-	private HistogramView hv6;
-	private HistogramView hv7;
+	
+	private HistogramView hv1, hv2, hv3, hv4, hv5, hv6, hv7;//分析页面的7个条形统计图
 
-	private PedometerDB pedometerDB;
+	private PedometerDB pedometerDB;//对数据库进行操作
 
-	private TextView day1;
-	private TextView day2;
-	private TextView day3;
-	private TextView day4;
-	private TextView day5;
-	private TextView day6;
-	private TextView day7;
+	private TextView day1,day2,day3,day4,day5,day6,day7;//条形统计图下的星期动态显示
 
-	private TextView average_step;
-	private TextView sum_step;
+	private TextView average_step;//7天的平均步数
+	private TextView sum_step;//7天的总共步数
 
 	private Step step = null;
 
@@ -53,16 +47,20 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	private View view;
 
-	private AllAnimation ani;
+	private AllAnimation ani;//对条形统计图，和数字的动画显示
 
-	@Override
+	/**
+	 * 为碎片创建视图（加载布局）时调用
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.analyze, container, false);
 		return view;
 	}
 
-	@Override
+	/**
+	 * 确保与碎片相关联的活动一定已经创建完毕时候调用
+	 */
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
@@ -72,14 +70,18 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	}
 
+	/**
+	 * 初始化当前页面
+	 */
 	private void init() {
-		average_step = (TextView) view.findViewById(R.id.average_step);
-		sum_step = (TextView) view.findViewById(R.id.sum_step);
-		ani = new AllAnimation();
-		ani.setDuration(1000);
+		average_step = (TextView) view.findViewById(R.id.average_step);//实例化平均步数
+		sum_step = (TextView) view.findViewById(R.id.sum_step);//实例化总共步数
+		ani = new AllAnimation();//创建一个动画的对象
+		ani.setDuration(1000);//设置动画完成的时间为1秒
 
-		calendar = Calendar.getInstance();
+		calendar = Calendar.getInstance();//实例化日历
 
+		//实例化柱形统计图
 		hv1 = (HistogramView) view.findViewById(R.id.map1);
 		hv2 = (HistogramView) view.findViewById(R.id.map2);
 		hv3 = (HistogramView) view.findViewById(R.id.map3);
@@ -88,8 +90,9 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 		hv6 = (HistogramView) view.findViewById(R.id.map6);
 		hv7 = (HistogramView) view.findViewById(R.id.map7);
 
-		pedometerDB = PedometerDB.getInstance(getActivity());
+		pedometerDB = PedometerDB.getInstance(getActivity());//实例化数据库的操作
 
+		//对所有的条形柱状图设计点击时间，用来显示当前的柱状图所代表的步数
 		hv1.setOnClickListener(this);
 		hv2.setOnClickListener(this);
 		hv3.setOnClickListener(this);
@@ -98,6 +101,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 		hv6.setOnClickListener(this);
 		hv7.setOnClickListener(this);
 
+		//实例化星期
 		day1 = (TextView) view.findViewById(R.id.Monday);
 		day2 = (TextView) view.findViewById(R.id.Tuesday);
 		day3 = (TextView) view.findViewById(R.id.Wednesday);
@@ -108,13 +112,16 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	}
 
-
+	/**
+	 * 设置所有柱状图的大小，根据所代表的步数
+	 */
 	@SuppressLint("SimpleDateFormat")
 	private void setProgress() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		day = sdf.format(calendar.getTime());
-		//Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
-		step = pedometerDB.loadSteps(1, day);
+		day = sdf.format(calendar.getTime());//得到当天的日期
+		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		step = pedometerDB.loadSteps(1, day);//从数据库中取出当天的步数
+		//如果当天步数不为0，则设置相应的条形统计图，否则设置为0
 		if (step != null) {
 			hv1.setProgress((step.getNumber() / 10000.0));
 			sum += step.getNumber();
@@ -123,7 +130,7 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 			sum += 0;
 		}
 
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);//设置前一天的日期
 		day = sdf.format(calendar.getTime());
 		step = pedometerDB.loadSteps(1, day);
 		if (step != null) {
@@ -192,10 +199,13 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 
 	}
 
+	/**
+	 * 设置显示的星期数
+	 */
 	private void setWeek() {
 
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
-		//Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
+		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
 		day -= 1;
 		day1.setText(week(day));
 		day2.setText(week(day - 1));
@@ -206,7 +216,9 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 		day7.setText(week(day - 6));
 	}
 
-	@Override
+	/**
+	 * 实现条形同居图的点击事件
+	 */
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.map1:
@@ -310,6 +322,11 @@ public class FragmentAnalysis extends Fragment implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 设置分析页面的动画类
+	 * @author 李垭超
+	 *
+	 */
 	private class AllAnimation extends Animation {
 		@Override
 		protected void applyTransformation(float interpolatedTime,

@@ -44,8 +44,8 @@ public class FragmentPK_memberset extends FragmentActivity implements
 	private int groNum;
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
+	protected void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.membet_set);
 		init();
@@ -113,13 +113,13 @@ public class FragmentPK_memberset extends FragmentActivity implements
 			if (groNum != user.getGroupId()) {
 				
 				group.setMember_number(group.getMember_number() - 1);
-				group.setAverage_number(group.getAverage_number()
+				group.setTotal_number(group.getTotal_number()
 						- user.getToday_step());
 				pedometerDB.updateGroup(group);
 				
 				Group group1 = pedometerDB.loadGroup(groNum);
-				group1.setMember_number(group.getMember_number() + 1);
-				group1.setAverage_number(group.getAverage_number()
+				group1.setMember_number(group1.getMember_number() + 1);
+				group1.setTotal_number(group1.getTotal_number()
 						+ user.getToday_step());
 				pedometerDB.updateGroup(group1);
 				

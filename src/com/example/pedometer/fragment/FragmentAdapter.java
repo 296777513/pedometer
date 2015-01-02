@@ -52,26 +52,30 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 			fTransaction.add(fgContentId, fragments.get(2));
 			fTransaction.commit();
 		} else {
+			//将当前日期格式化为：yyyyMMdd
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			step = new Step();
+			//得到当天的日期
 			step.setDate(sdf.format(new Date()));
 			step.setUserId(1);
 			step.setNumber(0);
 			pedometerDB.saveStep(step);
 
+			//如果是第一次登陆则自动初始化三个小组，进行PK
 			Group group = new Group();
-			group.setAverage_number(0);
+			group.setTotal_number(0);
 			group.setMember_number(0);
 			pedometerDB.saveGroup(group);
 
-			group.setAverage_number(0);
+			group.setTotal_number(0);
 			group.setMember_number(0);
 			pedometerDB.saveGroup(group);
 
-			group.setAverage_number(0);
+			group.setTotal_number(0);
 			group.setMember_number(0);
 			pedometerDB.saveGroup(group);
 
+			//进行对话框提示，需要进行注册
 			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 			dialog.setTitle("提示");
 			dialog.setMessage("您还没有注册，需要注册！");
@@ -92,7 +96,9 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 		rGroup.setOnCheckedChangeListener(this);
 	}
 
-	@Override
+	/**
+	 * 改变Tab键，进行更换页面
+	 */
 	public void onCheckedChanged(RadioGroup arg0, int arg1) {
 		for (int i = 0; i < rGroup.getChildCount(); i++) {
 			if (rGroup.getChildAt(i).getId() == arg1) {
@@ -114,7 +120,6 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 
 	/**
 	 * 显示切换的页面
-	 * 
 	 * @param i
 	 */
 	private void showFragment(int i) {
@@ -131,10 +136,19 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 		currentId = i;// 更新目标tab为当前tab
 	}
 
+	/**
+	 * 得到当前的页面
+	 * @return
+	 */
 	private Fragment getCurrentFragment() {
 		return fragments.get(currentId);
 	}
 
+	/**
+	 * 得到当前页面的事务管理
+	 * @param i
+	 * @return
+	 */
 	private FragmentTransaction obtainFragmentTransaction(int i) {
 		FragmentTransaction fg = activity.getSupportFragmentManager()
 				.beginTransaction();

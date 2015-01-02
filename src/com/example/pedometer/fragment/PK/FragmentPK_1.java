@@ -213,11 +213,6 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Group group = pedometerDB.loadGroup(1);
-				User user = pedometerDB.loadUser(1);
-				group.setAverage_number(group.getAverage_number()
-						+ user.getToday_step());
-				pedometerDB.updateGroup(group);
 				// 获取最新数据
 				setData();
 				// 通知界面显示

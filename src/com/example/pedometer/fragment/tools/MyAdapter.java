@@ -141,7 +141,7 @@ public class MyAdapter extends BaseAdapter {
 					pedometerDB.saveUser(user);
 					Group group = pedometerDB.loadGroup(user.getGroupId());
 					if (group != null) {
-						group.setAverage_number(group.getAverage_number()
+						group.setTotal_number(group.getTotal_number()
 								+ user.getToday_step());
 						group.setMember_number(group.getMember_number() + 1);
 						pedometerDB.updateGroup(group);

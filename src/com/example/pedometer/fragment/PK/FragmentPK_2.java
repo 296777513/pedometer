@@ -38,6 +38,12 @@ public class FragmentPK_2 extends Fragment {
 	}
 
 	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		init();
+	}
+	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
@@ -50,6 +56,7 @@ public class FragmentPK_2 extends Fragment {
 		pedometerDB = PedometerDB.getInstance(getActivity());
 		list = new ArrayList<Group>();
 		list = pedometerDB.loadListGroup();
+		userList = new ArrayList<User>();
 		userList = pedometerDB.lodListUsers();
 		prepareData();
 		eAdapter = new ExpandableListViewAdapter(getActivity(), list, userMap,

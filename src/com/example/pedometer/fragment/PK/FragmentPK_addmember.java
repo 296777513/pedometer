@@ -13,6 +13,7 @@ import com.example.pedometer.fragment.tools.ReFlashListView;
 import com.example.pedometer.fragment.tools.ReFlashListView.IReflashListener;
 import com.example.pedometer.model.User;
 
+import android.R.animator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -49,6 +50,7 @@ public class FragmentPK_addmember extends FragmentActivity implements
 		queryAll();
 		back.setOnClickListener(this);
 		memberList.setInterface(this);
+		
 
 	}
 

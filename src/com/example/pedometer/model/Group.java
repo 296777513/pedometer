@@ -14,11 +14,11 @@ public class Group {
 		ID = iD;
 	}
 
-	public int getAverage_number() {
+	public int getTotal_number() {
 		return total_number;
 	}
 
-	public void setAverage_number(int total_number) {
+	public void setTotal_number(int total_number) {
 		this.total_number = total_number;
 	}
 
