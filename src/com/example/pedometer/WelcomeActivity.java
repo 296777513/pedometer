@@ -57,7 +57,7 @@ public class WelcomeActivity extends Activity {
 //					WelcomeActivity.this.finish();
 //				}
 //			});
-			//设置一个计时器，在此页面上停留3秒然后跳转到主页面
+			//设置一个计时器，在此页面上停留3秒然后跳转到主页面,
 			 (new Timer()).schedule(new TimerTask() {
 			 public void run() {
 			 Intent intent = new Intent(WelcomeActivity.this,

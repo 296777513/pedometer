@@ -7,7 +7,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.DefaultClientConnection;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -20,13 +29,13 @@ import com.example.pedometer.model.User;
 import com.example.pedometer.model.Weather;
 import com.example.pedometer.service.StepDetector;
 import com.example.pedometer.service.StepService;
-import com.example.pedometer.widet.RateTextCircularProgressBar;
+import com.example.pedometer.widet.CircleBar;
+import com.example.pedometer.widet.HttpCallbackListener;
+import com.example.pedometer.widet.HttpUtil;
 import com.example.pedometer.R;
-
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,19 +44,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentPedometer extends Fragment implements OnClickListener {
 	private View view;
-	private RateTextCircularProgressBar mRateTextCircularProgressBar;
+	private CircleBar circleBar;
 	private int total_step = 0;
 	private Thread thread;
 	private int Type = 1;
 	private int calories = 0;
-	private TextView tView1;
-	private TextView tView2;
-	private TextView tView3;
 	private ImageView sharekey;
 	private int step_length = 50;
 	private int weight = 70;
@@ -62,6 +67,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	private String today;
 	private String test;
 
+	private boolean flag = true;// 来判断第三个页面是否开启动画
+
 	@SuppressLint("HandlerLeak")
 	public int getTotal_step() {
 		return total_step;
@@ -73,46 +80,23 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 			super.handleMessage(msg);
 			total_step = StepDetector.CURRENT_SETP;
 			if (Type == 1) {
-				tView1.setText("步数");
-				tView2.setText("目标：10000");
-				tView1.setVisibility(View.VISIBLE);
-				tView2.setVisibility(View.VISIBLE);
-				tView3.setVisibility(View.INVISIBLE);
-				tView1.setTextColor(Color.parseColor("#a1a3a6"));
-				tView2.setTextColor(Color.parseColor("#a1a3a6"));
-				tView3.setTextColor(Color.parseColor("#a1a3a6"));
-				mRateTextCircularProgressBar.setProgress(total_step, Type);
+				circleBar.setProgress(total_step, Type);
 			} else if (Type == 2) {
-				tView1.setText("卡路里");
-				tView2.setText("目标：10000");
-				tView1.setVisibility(View.VISIBLE);
-				tView2.setVisibility(View.VISIBLE);
-				tView3.setVisibility(View.INVISIBLE);
-				tView1.setTextColor(Color.parseColor("#a1a3a6"));
-				tView2.setTextColor(Color.parseColor("#a1a3a6"));
-				tView3.setTextColor(Color.parseColor("#a1a3a6"));
 				calories = (int) (weight * total_step * step_length * 0.01 * 0.01);
-				mRateTextCircularProgressBar.setProgress(calories, Type);
+				circleBar.setProgress(calories, Type);
 			} else if (Type == 3) {
-				mRateTextCircularProgressBar.setProgress(10000, Type);
-				if (test != null) {
-					tView1.setVisibility(View.INVISIBLE);
-					tView2.setVisibility(View.INVISIBLE);
-					tView3.setVisibility(View.VISIBLE);
-					tView3.setTextColor(Color.parseColor("#6DCAEC"));
-					tView3.setText(test);
+				if (flag) {
+					circleBar.startCustomAnimation();
+					flag = false;
+				}
+				if (test != null || weather.getWeather() == null) {
+					weather.setWeather("正在更新中...");
+					weather.setPtime("");
+					weather.setTemp1("");
+					weather.setTemp2("");
+					circleBar.setWeather(weather);
 				} else {
-					tView1.setVisibility(View.VISIBLE);
-					tView2.setVisibility(View.VISIBLE);
-					tView3.setVisibility(View.VISIBLE);
-					tView1.setTextColor(Color.parseColor("#6DCAEC"));
-					tView2.setTextColor(Color.parseColor("#6DCAEC"));
-					tView3.setTextColor(Color.parseColor("#6DCAEC"));
-					tView1.setText(weather.getPtime());
-					tView2.setText(weather.getTemp1() + " ~ "
-							+ weather.getTemp2());
-					tView3.setText(weather.getWeather());
-
+					circleBar.setWeather(weather);
 				}
 
 			}
@@ -127,7 +111,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		this.view = inflater.inflate(R.layout.pedometer, container, false);
 
 		init();
-		mRateTextCircularProgressBar.setProgress(StepDetector.CURRENT_SETP, 0);
+		// mRateTextCircularProgressBar.setProgress(StepDetector.CURRENT_SETP,
+		// 0);
 		mThread();
 
 		return view;
@@ -156,8 +141,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 		group.setTotal_number(group.getTotal_number()
 				+ (user.getToday_step() - step.getNumber()));
-//		Toast.makeText(getActivity(), user.getToday_step() + "",
-//				Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getActivity(), user.getToday_step() + "",
+		// Toast.LENGTH_SHORT).show();
 		pedometerDB.updateGroup(group);
 
 		step.setNumber(StepDetector.CURRENT_SETP);
@@ -167,6 +152,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
+
 		sdf = new SimpleDateFormat("yyyyMMdd");
 		today = sdf.format(new Date());
 		pedometerDB = PedometerDB.getInstance(getActivity());
@@ -184,19 +170,18 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
 
-		weather = new Weather();
-
-		tView1 = (TextView) view.findViewById(R.id.pedometer_1);
-		tView2 = (TextView) view.findViewById(R.id.pedometer_2);
-		tView3 = (TextView) view.findViewById(R.id.pedometer_3);
 		sharekey = (ImageView) view.findViewById(R.id.title_pedometer);
-		mRateTextCircularProgressBar = (RateTextCircularProgressBar) view
-				.findViewById(R.id.progress_pedometer);
-		mRateTextCircularProgressBar.setOnClickListener(this);
+		weather = new Weather();
+		circleBar = (CircleBar) view.findViewById(R.id.progress_pedometer);
+		circleBar.setMax(10000);
+		circleBar.setProgress(StepDetector.CURRENT_SETP, 1);
+		circleBar.startCustomAnimation();
+		circleBar.setOnClickListener(this);
 
-		mRateTextCircularProgressBar.setMax(10000);
-		mRateTextCircularProgressBar.getCircularProgressBar()
-				.setCircleWidth(40);
+		// mRateTextCircularProgressBar.setOnClickListener(this);
+		// mRateTextCircularProgressBar.setMax(10000);
+		// mRateTextCircularProgressBar.getCircularProgressBar()
+		// .setCircleWidth(40);
 
 		ShareSDK.initSDK(getActivity());
 		sharekey.setOnClickListener(this);
@@ -238,44 +223,31 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 	@SuppressLint("SimpleDateFormat")
 	private void queryFromServer(final String address) {
-		new Thread(new Runnable() {
+		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
 
-			public void run() {
-				HttpURLConnection connection = null;
+			@Override
+			public void onFinish(String response) {
+				JSONObject jsonObject;
 				try {
-					URL url = new URL(address);
-					connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestMethod("GET");
-					connection.setConnectTimeout(8000);
-					connection.setReadTimeout(8000);
-					InputStream in = connection.getInputStream();
-					BufferedReader reader = new BufferedReader(
-							new InputStreamReader(in));
-					StringBuilder response = new StringBuilder();
-					String line;
-					while ((line = reader.readLine()) != null) {
-						response.append(line);
-					}
-					JSONObject jsonObject = new JSONObject(response.toString());
+					jsonObject = new JSONObject(response.toString());
 					JSONObject weatherInfo = jsonObject
 							.getJSONObject("weatherinfo");
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					weather.setPtime(sdf.format(new Date()));
 					weather.setTemp1(weatherInfo.getString("temp1"));
 					weather.setTemp2(weatherInfo.getString("temp2"));
 					weather.setWeather(weatherInfo.getString("weather"));
 					test = null;
-				} catch (Exception e) {
-					test = "同步失败";
+				} catch (JSONException e) {
 					e.printStackTrace();
-				} finally {
-					if (connection != null) {
-						connection.disconnect();
-					}
 				}
 			}
-		}).start();
 
+			@Override
+			public void onError(Exception e) {
+				test = "同步失败";
+			}
+		});
 	}
 
 	@Override
@@ -294,22 +266,19 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 			break;
 		case R.id.progress_pedometer:
 			if (Type == 1) {
-
 				Type = 2;
 			} else if (Type == 2) {
 				String address = "http://www.weather.com.cn/data/cityinfo"
 						+ "/101010100.html";
-				tView3.setText("同步中.....");
 				queryFromServer(address);
+				flag = true;
 				Type = 3;
 			} else if (Type == 3) {
-
 				Type = 1;
 			}
 			Message msg = new Message();
 			handler.sendMessage(msg);
 			break;
-
 		default:
 			break;
 		}

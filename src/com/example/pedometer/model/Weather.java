@@ -1,7 +1,13 @@
 package com.example.pedometer.model;
 
-public class Weather {
+import java.io.Serializable;
 
+public class Weather{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int cityid;
 	private String city;
 	private String temp1;

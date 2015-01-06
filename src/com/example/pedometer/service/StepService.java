@@ -1,6 +1,7 @@
 package com.example.pedometer.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -34,9 +35,16 @@ public class StepService extends Service {
 		flag = true;
 		stepDetector = new StepDetector(this);
 		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
-		sensorManager.registerListener(stepDetector,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		Sensor sensor = sensorManager
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		sensorManager.registerListener(stepDetector, sensor,
 				SensorManager.SENSOR_DELAY_FASTEST);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override

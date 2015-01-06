@@ -4,9 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.example.pedometer.db.PedometerDB;
-
 import com.example.pedometer.model.Step;
-
 import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
@@ -14,8 +12,10 @@ import android.app.DatePickerDialog;
 import android.support.v4.app.Fragment;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -126,8 +126,10 @@ public class FragmentHistory extends Fragment implements OnClickListener {
 		dPicker = dialog.getDatePicker();
 		dPicker.setSpinnersShown(false);
 		dPicker.setCalendarViewShown(true);
+		//设置对话框背景
+		dPicker.setBackground(view.getResources().getDrawable(R.drawable.back_pressed));
 		dPicker.setMaxDate(calendar.getTimeInMillis());
-
+		dialog.setTitle("你好");
 		dialog.show();
 
 	}

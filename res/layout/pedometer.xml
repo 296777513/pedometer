@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,41 +48,11 @@
         android:layout_weight="1"
         android:gravity="center" >
 
-        <com.example.pedometer.widet.RateTextCircularProgressBar
+        <com.example.pedometer.widet.CircleBar
             android:id="@+id/progress_pedometer"
-            android:layout_width="250dp"
-            android:layout_height="250dp" >
-
-            <TextView
-                android:id="@+id/pedometer_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60dp"
-                android:text="@string/step"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/pedometer_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="100dp"
-                android:text="@string/step"
-                android:textColor="@android:color/darker_gray"
-                android:visibility="invisible"
-                android:textSize="40sp" />
-
-            <TextView
-                android:id="@+id/pedometer_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="60dp"
-                android:text="@string/_10000"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="20sp" />
-        </com.example.pedometer.widet.RateTextCircularProgressBar>
+            android:layout_width="match_parent"
+            android:layout_height="300dp" >
+        </com.example.pedometer.widet.CircleBar>
     </LinearLayout>
 
 </LinearLayout>
