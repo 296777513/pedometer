@@ -12,7 +12,6 @@ import android.graphics.RectF;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -36,6 +35,7 @@ public class CircleBar extends View {
 	private float mProgressAni;// 为了达到蓝色扇形增加效果而添加的变量，他和mProgress其实代表一个意思
 	private float mProgress;// 扇形弧度
 	private int mTextSize;// 中间文字大小
+	private int mTextSize2;
 	private int mTextSize1;// 上下文字大小
 	private int mDistance;// 上下文字的距离
 	BarAnimation anim;// 动画类
@@ -63,6 +63,7 @@ public class CircleBar extends View {
 		circleStrokeWidth = dip2px(getContext(), 20);// 圆圈的线条粗细
 		pressExtraStrokeWidth = dip2px(getContext(), 2);// 按下状态下增加的圆圈线条增加的粗细
 		mTextSize = dip2px(getContext(), 80);// 中间文字大小
+		mTextSize2 = dip2px(getContext(), 50);
 		mTextSize1 = dip2px(getContext(), 30);// 上下文字大小
 		mDistance = dip2px(getContext(), 70);// 文字间的距离
 
@@ -146,7 +147,7 @@ public class CircleBar extends View {
 			upText = weather.getPtime();
 			downText = weather.getTemp1() + "~" + weather.getTemp2();
 			middleText = weather.getWeather();
-			// textPaint.setTextSize(mTextSize);
+			textPaint.setTextSize(mTextSize2);
 			// textPaint1.setTextSize(mTextSize);
 		}
 		// 中间文字的画笔

@@ -12,8 +12,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -138,7 +136,7 @@ public class HistogramView extends View {
 				int value = aniProgress[i];
 				paint.setAntiAlias(true);// 抗锯齿效果
 				paint.setStyle(Paint.Style.FILL);
-				paint.setTextSize(20);// 字体大小
+				paint.setTextSize(sp2px(getContext(),13));// 字体大小
 				paint.setColor(Color.parseColor("#6DCAEC"));// 字体颜色
 				Rect rect = new Rect();// 柱状图的形状
 
@@ -163,6 +161,10 @@ public class HistogramView extends View {
 
 	}
 
+	 public static int sp2px(Context context, float spValue) { 
+         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity; 
+         return (int) (spValue * fontScale + 0.5f); 
+     } 
 	public static int dip2px(Context context, float dipValue) {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dipValue * scale + 0.5f);

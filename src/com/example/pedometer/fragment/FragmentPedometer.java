@@ -1,24 +1,12 @@
 package com.example.pedometer.fragment;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.DefaultClientConnection;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.bmob.v3.listener.SaveListener;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.example.pedometer.db.PedometerDB;
@@ -33,6 +21,7 @@ import com.example.pedometer.widet.CircleBar;
 import com.example.pedometer.widet.HttpCallbackListener;
 import com.example.pedometer.widet.HttpUtil;
 import com.example.pedometer.R;
+
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -56,23 +45,15 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	private ImageView sharekey;
 	private int step_length = 50;
 	private int weight = 70;
-
 	private Step step = null;
 	private User user = null;
 	private Group group = null;
 	private Weather weather;
 	private PedometerDB pedometerDB;
-
 	private SimpleDateFormat sdf;
 	private String today;
 	private String test;
-
 	private boolean flag = true;// 来判断第三个页面是否开启动画
-
-	@SuppressLint("HandlerLeak")
-	public int getTotal_step() {
-		return total_step;
-	}
 
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
@@ -109,18 +90,13 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		this.view = inflater.inflate(R.layout.pedometer, container, false);
-
 		init();
-		// mRateTextCircularProgressBar.setProgress(StepDetector.CURRENT_SETP,
-		// 0);
 		mThread();
-
 		return view;
 	}
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		saveDate();
 	}
@@ -135,19 +111,14 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		user = pedometerDB.loadUser(1);
 		step = pedometerDB.loadSteps(1, today);
 		group = pedometerDB.loadGroup(user.getGroupId());
-
 		user.setToday_step(StepDetector.CURRENT_SETP);
 		pedometerDB.updateUser(user);
-
 		group.setTotal_number(group.getTotal_number()
 				+ (user.getToday_step() - step.getNumber()));
-		// Toast.makeText(getActivity(), user.getToday_step() + "",
-		// Toast.LENGTH_SHORT).show();
 		pedometerDB.updateGroup(group);
-
 		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
-
+		
 	}
 
 	@SuppressLint("SimpleDateFormat")
@@ -165,7 +136,6 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		} else {
 			Toast.makeText(getActivity(), "this is my", Toast.LENGTH_SHORT)
 					.show();
-
 		}
 		Intent intent = new Intent(getActivity(), StepService.class);
 		getActivity().startService(intent);
@@ -178,25 +148,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		circleBar.startCustomAnimation();
 		circleBar.setOnClickListener(this);
 
-		// mRateTextCircularProgressBar.setOnClickListener(this);
-		// mRateTextCircularProgressBar.setMax(10000);
-		// mRateTextCircularProgressBar.getCircularProgressBar()
-		// .setCircleWidth(40);
-
 		ShareSDK.initSDK(getActivity());
 		sharekey.setOnClickListener(this);
-
-		// Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
-		// if ((step = pedometerDB.loadSteps(1, today)) != null) {
-		// StepDetector.CURRENT_SETP = step.getNumber();
-		// } else {
-		// step = new Step();
-		// step.setNumber(total_step);
-		// step.setDate(today);
-		// step.setUserId(1);
-		// pedometerDB.saveStep(step);
-		// }
-
 	}
 
 	private void mThread() {

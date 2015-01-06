@@ -171,7 +171,6 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 	}
 
 	private void setWeek() {
-
 		int day = calendar.get(Calendar.DAY_OF_WEEK);
 		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
 		day -= 1;

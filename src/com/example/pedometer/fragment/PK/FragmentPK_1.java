@@ -45,8 +45,8 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 	private SimpleAdapter simpleAdapter = null;
 	private List<Map<String, Object>> dataList;
 	private PedometerDB pedometerDB;
-	private User user = null;
 	private List<User> list;
+	private int[] drawables;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +63,11 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		listView = (ReFlashListView) view.findViewById(R.id.pk_1_listview);
 		dataList = new ArrayList<Map<String, Object>>();
 		pedometerDB = PedometerDB.getInstance(getActivity());
+		drawables = new int[] { R.drawable.head1, R.drawable.head2,
+				R.drawable.head3, R.drawable.head4, R.drawable.head5,
+				R.drawable.head6, R.drawable.head8, R.drawable.head9,
+				R.drawable.head10 };
+
 
 		// listView.setOnScrollListener(this);
 	}
@@ -121,10 +126,9 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 				}
 
 			} else {
-				Resources default_picture = getActivity().getResources();
 				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory
-						.decodeResource(default_picture,
-								R.drawable.default_picture));
+						.decodeResource(getActivity().getResources(),
+								drawables[i]));
 
 				map.put("pic", bitmap);
 			}
@@ -139,18 +143,7 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-		// String str = listView.getItemAtPosition(position) + "";
-		// Toast.makeText(getActivity(), "position=" + position + "text: " +
-		// str,
-		// Toast.LENGTH_SHORT).show();
-		// user = pedometerDB.loadUser(position);
-		// if (list.get(position) == null) {
-		// user = new User();
-		// }
 		final int pos = position - 1;
-		Toast.makeText(getActivity(), list.get(pos).getPicture() + "",
-				Toast.LENGTH_LONG).show();
-		Log.i("tag1", list.get(pos).getPicture() + "");
 
 		final AlertDialog.Builder dialog = new AlertDialog.Builder(
 				getActivity());
@@ -180,7 +173,7 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		} else {
 			Resources default_picture = getActivity().getResources();
 			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, R.drawable.default_picture));
+					default_picture, drawables[pos]));
 			picture.setImageBitmap(bitmap);
 		}
 

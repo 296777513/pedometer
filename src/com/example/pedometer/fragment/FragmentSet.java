@@ -67,7 +67,6 @@ public class FragmentSet extends Fragment implements OnClickListener {
 
 	private PedometerDB pedometerDB;
 	private User user = null;
-	private Group group = null;
 	private Uri originalUri;
 
 	// private Intent pictureIntent;
@@ -89,12 +88,10 @@ public class FragmentSet extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+	public void onDestroy() {
+		super.onDestroy();
 		pedometerDB.updateUser(user);
 	}
-
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
@@ -149,7 +146,6 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			}
 		} else {
 			user = new User();
-			user.setToday_step(0);
 			user.setId(1);
 			user.setName(nameText.getText().toString());
 			user.setWeight(Integer.valueOf(weightText.getText().toString()));
@@ -161,9 +157,6 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			user.setStep_length(Integer
 					.valueOf(lengthText.getText().toString()));
 			user.setGroupId(1);
-			group = pedometerDB.loadGroup(1);
-			group.setMember_number(group.getMember_number() + 1);
-			pedometerDB.updateGroup(group);
 			pedometerDB.saveUser(user);
 
 		}
@@ -372,7 +365,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 					user.setPicture(Environment.getExternalStorageDirectory()
 							+ "/picture.jpg");
 				} catch (FileNotFoundException e) {
-					
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 

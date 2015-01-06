@@ -23,7 +23,6 @@ public class StepService extends Service {
 		super.onCreate();
 
 		new Thread(new Runnable() {
-
 			public void run() {
 				startStepDetector();
 			}
@@ -34,16 +33,16 @@ public class StepService extends Service {
 	private void startStepDetector() {
 		flag = true;
 		stepDetector = new StepDetector(this);
-		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);//获取传感器管理器的实例
 		Sensor sensor = sensorManager
-				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//获得传感器的类型，这里获得的类型是加速度传感器
+		//此方法用来注册，只有注册过才会生效，参数：SensorEventListener的实例，Sensor的实例，更新速率
 		sensorManager.registerListener(stepDetector, sensor,
 				SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// TODO Auto-generated method stub
 		return super.onStartCommand(intent, flags, startId);
 	}
 

@@ -37,7 +37,6 @@ public class FragmentPK extends Fragment {
 	private ImageView friend;
 	FragmentPK_1 fPk_1;
 	FragmentPK_2 fPk_2;
-
 	private int mCurrentPageIndex;
 
 	@Override

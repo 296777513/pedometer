@@ -21,10 +21,6 @@ public class User extends BmobObject implements Serializable {
 	private String picture;
 	private int today_step;
 
-	public User() {
-		this.setTableName("user");
-	}
-
 	public int getToday_step() {
 		return today_step;
 	}

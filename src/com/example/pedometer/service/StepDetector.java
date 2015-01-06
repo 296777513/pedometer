@@ -6,18 +6,21 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * 这是一个实现了信号监听的记步的类
+ * 这是从谷歌找来的一个记步的算法，看不太懂
+ * @author Liyachao Date:2015-1-6
+ *
+ */
 public class StepDetector implements SensorEventListener {
 
 	public static int CURRENT_SETP = 0;
-
 	public static float SENSITIVITY = 10; // SENSITIVITY灵敏度
-
 	private float mLastValues[] = new float[3 * 2];
 	private float mScale[] = new float[2];
 	private float mYOffset;
 	private static long end = 0;
 	private static long start = 0;
-
 	/**
 	 * 最后加速度方向
 	 */
@@ -37,11 +40,9 @@ public class StepDetector implements SensorEventListener {
 		mYOffset = h * 0.5f;
 		mScale[0] = -(h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
 		mScale[1] = -(h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
-
-		
 	}
 
-	@Override
+	//当传感器检测到的数值发生变化时就会调用这个方法
 	public void onSensorChanged(SensorEvent event) {
 		Sensor sensor = event.sensor;
 		synchronized (this) {
@@ -91,7 +92,7 @@ public class StepDetector implements SensorEventListener {
 
 		}
 	}
-
+	//当传感器的经度发生变化时就会调用这个方法，在这里没有用
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 
 	}

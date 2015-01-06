@@ -35,6 +35,10 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 	private HashMap<Group, List<User>> user;
 	private ExpandableListView accordion;
 	private int last;
+	private int[] drawables = new int[] { R.drawable.head1, R.drawable.head2,
+			R.drawable.head3, R.drawable.head4, R.drawable.head5,
+			R.drawable.head6, R.drawable.head8, R.drawable.head9,
+			R.drawable.head10 };
 
 	public ExpandableListViewAdapter(Context context, List<Group> group,
 			HashMap<Group, List<User>> user, ExpandableListView accordion) {
@@ -98,7 +102,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		} else {
 			Resources default_picture = context.getResources();
 			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, R.drawable.default_picture));
+					default_picture, drawables[childPosition]));
 			imageView.setImageBitmap(bitmap);
 		}
 		// TextView txtListChild = (TextView) convertView
