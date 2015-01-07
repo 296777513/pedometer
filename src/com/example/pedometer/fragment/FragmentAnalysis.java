@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.tools.DisplayUtil;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.widet.HistogramView;
 import com.example.pedometer.R;
@@ -226,11 +227,11 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		int step = (v.getWidth() - 30) / 8;
+		int step = (v.getWidth() - dp2px(30)) / 8;
 		int x = (int) event.getX();
 		for (int i = 0; i < 7; i++) {
-			if (x > (30 + step * (i + 1) - 30)
-					&& x < (30 + step * (i + 1) + 30)) {
+			if (x > (dp2px(15) + step * (i + 1) - dp2px(15))
+					&& x < (dp2px(15) + step * (i + 1) + dp2px(15))) {
 				text[i] = 1;
 				for (int j = 0; j < 7; j++) {
 					if (i != j) {
@@ -242,6 +243,10 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 		}
 
 		return false;
+	}
+
+	private int dp2px(int value) {
+		return DisplayUtil.dip2px(getActivity(), value);
 	}
 
 }

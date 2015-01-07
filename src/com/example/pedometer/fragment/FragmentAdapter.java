@@ -89,6 +89,7 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 					fTransaction.commit();
 				}
 			});
+			dialog.setCancelable(false);
 			dialog.show();
 
 		}

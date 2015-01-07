@@ -79,11 +79,8 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 				} else {
 					circleBar.setWeather(weather);
 				}
-
 			}
-
 		}
-
 	};
 
 	@Override

@@ -1,5 +1,6 @@
 package com.example.pedometer.widet;
 
+import com.example.pedometer.fragment.tools.DisplayUtil;
 import com.example.pedometer.model.Weather;
 
 import android.annotation.SuppressLint;
@@ -38,6 +39,7 @@ public class CircleBar extends View {
 	private int mTextSize2;
 	private int mTextSize1;// 上下文字大小
 	private int mDistance;// 上下文字的距离
+	private int mDistance1;//圆形离父布局的距离
 	BarAnimation anim;// 动画类
 	private int mType;// 根据传入的数值判断应该显示的页面
 	private Weather weather;
@@ -60,12 +62,12 @@ public class CircleBar extends View {
 
 	private void init() {
 
-		circleStrokeWidth = dip2px(getContext(), 20);// 圆圈的线条粗细
-		pressExtraStrokeWidth = dip2px(getContext(), 2);// 按下状态下增加的圆圈线条增加的粗细
-		mTextSize = dip2px(getContext(), 80);// 中间文字大小
-		mTextSize2 = dip2px(getContext(), 50);
-		mTextSize1 = dip2px(getContext(), 30);// 上下文字大小
-		mDistance = dip2px(getContext(), 70);// 文字间的距离
+		circleStrokeWidth = DisplayUtil.dip2px(getContext(), 20);// 圆圈的线条粗细
+		mTextSize = DisplayUtil.sp2px(getContext(), 80);// 中间文字大小
+		mTextSize2 = DisplayUtil.sp2px(getContext(), 50);
+		mTextSize1 = DisplayUtil.sp2px(getContext(), 25);// 上下文字大小
+		mDistance = DisplayUtil.dip2px(getContext(), 60);// 文字间的距离
+		mDistance1 = DisplayUtil.dip2px(getContext(), 20);//圆圈离父布局的距离
 
 		// 绘制蓝色扇形的画笔
 		mColorWheelPaint = new Paint();
@@ -115,7 +117,7 @@ public class CircleBar extends View {
 		int halfWidth = getWidth() / 2;
 		int radius = halfHeight < halfWidth ? halfHeight : halfWidth;
 		// 圆圈的矩形范围 绘制底部灰色圆圈的画笔
-		canvas.drawCircle(halfWidth, halfHeight, radius - 20f,
+		canvas.drawCircle(halfWidth, halfHeight, radius - mDistance1,
 				mDefaultWheelPaint);
 
 		// canvas.drawArc(mColorWheelRectangle, -90, 360, false,
@@ -123,10 +125,10 @@ public class CircleBar extends View {
 		// 为了达到蓝色扇形增加效果而添加的变量，他和mSweepAngle其实代表一个意思
 
 		// mColorWheelRectangle是绘制蓝色扇形的画笔
-		mColorWheelRectangle.top = halfHeight - radius + 20f;
-		mColorWheelRectangle.bottom = halfHeight + radius - 20f;
-		mColorWheelRectangle.left = halfWidth - radius + 20f;
-		mColorWheelRectangle.right = halfWidth + radius - 20f;
+		mColorWheelRectangle.top = halfHeight - radius + mDistance1;
+		mColorWheelRectangle.bottom = halfHeight + radius - mDistance1;
+		mColorWheelRectangle.left = halfWidth - radius + mDistance1;
+		mColorWheelRectangle.right = halfWidth + radius - mDistance1;
 		// 根据mProgressAni（角度）画扇形
 		canvas.drawArc(mColorWheelRectangle, -90, mProgressAni, false,
 				mColorWheelPaint);
@@ -252,11 +254,6 @@ public class CircleBar extends View {
 			postInvalidate();
 
 		}
-	}
-
-	public static int dip2px(Context context, float dipValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dipValue * scale + 0.5f);
 	}
 
 }

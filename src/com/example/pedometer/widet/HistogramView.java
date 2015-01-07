@@ -1,6 +1,7 @@
 package com.example.pedometer.widet;
 
 import com.example.pedometer.R;
+import com.example.pedometer.fragment.tools.DisplayUtil;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -63,10 +64,11 @@ public class HistogramView extends View {
 		titlePaint.setColor(Color.BLACK);
 	}
 
-	public void setWeekd(String[] xWeeks){
+	public void setWeekd(String[] xWeeks) {
 		this.xWeeks = xWeeks;
 		this.postInvalidate();
 	}
+
 	public void setText(int[] text) {
 
 		this.text = text;
@@ -81,8 +83,6 @@ public class HistogramView extends View {
 		this.startAnimation(ani);
 	}
 
-
-
 	@SuppressLint("DrawAllocation")
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -90,43 +90,46 @@ public class HistogramView extends View {
 		super.onDraw(canvas);
 
 		int width = getWidth();
-		int height = getHeight() - 100;
+		int height = getHeight() - dp2px(50);
 
 		// 1 绘制坐标线：startX, startY, stopX, stopY, paint
-//		canvas.drawLine(50, 10, 50, height, xLinePaint);
+		// canvas.drawLine(50, 10, 50, height, xLinePaint);
 
-		canvas.drawLine(50, height, width - 10, height, xLinePaint);
+		canvas.drawLine(dp2px(30), height + dp2px(3), width - dp2px(30),
+				height + dp2px(3), xLinePaint);
 
 		// 2 绘制坐标内部的水平线
 
-		int leftHeight = height-20;// 左侧外周的 需要划分的高度：
+		int leftHeight = height - dp2px(5);// 左侧外周的 需要划分的高度：
 
 		int hPerHeight = leftHeight / 4;// 分成四部分
 
 		hLinePaint.setTextAlign(Align.CENTER);
 		for (int i = 0; i < 4; i++) {
-			canvas.drawLine(50, 20 + i * hPerHeight, width - 10, 20 + i
-					* hPerHeight, hLinePaint);
+			canvas.drawLine(dp2px(30), dp2px(10) + i * hPerHeight, width
+					- dp2px(30), dp2px(10) + i * hPerHeight, hLinePaint);
 		}
 
 		// 3 绘制 Y 周坐标
 
 		titlePaint.setTextAlign(Align.RIGHT);
-		titlePaint.setTextSize(20);
+		titlePaint.setTextSize(sp2px(12));
 		titlePaint.setAntiAlias(true);
 		titlePaint.setStyle(Paint.Style.FILL);
 		for (int i = 0; i < ySteps.length; i++) {
-			canvas.drawText(ySteps[i], 40, 20 + i * hPerHeight, titlePaint);
+			canvas.drawText(ySteps[i], dp2px(25), dp2px(13) + i * hPerHeight,
+					titlePaint);
 		}
 
 		// 4 绘制 X 周 做坐标
-		int xAxisLength = width - 30;
+		int xAxisLength = width - dp2px(30);
 		int columCount = xWeeks.length + 1;
 		int step = xAxisLength / columCount;
 
 		for (int i = 0; i < columCount - 1; i++) {
 			// text, baseX, baseY, textPaint
-			canvas.drawText(xWeeks[i], 55 + step * (i + 1), height+30, titlePaint);
+			canvas.drawText(xWeeks[i], dp2px(55) + step * (i + 1) - dp2px(30),
+					height + dp2px(20), titlePaint);
 		}
 
 		// 5 绘制矩形
@@ -136,14 +139,14 @@ public class HistogramView extends View {
 				int value = aniProgress[i];
 				paint.setAntiAlias(true);// 抗锯齿效果
 				paint.setStyle(Paint.Style.FILL);
-				paint.setTextSize(sp2px(getContext(),13));// 字体大小
+				paint.setTextSize(sp2px(15));// 字体大小
 				paint.setColor(Color.parseColor("#6DCAEC"));// 字体颜色
 				Rect rect = new Rect();// 柱状图的形状
 
-				rect.left = 30 + step * (i + 1) - 30;
-				rect.right = 30 + step * (i + 1) + 30;
+				rect.left = dp2px(15) + step * (i + 1) - dp2px(15);
+				rect.right = dp2px(15) + step * (i + 1) + dp2px(15);
 				int rh = (int) (leftHeight - leftHeight * (value / 10000.0));
-				rect.top = rh + 20;
+				rect.top = rh + dp2px(15);
 				rect.bottom = height;
 
 				Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
@@ -152,8 +155,8 @@ public class HistogramView extends View {
 				canvas.drawBitmap(bitmap, null, rect, paint);
 
 				if (this.text[i] == TRUE) {
-					canvas.drawText(value + "", 30 + step * (i + 1) - 30,
-							rh + 10, paint);
+					canvas.drawText(value + "", dp2px(15) + step * (i + 1)
+							- dp2px(15), rh + dp2px(10), paint);
 				}
 
 			}
@@ -161,13 +164,12 @@ public class HistogramView extends View {
 
 	}
 
-	 public static int sp2px(Context context, float spValue) { 
-         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity; 
-         return (int) (spValue * fontScale + 0.5f); 
-     } 
-	public static int dip2px(Context context, float dipValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dipValue * scale + 0.5f);
+	private int dp2px(int value) {
+		return DisplayUtil.dip2px(getContext(), value);
+	}
+
+	private int sp2px(int value) {
+		return DisplayUtil.sp2px(getContext(), value);
 	}
 
 	/**
