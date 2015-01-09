@@ -14,7 +14,7 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 			+ "id integer primary key autoincrement,"
 			+ "number text,"
 			+ "date integer,"
-			+ "userId integert)";
+			+ "userId text)";
 	
 	/**
 	 * 创建group表
@@ -29,13 +29,13 @@ public class PedometerOpenHelper extends SQLiteOpenHelper{
 	 * 创建user表
 	 */
 	public static final String CREATE_USER = "create table user("
-			+ "id integer UNIQUE,"
+			+ "objectId text ,"
 			+ "name text,"
 			+ "sex text,"
 			+ "weight integer,"
 			+ "step_length integer,"
 			+ "sensitivity integer,"
-			+ "picture text,"
+			+ "picture blob,"
 			+ "groupId integer,"
 			+ "today_step integer)";
 	

@@ -1,6 +1,7 @@
 package com.example.pedometer.model;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import cn.bmob.v3.BmobObject;
 
@@ -11,14 +12,13 @@ public class User extends BmobObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int id;
 	private String name;
 	private String sex;
 	private int weight;
 	private int sensitivity;
 	private int step_length;
 	private int groupId;
-	private String picture;
+	private byte[] picture;
 	private int today_step;
 
 	public int getToday_step() {
@@ -29,11 +29,11 @@ public class User extends BmobObject implements Serializable {
 		this.today_step = today_step;
 	}
 
-	public String getPicture() {
+	public byte[] getPicture() {
 		return picture;
 	}
 
-	public void setPicture(String picture) {
+	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
 
@@ -45,13 +45,7 @@ public class User extends BmobObject implements Serializable {
 		this.groupId = groupId;
 	}
 
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

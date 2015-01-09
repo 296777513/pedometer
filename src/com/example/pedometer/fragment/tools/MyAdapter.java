@@ -96,33 +96,16 @@ public class MyAdapter extends BaseAdapter {
 		Button btn = (Button) convertView
 				.findViewById(R.id.member_add_list_button);
 
-		Bitmap bitmap;
-		if (user.getPicture() != null) {
+		Bitmap bitmap = ToRoundBitmap.toRoundBitmap(PictureUtil
+				.Byte2Bitmap(user.getPicture()));
+		picture.setImageBitmap(bitmap);
 
-			try {
-				bitmap = ToRoundBitmap
-						.toRoundBitmap(BitmapFactory.decodeStream(context
-								.getContentResolver().openInputStream(
-										Uri.parse(user.getPicture()))));
-
-				picture.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			Resources default_picture = context.getResources();
-			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, R.drawable.default_picture));
-			picture.setImageBitmap(bitmap);
-
-		}
 
 		name.setText(user.getName());
 		steps.setText(user.getToday_step() + "");
 
 		pedometerDB = PedometerDB.getInstance(context);
-		User user1 = pedometerDB.loadUser(user.getId());
+		User user1 = pedometerDB.loadUser(user.getObjectId());
 
 		if (user1 != null) {
 			add.setVisibility(View.VISIBLE);

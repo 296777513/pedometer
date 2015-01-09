@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
@@ -32,8 +33,6 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 	private FragmentActivity activity;// Fragment所属的Activity
 	private int fgContentId;// Activity中所要被替换的区域的id
 	private int currentId; // 当前Tab页面索引
-	private User user;// 判断数据库中是否有用户
-	private Step step;// 新建一个今天step的步数
 	private FragmentTransaction fTransaction;// 用于让调用者在切换tab时候增加新的功能
 
 	@SuppressLint("SimpleDateFormat")
@@ -41,26 +40,16 @@ public class FragmentAdapter implements OnCheckedChangeListener {
 			final List<Fragment> fragments, final int fgContentId,
 			RadioGroup rGroup, Context context) {
 		PedometerDB pedometerDB = PedometerDB.getInstance(context);
-		user = pedometerDB.loadUser(1);
 		this.activity = activity;
 		this.fragments = fragments;
 		this.rGroup = rGroup;
 		this.fgContentId = fgContentId;
 		fTransaction = activity.getSupportFragmentManager().beginTransaction();
 		// 判断是否存在用户，如果存在则显示第三个页面，如果不存在则显示第5个页面
-		if (user != null) {
+		if (MainActivity.myObjectId != null) {
 			fTransaction.add(fgContentId, fragments.get(2));
 			fTransaction.commit();
 		} else {
-			//将当前日期格式化为：yyyyMMdd
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			step = new Step();
-			//得到当天的日期
-			step.setDate(sdf.format(new Date()));
-			step.setUserId(1);
-			step.setNumber(0);
-			pedometerDB.saveStep(step);
-
 			//如果是第一次登陆则自动初始化三个小组，进行PK
 			Group group = new Group();
 			group.setTotal_number(0);

@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.FragmentSet;
+import com.example.pedometer.fragment.tools.PictureUtil;
 import com.example.pedometer.fragment.tools.ReFlashListView;
 import com.example.pedometer.fragment.tools.ToRoundBitmap;
 import com.example.pedometer.fragment.tools.ReFlashListView.IReflashListener;
-import com.example.pedometer.model.Group;
 import com.example.pedometer.model.User;
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.R;
 
 import android.support.v4.app.Fragment;
@@ -24,17 +26,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FragmentPK_1 extends Fragment implements OnItemClickListener,
@@ -67,7 +66,6 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 				R.drawable.head3, R.drawable.head4, R.drawable.head5,
 				R.drawable.head6, R.drawable.head8, R.drawable.head9,
 				R.drawable.head10 };
-
 
 		// listView.setOnScrollListener(this);
 	}
@@ -107,31 +105,9 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		list = pedometerDB.lodListUsers();
 		for (int i = 0; i < list.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			Bitmap bitmap;
-			if (list.get(i).getPicture() != null) {
-
-				try {
-					bitmap = ToRoundBitmap
-							.toRoundBitmap(BitmapFactory
-									.decodeStream(getActivity()
-											.getContentResolver()
-											.openInputStream(
-													Uri.parse(list.get(i)
-															.getPicture()))));
-
-					map.put("pic", bitmap);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			} else {
-				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory
-						.decodeResource(getActivity().getResources(),
-								drawables[i]));
-
-				map.put("pic", bitmap);
-			}
+			Bitmap bitmap = ToRoundBitmap.toRoundBitmap(PictureUtil
+					.Byte2Bitmap(list.get(i).getPicture()));
+			map.put("pic", bitmap);
 			map.put("name", list.get(i).getName());
 			map.put("steps", list.get(i).getToday_step());
 			map.put("number", (i + 1) + "");
@@ -141,6 +117,7 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		return dataList;
 	}
 
+	@SuppressLint("InflateParams")
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		final int pos = position - 1;
@@ -156,32 +133,15 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		ImageView picture = (ImageView) view.findViewById(R.id.user_picture);
 
 		sex.setText(list.get(pos).getSex());
-		Bitmap bitmap;
-		if (list.get(pos).getPicture() != null) {
-
-			try {
-				bitmap = ToRoundBitmap
-						.toRoundBitmap(BitmapFactory.decodeStream(getActivity()
-								.getContentResolver().openInputStream(
-										Uri.parse(list.get(pos).getPicture()))));
-				picture.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else {
-			Resources default_picture = getActivity().getResources();
-			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, drawables[pos]));
-			picture.setImageBitmap(bitmap);
-		}
+		Bitmap bitmap = ToRoundBitmap.toRoundBitmap(PictureUtil
+				.Byte2Bitmap(list.get(pos).getPicture()));
+		picture.setImageBitmap(bitmap);
 
 		steps.setText(list.get(pos).getToday_step() + "");
-		number.setText((position + 1) + "");
+		number.setText((position) + "");
 
 		dialog.setView(view);
-		if (list.get(pos).getId() == 1) {
+		if (list.get(pos).getObjectId().equals(MainActivity.myObjectId)) {
 			dialog.setPositiveButton("确认", null);
 			name.setText(list.get(pos).getName() + "(自己)");
 		} else {

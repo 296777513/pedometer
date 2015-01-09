@@ -59,7 +59,7 @@ public class PedometerDB {
 	public void saveUser(User user) {
 		if (user != null) {
 			ContentValues values = new ContentValues();
-			values.put("id", user.getId());
+			values.put("objectId", user.getObjectId());
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
 			values.put("picture", user.getPicture());
@@ -74,12 +74,13 @@ public class PedometerDB {
 
 	/**
 	 * 根据user的id删除user表里的数据
+	 * 
 	 * @param user
 	 */
 	public void deleteUser(User user) {
 		if (user != null) {
-			db.delete("user", "id = ?",
-					new String[] { String.valueOf(user.getId()) });
+			db.delete("user", "objectId = ?",
+					new String[] { user.getObjectId() });
 		}
 	}
 
@@ -91,7 +92,7 @@ public class PedometerDB {
 	public void updateUser(User user) {
 		if (user != null) {
 			ContentValues values = new ContentValues();
-
+			values.put("objectId", user.getObjectId());
 			values.put("name", user.getName());
 			values.put("sex", user.getSex());
 			values.put("picture", user.getPicture());
@@ -100,8 +101,29 @@ public class PedometerDB {
 			values.put("step_length", user.getStep_length());
 			values.put("groupId", user.getGroupId());
 			values.put("today_step", user.getToday_step());
-			db.update("user", values, "id = ?",
-					new String[] { String.valueOf(user.getId()) });
+			db.update("user", values, "objectId = ?",
+					new String[] { user.getObjectId() });
+		}
+	}
+
+	/**
+	 * 升级user表里的数据
+	 * 
+	 * @param user
+	 */
+	public void changeObjectId(User user) {
+		if (user != null) {
+			ContentValues values = new ContentValues();
+			values.put("objectId", user.getObjectId());
+			values.put("name", user.getName());
+			values.put("sex", user.getSex());
+			values.put("picture", user.getPicture());
+			values.put("weight", user.getWeight());
+			values.put("sensitivity", user.getSensitivity());
+			values.put("step_length", user.getStep_length());
+			values.put("groupId", user.getGroupId());
+			values.put("today_step", user.getToday_step());
+			db.update("user", values, null, null);
 		}
 	}
 
@@ -132,7 +154,21 @@ public class PedometerDB {
 			values.put("date", step.getDate());
 			values.put("userId", step.getUserId());
 			db.update("step", values, "userId = ? and date = ?", new String[] {
-					String.valueOf(step.getUserId()), step.getDate() });
+					step.getUserId(), step.getDate() });
+		}
+	}
+	/**
+	 * 升级step表里的数据
+	 * 
+	 * @param step
+	 */
+	public void changeuserId(Step step) {
+		if (step != null) {
+			ContentValues values = new ContentValues();
+//			values.put("number", step.getNumber());
+//			values.put("date", step.getDate());
+			values.put("userId", step.getUserId());
+			db.update("step", values, null, null);
 		}
 	}
 
@@ -214,11 +250,10 @@ public class PedometerDB {
 	 * @param date
 	 * @return
 	 */
-	public Step loadSteps(int userId, String date) {
+	public Step loadSteps(String userId, String date) {
 		Step step = null;
-		Cursor cursor = db
-				.query("step", null, "userId = ? and date = ?", new String[] {
-						String.valueOf(userId), date }, null, null, null);
+		Cursor cursor = db.query("step", null, "userId = ? and date = ?",
+				new String[] { userId, date }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				step = new Step();
@@ -264,18 +299,19 @@ public class PedometerDB {
 	 * @return
 	 */
 	public List<User> lodListUsers() {
-		List<User> list = new ArrayList<User>();
+		List<User> list = null;
 		Cursor cursor = db.rawQuery(
 				"select * from user  order by today_step desc", null);
 		if (cursor.moveToFirst()) {
+			list = new ArrayList<User>();
 			do {
 				User user = new User();
-				user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				user.setObjectId(cursor.getString(cursor
+						.getColumnIndex("objectId")));
 				user.setGroupId(cursor.getInt(cursor.getColumnIndex("groupId")));
 				user.setName(cursor.getString(cursor.getColumnIndex("name")));
 				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
-				user.setPicture(cursor.getString(cursor
-						.getColumnIndex("picture")));
+				user.setPicture(cursor.getBlob(cursor.getColumnIndex("picture")));
 				user.setSensitivity(cursor.getInt(cursor
 						.getColumnIndex("sensitivity")));
 				user.setStep_length(cursor.getInt(cursor
@@ -296,19 +332,18 @@ public class PedometerDB {
 	 * @param date
 	 * @return
 	 */
-	public List<Step> loadListSteps(String date) {
+	public List<Step> loadListSteps() {
 		List<Step> list = new ArrayList<Step>();
 
-		Cursor cursor = db.rawQuery(
-				"select * from step where date = ? order by number desc",
-				new String[] { date });
+		Cursor cursor = db.rawQuery("select * from step order by number desc",
+				null);
 		if (cursor.moveToFirst()) {
 			do {
 				Step step = new Step();
 				step.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				step.setNumber(cursor.getInt(cursor.getColumnIndex("number")));
 				step.setDate(cursor.getString(cursor.getColumnIndex("date")));
-				step.setUserId(cursor.getInt(cursor.getColumnIndex("userId")));
+				step.setUserId(cursor.getString(cursor.getColumnIndex("userId")));
 				list.add(step);
 			} while (cursor.moveToNext());
 
@@ -323,18 +358,17 @@ public class PedometerDB {
 	 * @param id
 	 * @return
 	 */
-	public User loadUser(int id) {
+	public User loadUser(String objectId) {
 		User user = null;
-		Cursor cursor = db.query("user", null, "id = ?",
-				new String[] { String.valueOf(id) }, null, null, null);
+		Cursor cursor = db.query("user", null, "objectId = ?",
+				new String[] { objectId }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				user = new User();
 				user.setName(cursor.getString(cursor.getColumnIndex("name")));
 				user.setSex(cursor.getString(cursor.getColumnIndex("sex")));
-				user.setId(id);
-				user.setPicture(cursor.getString(cursor
-						.getColumnIndex("picture")));
+				user.setObjectId(objectId);
+				user.setPicture(cursor.getBlob(cursor.getColumnIndex("picture")));
 				user.setSensitivity(cursor.getInt(cursor
 						.getColumnIndex("sensitivity")));
 				user.setStep_length(cursor.getInt(cursor

@@ -6,10 +6,12 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.listener.SaveListener;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.PK.FragmentPK_addmember;
 import com.example.pedometer.fragment.onekeyshare.*;
 import com.example.pedometer.model.Group;
 import com.example.pedometer.model.Step;
@@ -20,11 +22,14 @@ import com.example.pedometer.service.StepService;
 import com.example.pedometer.widet.CircleBar;
 import com.example.pedometer.widet.HttpCallbackListener;
 import com.example.pedometer.widet.HttpUtil;
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -93,39 +98,42 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		saveDate();
-	}
-
-	@Override
 	public void onPause() {
 		super.onPause();
 		saveDate();
 	}
 
 	private void saveDate() {
-		user = pedometerDB.loadUser(1);
-		step = pedometerDB.loadSteps(1, today);
+		user = pedometerDB.loadUser(MainActivity.myObjectId);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, today);
 		group = pedometerDB.loadGroup(user.getGroupId());
 		user.setToday_step(StepDetector.CURRENT_SETP);
 		pedometerDB.updateUser(user);
+//		Toast.makeText(getActivity(), step.getNumber()+"",
+//				Toast.LENGTH_LONG).show();
 		group.setTotal_number(group.getTotal_number()
-				+ (user.getToday_step() - step.getNumber()));
+				+ (user.getToday_step()- step.getNumber()));
 		pedometerDB.updateGroup(group);
 		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
-		
 	}
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
-
+		ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
+				.getSystemService(getActivity().CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isAvailable()) {
+			
+		}else {
+			Toast.makeText(getActivity(), "没有网络", Toast.LENGTH_LONG).show();
+		}
 		sdf = new SimpleDateFormat("yyyyMMdd");
 		today = sdf.format(new Date());
 		pedometerDB = PedometerDB.getInstance(getActivity());
-		user = pedometerDB.loadUser(1);
-		if (user != null) {
+		user = pedometerDB.loadUser(MainActivity.myObjectId);
+		if (MainActivity.myObjectId != null) {
 			step_length = user.getStep_length();
 			weight = user.getWeight();
 			StepDetector.SENSITIVITY = user.getSensitivity();

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import com.example.pedometer.R;
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.MyNumberPicker;
+import com.example.pedometer.fragment.tools.PictureUtil;
 import com.example.pedometer.fragment.tools.ToRoundBitmap;
 import com.example.pedometer.model.Group;
 import com.example.pedometer.model.User;
@@ -63,25 +64,27 @@ public class FragmentPK_memberset extends FragmentActivity implements
 		btn2 = (Button) findViewById(R.id.member_button2);
 
 		user = (User) getIntent().getSerializableExtra("user_data");
-		Bitmap bitmap;
-		if (user.getPicture() != null) {
-			
-			try {
-				bitmap = ToRoundBitmap
-						.toRoundBitmap(BitmapFactory.decodeStream(this
-								.getContentResolver().openInputStream(
-										Uri.parse(user.getPicture()))));
-				picture.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			Resources default_picture = this.getResources();
-			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, R.drawable.default_picture));
-			picture.setImageBitmap(bitmap);
-		}
+		Bitmap bitmap = ToRoundBitmap.toRoundBitmap(PictureUtil
+				.Byte2Bitmap(user.getPicture()));
+		picture.setImageBitmap(bitmap);
+//		if (user.getPicture() != null) {
+//			
+//			try {
+//				bitmap = ToRoundBitmap
+//						.toRoundBitmap(BitmapFactory.decodeStream(this
+//								.getContentResolver().openInputStream(
+//										Uri.parse(user.getPicture()))));
+//				picture.setImageBitmap(bitmap);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} else {
+//			Resources default_picture = this.getResources();
+//			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
+//					default_picture, R.drawable.default_picture));
+//			picture.setImageBitmap(bitmap);
+//		}
 		name.setText(user.getName());
 		if (user.getSex().equals("男")) {
 			sexImage.setImageResource(R.drawable.male_set);

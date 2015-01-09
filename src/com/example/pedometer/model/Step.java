@@ -5,7 +5,7 @@ public class Step {
 	private int id;
 	private int number;
 	private String date;
-	private int userId;
+	private String userId;
 
 	public int getId() {
 		return id;
@@ -31,11 +31,11 @@ public class Step {
 		this.date = date;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

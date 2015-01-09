@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.db.PedometerDB;
+import com.example.pedometer.fragment.FragmentSet;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 
@@ -50,12 +52,12 @@ public class AutoSaveService extends Service {
 		pedometerDB = PedometerDB.getInstance(this);
 		date = sdf.format(calendar.getTime());
 		Log.i("info", date);
-		step = pedometerDB.loadSteps(1, date);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, date);
 		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
 		Log.i("info", "你好啊1");
 		
-		user = pedometerDB.loadUser(1);
+		user = pedometerDB.loadUser(MainActivity.myObjectId);
 		user.setToday_step(0);
 		pedometerDB.updateUser(user);
 		
@@ -63,7 +65,7 @@ public class AutoSaveService extends Service {
 		step = new Step();
 		step.setDate(sdf.format(new Date()));
 		step.setNumber(0);
-		step.setUserId(1);
+		step.setUserId(MainActivity.myObjectId);
 		pedometerDB.saveStep(step);
 
 	}

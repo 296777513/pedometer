@@ -7,6 +7,7 @@ import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.DisplayUtil;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.widet.HistogramView;
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.R;
 
 import android.annotation.SuppressLint;
@@ -90,7 +91,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		day = sdf.format(calendar.getTime());
 		// Toast.makeText(getActivity(), day + "", Toast.LENGTH_LONG).show();
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -101,7 +102,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -113,7 +114,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -124,7 +125,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -135,7 +136,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -146,7 +147,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();
@@ -157,7 +158,7 @@ public class FragmentAnalysis extends Fragment implements OnTouchListener {
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
 		day = sdf.format(calendar.getTime());
-		step = pedometerDB.loadSteps(1, day);
+		step = pedometerDB.loadSteps(MainActivity.myObjectId, day);
 		if (step != null) {
 			steps[i++] = step.getNumber();
 			sum += step.getNumber();

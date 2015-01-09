@@ -6,14 +6,19 @@ import java.util.zip.Inflater;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
+import com.example.pedometer.MainActivity;
 import com.example.pedometer.R;
+import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.MyAdapter;
 import com.example.pedometer.fragment.tools.ReFlashListView;
 import com.example.pedometer.fragment.tools.ReFlashListView.IReflashListener;
+import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
 
 import android.R.animator;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -33,6 +38,10 @@ public class FragmentPK_addmember extends FragmentActivity implements
 	private ImageView back;
 	private ReFlashListView memberList;
 	private MyAdapter myAdapter;
+	private User user;
+	private List<Step> steps;
+	private PedometerDB pedometerdb;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -41,16 +50,49 @@ public class FragmentPK_addmember extends FragmentActivity implements
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.member_add);
 		init();
+		queryAll();
 	}
 
 	private void init() {
 		Bmob.initialize(this, "c153449e638703134b8fe75c52210bc7");
 		back = (ImageView) findViewById(R.id.member_add_back);
 		memberList = (ReFlashListView) findViewById(R.id.member_add_list);
-		queryAll();
+		pedometerdb = PedometerDB.getInstance(this);
+		user = pedometerdb.lodListUsers().get(0);
+		steps = pedometerdb.loadListSteps();
+		showProgressDialog();
+		if (user.getObjectId().equals("1")) {
+
+			user.setObjectId(null);
+			user.save(this, new SaveListener() {
+
+				@Override
+				public void onSuccess() {
+					pedometerdb.changeObjectId(user);
+					MainActivity.myObjectId = user.getObjectId();
+					for (int i = 0; i < steps.size(); i++) {
+						Step step = steps.get(i);
+						step.setUserId(user.getObjectId());
+						pedometerdb.changeuserId(step);
+					}
+				}
+
+				@Override
+				public void onFailure(int arg0, String arg1) {
+
+				}
+			});
+			Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
+					Toast.LENGTH_LONG).show();
+
+		} else {
+			Toast.makeText(this, "-----" + user.getObjectId(),
+					Toast.LENGTH_LONG).show();
+			user.update(this);
+		}
+
 		back.setOnClickListener(this);
 		memberList.setInterface(this);
-		
 
 	}
 
@@ -67,7 +109,7 @@ public class FragmentPK_addmember extends FragmentActivity implements
 				myAdapter = new MyAdapter(FragmentPK_addmember.this, user_list,
 						memberList);
 				memberList.setAdapter(myAdapter);
-				
+				closeProgressDialog();
 
 			}
 
@@ -79,6 +121,27 @@ public class FragmentPK_addmember extends FragmentActivity implements
 			}
 		});
 
+	}
+	
+	/**
+	 * 显示进度对话框
+	 */
+	private void showProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new ProgressDialog(this);
+			progressDialog.setMessage("正在加载...");
+			progressDialog.setCanceledOnTouchOutside(false);
+		}
+		progressDialog.show();
+	}
+	
+	/**
+	 * 关闭进度对话框
+	 */
+	private void closeProgressDialog() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
 	}
 
 	@Override

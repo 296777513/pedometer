@@ -77,7 +77,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 		PedometerDB pd = PedometerDB.getInstance(context);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
-		Step step = pd.loadSteps(childUser.getId(), sdf.format(new Date()));
+		Step step = pd.loadSteps(childUser.getObjectId(), sdf.format(new Date()));
 		TextView nameTextView = (TextView) convertView
 				.findViewById(R.id.group_member_name);
 		TextView stepsTextView = (TextView) convertView
@@ -87,24 +87,26 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
 		nameTextView.setText(childUser.getName());
 		stepsTextView.setText(childUser.getToday_step() + "");
-		Bitmap bitmap;
-		if (childUser.getPicture() != null) {
-			
-			try {
-				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeStream(context
-						.getContentResolver().openInputStream(
-								Uri.parse(childUser.getPicture()))));
-				imageView.setImageBitmap(bitmap);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			Resources default_picture = context.getResources();
-			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
-					default_picture, drawables[childPosition]));
-			imageView.setImageBitmap(bitmap);
-		}
+		Bitmap bitmap = ToRoundBitmap.toRoundBitmap(PictureUtil
+				.Byte2Bitmap(childUser.getPicture()));
+		imageView.setImageBitmap(bitmap);
+//		if (childUser.getPicture() != null) {
+//			
+//			try {
+//				bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeStream(context
+//						.getContentResolver().openInputStream(
+//								Uri.parse(childUser.getPicture()))));
+//				imageView.setImageBitmap(bitmap);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} else {
+//			Resources default_picture = context.getResources();
+//			bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory.decodeResource(
+//					default_picture, drawables[childPosition]));
+//			imageView.setImageBitmap(bitmap);
+//		}
 		// TextView txtListChild = (TextView) convertView
 		// .findViewById(R.id.lblListItem);
 		//

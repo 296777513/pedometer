@@ -33,7 +33,7 @@ public class FragmentPK extends Fragment {
 	private FragmentPagerAdapter mAdapter;
 	private ViewPager viewPager;
 	private ImageView imageView;
-	private int mScreen1_3;
+	private int mScreen1_2;
 	private ImageView friend;
 	FragmentPK_1 fPk_1;
 	FragmentPK_2 fPk_2;
@@ -53,13 +53,13 @@ public class FragmentPK extends Fragment {
 		Display display = getActivity().getWindow().getWindowManager()
 				.getDefaultDisplay();
 		DisplayMetrics outMetrics = new DisplayMetrics();
-		display.getMetrics(outMetrics);
-		mScreen1_3 = outMetrics.widthPixels / 2
+		display.getMetrics(outMetrics);//得到屏幕的像素和分辨率,得到了屏幕的高度和宽度
+		mScreen1_2 = outMetrics.widthPixels / 2
 				- DisplayUtil.dip2px(getActivity(), 60);
 		LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) imageView
 				.getLayoutParams();
 		lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60);
-		lp.width = mScreen1_3;
+		lp.width = mScreen1_2;
 		imageView.setLayoutParams(lp);
 	}
 
@@ -120,13 +120,13 @@ public class FragmentPK extends Fragment {
 				if (mCurrentPageIndex == 0 && position == 0)// 0->1
 				{
 					lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60)
-							+ (int) (positionOffset * mScreen1_3 + mCurrentPageIndex
-									* mScreen1_3);
+							+ (int) (positionOffset * mScreen1_2 + mCurrentPageIndex
+									* mScreen1_2);
 				} else if (mCurrentPageIndex == 1 && position == 0)// 1->0
 				{
 					lp.leftMargin = DisplayUtil.dip2px(getActivity(), 60)
-							+ (int) (mCurrentPageIndex * mScreen1_3 + (positionOffset - 1)
-									* mScreen1_3);
+							+ (int) (mCurrentPageIndex * mScreen1_2 + (positionOffset - 1)
+									* mScreen1_2);
 				}
 				imageView.setLayoutParams(lp);
 			}
