@@ -69,6 +69,8 @@ public class FragmentPK_addmember extends FragmentActivity implements
 				@Override
 				public void onSuccess() {
 					pedometerdb.changeObjectId(user);
+					Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
+							Toast.LENGTH_LONG).show();
 					MainActivity.myObjectId = user.getObjectId();
 					for (int i = 0; i < steps.size(); i++) {
 						Step step = steps.get(i);
@@ -82,8 +84,7 @@ public class FragmentPK_addmember extends FragmentActivity implements
 
 				}
 			});
-			Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
-					Toast.LENGTH_LONG).show();
+		
 
 		} else {
 			Toast.makeText(this, "-----" + user.getObjectId(),
@@ -117,6 +118,8 @@ public class FragmentPK_addmember extends FragmentActivity implements
 			public void onError(int arg0, String arg1) {
 				Toast.makeText(FragmentPK_addmember.this, "连接不上服务器",
 						Toast.LENGTH_SHORT).show();
+				closeProgressDialog();
+				FragmentPK_addmember.this.finish();
 
 			}
 		});

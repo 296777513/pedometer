@@ -115,14 +115,6 @@ public class PedometerDB {
 		if (user != null) {
 			ContentValues values = new ContentValues();
 			values.put("objectId", user.getObjectId());
-			values.put("name", user.getName());
-			values.put("sex", user.getSex());
-			values.put("picture", user.getPicture());
-			values.put("weight", user.getWeight());
-			values.put("sensitivity", user.getSensitivity());
-			values.put("step_length", user.getStep_length());
-			values.put("groupId", user.getGroupId());
-			values.put("today_step", user.getToday_step());
 			db.update("user", values, null, null);
 		}
 	}

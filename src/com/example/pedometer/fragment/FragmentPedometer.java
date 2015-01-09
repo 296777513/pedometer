@@ -102,6 +102,12 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		super.onPause();
 		saveDate();
 	}
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		saveDate();
+	}
 
 	private void saveDate() {
 		user = pedometerDB.loadUser(MainActivity.myObjectId);
