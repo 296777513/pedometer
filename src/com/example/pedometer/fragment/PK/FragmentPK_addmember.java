@@ -69,8 +69,8 @@ public class FragmentPK_addmember extends FragmentActivity implements
 				@Override
 				public void onSuccess() {
 					pedometerdb.changeObjectId(user);
-					Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
-							Toast.LENGTH_LONG).show();
+//					Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
+//							Toast.LENGTH_LONG).show();
 					MainActivity.myObjectId = user.getObjectId();
 					for (int i = 0; i < steps.size(); i++) {
 						Step step = steps.get(i);
@@ -87,8 +87,8 @@ public class FragmentPK_addmember extends FragmentActivity implements
 		
 
 		} else {
-			Toast.makeText(this, "-----" + user.getObjectId(),
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "-----" + user.getObjectId(),
+//					Toast.LENGTH_LONG).show();
 			user.update(this);
 		}
 

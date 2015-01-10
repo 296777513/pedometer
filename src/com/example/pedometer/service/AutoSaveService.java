@@ -20,7 +20,6 @@ public class AutoSaveService extends Service {
 	private PedometerDB pedometerDB;
 	private Step step;
 	private User user;
-	private int userid;
 	private String date;
 	private Calendar calendar;
 	private SimpleDateFormat sdf;
@@ -52,12 +51,14 @@ public class AutoSaveService extends Service {
 		pedometerDB = PedometerDB.getInstance(this);
 		date = sdf.format(calendar.getTime());
 		Log.i("info", date);
-		step = pedometerDB.loadSteps(MainActivity.myObjectId, date);
+		
+		user = pedometerDB.lodListUsers().get(0);
+		step = pedometerDB.loadSteps(user.getObjectId(), date);
 		step.setNumber(StepDetector.CURRENT_SETP);
 		pedometerDB.updateStep(step);
 		Log.i("info", "你好啊1");
 		
-		user = pedometerDB.loadUser(MainActivity.myObjectId);
+		
 		user.setToday_step(0);
 		pedometerDB.updateUser(user);
 		
@@ -65,7 +66,7 @@ public class AutoSaveService extends Service {
 		step = new Step();
 		step.setDate(sdf.format(new Date()));
 		step.setNumber(0);
-		step.setUserId(MainActivity.myObjectId);
+		step.setUserId(user.getObjectId());
 		pedometerDB.saveStep(step);
 
 	}

@@ -146,7 +146,7 @@ public class HistogramView extends View {
 				rect.left = dp2px(15) + step * (i + 1) - dp2px(15);
 				rect.right = dp2px(15) + step * (i + 1) + dp2px(15);
 				int rh = (int) (leftHeight - leftHeight * (value / 10000.0));
-				rect.top = rh + dp2px(15);
+				rect.top = rh + dp2px(10);
 				rect.bottom = height;
 
 				Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
@@ -156,7 +156,7 @@ public class HistogramView extends View {
 
 				if (this.text[i] == TRUE) {
 					canvas.drawText(value + "", dp2px(15) + step * (i + 1)
-							- dp2px(15), rh + dp2px(10), paint);
+							- dp2px(15), rh + dp2px(5), paint);
 				}
 
 			}

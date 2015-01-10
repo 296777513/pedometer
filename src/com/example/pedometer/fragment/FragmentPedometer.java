@@ -108,6 +108,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		super.onDestroy();
 		saveDate();
 	}
+	
 
 	private void saveDate() {
 		user = pedometerDB.loadUser(MainActivity.myObjectId);
@@ -115,7 +116,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 		group = pedometerDB.loadGroup(user.getGroupId());
 		user.setToday_step(StepDetector.CURRENT_SETP);
 		pedometerDB.updateUser(user);
-//		Toast.makeText(getActivity(), step.getNumber()+"",
+//		Toast.makeText(getActivity(), StepDetector.CURRENT_SETP+"--" + group.getID(),
 //				Toast.LENGTH_LONG).show();
 		group.setTotal_number(group.getTotal_number()
 				+ (user.getToday_step()- step.getNumber()));
@@ -126,6 +127,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 	@SuppressLint("SimpleDateFormat")
 	private void init() {
+	
 		ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
 				.getSystemService(getActivity().CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager
@@ -161,6 +163,7 @@ public class FragmentPedometer extends Fragment implements OnClickListener {
 
 		ShareSDK.initSDK(getActivity());
 		sharekey.setOnClickListener(this);
+
 	}
 
 	private void mThread() {

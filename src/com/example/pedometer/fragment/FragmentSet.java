@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.listener.SaveListener;
-
 import com.example.pedometer.db.PedometerDB;
 import com.example.pedometer.fragment.tools.PictureUtil;
 import com.example.pedometer.fragment.tools.ToRoundBitmap;
@@ -25,8 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentSet extends Fragment implements OnClickListener {
 	private View view;
@@ -73,6 +67,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 
 	private PedometerDB pedometerDB;
 	private User user = null;
+	private Group group = null;
 	private Uri originalUri;
 
 	// private Intent pictureIntent;
@@ -107,6 +102,7 @@ public class FragmentSet extends Fragment implements OnClickListener {
 		lengthLayout = (LinearLayout) view.findViewById(R.id.lengh_step);
 		nameLayout = (LinearLayout) view.findViewById(R.id.set_name);
 		pictureLayout = (LinearLayout) view.findViewById(R.id.picture);
+
 		weightText = (TextView) view.findViewById(R.id.weight_);
 
 		sensitivyText = (TextView) view.findViewById(R.id.sensitivy_);
@@ -125,30 +121,12 @@ public class FragmentSet extends Fragment implements OnClickListener {
 		rButton1.setOnClickListener(this);
 		rButton2.setOnClickListener(this);
 		pictureLayout.setOnClickListener(this);
+
 		if (MainActivity.myObjectId != null) {
 			user = pedometerDB.loadUser(MainActivity.myObjectId);
 			nameText.setText(user.getName());
 			setSensitivity(user.getSensitivity());
 			weightText.setText(String.valueOf(user.getWeight()));
-
-			// if (user.getPicture().equals("")) {
-			// pictureImage.setImageBitmap(ToRoundBitmap
-			// .toRoundBitmap(BitmapFactory.decodeResource(
-			// getActivity().getResources(),
-			// R.drawable.default_picture)));
-			// } else {
-			// Bitmap bitmap;
-			// try {
-			// bitmap = ToRoundBitmap.toRoundBitmap(BitmapFactory
-			// .decodeStream(getActivity().getContentResolver()
-			// .openInputStream(
-			// Uri.parse(user.getPicture()))));
-			// pictureImage.setImageBitmap(bitmap);
-			// } catch (FileNotFoundException e) { // TODO Auto-generated catch
-			// // block
-			// e.printStackTrace();
-			// }
-			// }
 
 			Bitmap picture = PictureUtil.Byte2Bitmap(user.getPicture());
 			pictureImage.setImageBitmap(ToRoundBitmap.toRoundBitmap(picture));
@@ -174,8 +152,8 @@ public class FragmentSet extends Fragment implements OnClickListener {
 			user.setPicture(PictureUtil.Bitmap2Byte(picture));
 			user.setStep_length(Integer
 					.valueOf(lengthText.getText().toString()));
-			user.setGroupId(3);
-			Group group = pedometerDB.loadGroup(3);
+			user.setGroupId(1);
+			group = pedometerDB.loadGroup(1);
 			group.setMember_number(1);
 			pedometerDB.updateGroup(group);
 			user.setObjectId("1");
