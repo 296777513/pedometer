@@ -16,6 +16,8 @@ import com.example.pedometer.fragment.tools.ReFlashListView;
 import com.example.pedometer.fragment.tools.ReFlashListView.IReflashListener;
 import com.example.pedometer.model.Step;
 import com.example.pedometer.model.User;
+import com.example.pedometer.widet.BmobCallbackListener;
+import com.example.pedometer.widet.BmobUtil;
 
 import android.R.animator;
 import android.app.ProgressDialog;
@@ -61,36 +63,32 @@ public class FragmentPK_addmember extends FragmentActivity implements
 		user = pedometerdb.lodListUsers().get(0);
 		steps = pedometerdb.loadListSteps();
 		showProgressDialog();
-		if (user.getObjectId().equals("1")) {
-
-			user.setObjectId(null);
-			user.save(this, new SaveListener() {
-
-				@Override
-				public void onSuccess() {
-					pedometerdb.changeObjectId(user);
-//					Toast.makeText(FragmentPK_addmember.this, user.getObjectId(),
-//							Toast.LENGTH_LONG).show();
-					MainActivity.myObjectId = user.getObjectId();
-					for (int i = 0; i < steps.size(); i++) {
-						Step step = steps.get(i);
-						step.setUserId(user.getObjectId());
-						pedometerdb.changeuserId(step);
-					}
+		BmobUtil.saveBmob(user, new BmobCallbackListener() {
+			
+			@Override
+			public void onFinish(User user) {
+				pedometerdb.changeObjectId(user);
+				MainActivity.myObjectId = user.getObjectId();
+				for (int i = 0; i < steps.size(); i++) {
+					Step step = steps.get(i);
+					step.setUserId(user.getObjectId());
+					pedometerdb.changeuserId(step);
 				}
+				
+			}
+			
+			@Override
+			public void onFailure(String e) {
+				Toast.makeText(FragmentPK_addmember.this, "连接服务器失败",
+						Toast.LENGTH_LONG).show();
+				
+			}
 
-				@Override
-				public void onFailure(int arg0, String arg1) {
-
-				}
-			});
-		
-
-		} else {
-//			Toast.makeText(this, "-----" + user.getObjectId(),
-//					Toast.LENGTH_LONG).show();
-			user.update(this);
-		}
+			@Override
+			public void onQuerySuccess(List<User> users) {
+				
+			}
+		}, this);
 
 		back.setOnClickListener(this);
 		memberList.setInterface(this);
@@ -98,31 +96,36 @@ public class FragmentPK_addmember extends FragmentActivity implements
 	}
 
 	private void queryAll() {
-		BmobQuery<User> query = new BmobQuery<User>();
-		query.findObjects(FragmentPK_addmember.this, new FindListener<User>() {
-
+		BmobUtil.queryBmob(new BmobCallbackListener() {
+			
 			@Override
-			public void onSuccess(List<User> user_list) {
+			public void onQuerySuccess(List<User> users) {
 				// Toast.makeText(FragmentPK_addmember.this,
 				// user_list.get(0).getName() + "", Toast.LENGTH_SHORT)
 				// .show();
 				memberList.setOnItemClickListener(FragmentPK_addmember.this);
-				myAdapter = new MyAdapter(FragmentPK_addmember.this, user_list,
+				myAdapter = new MyAdapter(FragmentPK_addmember.this, users,
 						memberList);
 				memberList.setAdapter(myAdapter);
 				closeProgressDialog();
-
+				
 			}
-
+			
 			@Override
-			public void onError(int arg0, String arg1) {
+			public void onFinish(User user) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(String e) {
 				Toast.makeText(FragmentPK_addmember.this, "连接不上服务器",
 						Toast.LENGTH_SHORT).show();
 				closeProgressDialog();
 				FragmentPK_addmember.this.finish();
-
+				
 			}
-		});
+		}, this);
 
 	}
 	
