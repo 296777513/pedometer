@@ -96,7 +96,7 @@
         android:layout_weight="10"
         android:orientation="horizontal" >
 
-        <com.example.pedometer.widet.HistogramView 
+        <com.bit.pedometer.widet.HistogramView 
             android:id="@+id/histograms"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

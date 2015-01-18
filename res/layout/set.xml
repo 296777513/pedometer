@@ -51,7 +51,6 @@
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="15dp"
             android:gravity="right|center_vertical"
-            android:src="@drawable/ic_launcher"
       />
 
        

@@ -48,11 +48,11 @@
         android:layout_weight="1"
         android:gravity="center" >
 
-        <com.example.pedometer.widet.CircleBar
+        <com.bit.pedometer.widet.CircleBar
             android:id="@+id/progress_pedometer"
             android:layout_width="match_parent"
             android:layout_height="300dp" >
-        </com.example.pedometer.widet.CircleBar>
+        </com.bit.pedometer.widet.CircleBar>
     </LinearLayout>
 
 </LinearLayout>

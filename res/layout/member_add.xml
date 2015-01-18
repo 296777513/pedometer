@@ -41,10 +41,10 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
 
-    <com.example.pedometer.fragment.tools.ReFlashListView
+    <com.bit.pedometer.fragment.tools.ReFlashListView
         android:id="@+id/member_add_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </com.example.pedometer.fragment.tools.ReFlashListView>
+    </com.bit.pedometer.fragment.tools.ReFlashListView>
 
 </LinearLayout>

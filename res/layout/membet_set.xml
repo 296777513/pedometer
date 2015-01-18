@@ -192,7 +192,7 @@
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20sp" />
 
-        <com.example.pedometer.fragment.tools.MyNumberPicker
+        <com.bit.pedometer.fragment.tools.MyNumberPicker
             android:id="@+id/member_numberPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
