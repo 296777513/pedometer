@@ -74,6 +74,7 @@ public class CircleBar extends View {
 		mColorWheelPaint.setAntiAlias(true);// 抗锯齿
 		mColorWheelPaint.setColor(0xFF29a6f6);// 设置颜色
 		mColorWheelPaint.setStyle(Paint.Style.STROKE);// 设置空心
+		mColorWheelPaint.setStrokeCap(Paint.Cap.ROUND);//设置圆形画笔
 		mColorWheelPaint.setStrokeWidth(circleStrokeWidth);// 设置圆圈粗细
 
 		// 绘制底部灰色圆圈的画笔
