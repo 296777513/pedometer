@@ -128,7 +128,6 @@ public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 	public void onReflash() {
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub

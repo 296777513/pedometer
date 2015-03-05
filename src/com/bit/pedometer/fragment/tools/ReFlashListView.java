@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 public class ReFlashListView extends ListView implements OnScrollListener {
 	private View header;// 顶部布局文件；
 	int headerHeight;// 顶部布局文件的高度；
@@ -33,7 +32,8 @@ public class ReFlashListView extends ListView implements OnScrollListener {
 	final int PULL = 1;// 提示下拉状态；
 	final int RELESE = 2;// 提示释放状态；
 	final int REFLASHING = 3;// 刷新状态；
-	private IReflashListener iReflashListener;//刷新数据的接口
+	private IReflashListener iReflashListener;// 刷新数据的接口
+
 	public ReFlashListView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -97,6 +97,10 @@ public class ReFlashListView extends ListView implements OnScrollListener {
 	 * @param topPadding
 	 */
 	private void topPadding(int topPadding) {
+		// topPadding = topPadding / 2;
+		// if (topPadding > getMeasuredHeight() / 3) {
+		// topPadding = getMeasuredHeight() / 3;
+		// }
 		header.setPadding(header.getPaddingLeft(), topPadding,
 				header.getPaddingRight(), header.getPaddingBottom());
 		header.invalidate();
@@ -130,14 +134,14 @@ public class ReFlashListView extends ListView implements OnScrollListener {
 			onMove(ev);
 			break;
 		case MotionEvent.ACTION_UP:
-			
+
 			if (state == RELESE) {
 				state = REFLASHING;
 				// 加载最新数据；
 				reflashViewByState();
 				iReflashListener.onReflash();
 			} else if (state == PULL) {
-				
+
 				state = NONE;
 				isRemark = false;
 				reflashViewByState();
@@ -250,15 +254,17 @@ public class ReFlashListView extends ListView implements OnScrollListener {
 		String time = format.format(date);
 		lastupdatetime.setText(time);
 	}
-	
-	public void setInterface(IReflashListener iReflashListener){
+
+	public void setInterface(IReflashListener iReflashListener) {
 		this.iReflashListener = iReflashListener;
 	}
+
 	/**
 	 * 刷新数据接口
+	 * 
 	 * @author Administrator
 	 */
-	public interface IReflashListener{
+	public interface IReflashListener {
 		public void onReflash();
 	}
 }
