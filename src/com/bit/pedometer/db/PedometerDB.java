@@ -22,6 +22,8 @@ import android.util.Log;
  */
 public class PedometerDB {
 
+
+
 	public static final String DB_NAME = "pedometer.db";// 数据库名称
 
 	public static final int VERSION = 1;// 数据版本
