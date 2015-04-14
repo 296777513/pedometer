@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bit.pedometer"
     android:versionCode="1"
-    android:versionName="2.0" >
+    android:versionName="2.0">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -24,23 +24,23 @@
         android:allowBackup="true"
         android:icon="@drawable/pedometer"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
-            android:name="com.bit.pedometer.WelcomeActivity"
+            android:name=".activity.WelcomeActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bit.pedometer.fragment.PK.FragmentPK_memberset" >
-        </activity>
-        <activity android:name="com.bit.pedometer.MainActivity" >
-        </activity>
-        <activity android:name="com.bit.pedometer.fragment.PK.FragmentPK_addmember" >
-        </activity>
+        <activity android:name="com.bit.pedometer.fragment.PK.FragmentPK_memberset"></activity>
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name="com.bit.pedometer.fragment.PK.FragmentPK_addmember"></activity>
+        <activity
+            android:name=".activity.SetToTakePicActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 这是进行授权页面的注册 -->
         <activity
@@ -50,12 +50,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <service android:name="com.bit.pedometer.service.StepService" >
-        </service>
-        <service android:name="com.bit.pedometer.service.AutoSaveService" >
-        </service>
+        <service android:name="com.bit.pedometer.service.StepService"></service>
+        <service android:name="com.bit.pedometer.service.AutoSaveService"></service>
 
-        <receiver android:name="com.bit.pedometer.receiver.AutoSaveReceiver" >
+        <receiver android:name="com.bit.pedometer.receiver.AutoSaveReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <!-- android.intent.action.DATE_CHANGED -->

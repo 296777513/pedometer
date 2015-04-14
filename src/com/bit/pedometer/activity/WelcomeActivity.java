@@ -1,4 +1,4 @@
-package com.bit.pedometer;
+package com.bit.pedometer.activity;
 
 import java.util.Timer;
 import java.util.TimerTask;

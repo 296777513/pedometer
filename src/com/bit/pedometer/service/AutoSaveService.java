@@ -4,9 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.bit.pedometer.MainActivity;
 import com.bit.pedometer.db.PedometerDB;
-import com.bit.pedometer.fragment.FragmentSet;
 import com.bit.pedometer.model.Step;
 import com.bit.pedometer.model.User;
 

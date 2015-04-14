@@ -3,7 +3,7 @@ package com.bit.pedometer.fragment;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.db.PedometerDB;
 import com.bit.pedometer.fragment.tools.DisplayUtil;
