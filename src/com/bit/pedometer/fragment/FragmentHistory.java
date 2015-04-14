@@ -4,22 +4,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.db.PedometerDB;
-import com.bit.pedometer.fragment.tools.PictureUtil;
-import com.bit.pedometer.fragment.tools.ToRoundBitmap;
-import com.bit.pedometer.model.Group;
 import com.bit.pedometer.model.Step;
-import com.bit.pedometer.model.User;
 
-import android.R.drawable;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.support.v4.app.Fragment;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +24,6 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentHistory extends Fragment implements OnClickListener {
 	private AllAnimation ani;

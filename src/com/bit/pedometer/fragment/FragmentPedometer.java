@@ -6,14 +6,11 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.listener.SaveListener;
 import cn.sharesdk.framework.ShareSDK;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.db.PedometerDB;
-import com.bit.pedometer.fragment.PK.FragmentPK_addmember;
 import com.bit.pedometer.fragment.onekeyshare.*;
 import com.bit.pedometer.model.Group;
 import com.bit.pedometer.model.Step;

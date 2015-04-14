@@ -3,7 +3,7 @@ package com.bit.pedometer.fragment;
 
 import java.util.List;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.db.PedometerDB;
 import com.bit.pedometer.model.Group;
 

@@ -1,4 +1,4 @@
-package com.bit.pedometer;
+package com.bit.pedometer.activity;
 
 import java.util.ArrayList;
 import java.util.List;

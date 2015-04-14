@@ -1,14 +1,10 @@
 package com.bit.pedometer.fragment.PK;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.db.PedometerDB;
 import com.bit.pedometer.fragment.tools.MyAdapter;
@@ -20,19 +16,12 @@ import com.bit.pedometer.widet.BmobUtil;
 import com.bit.pedometer.widet.BmobUtil.BmobQueryListener;
 import com.bit.pedometer.widet.BmobUtil.BmobSaveAndUpdataListener;
 
-import android.R.animator;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#00ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_take_pictures"
+            android:text="拍照"
+            android:textSize="25sp"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:background="#ffffff"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp" />
+
+        <TextView
+            android:id="@+id/layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33b5e5"
+            android:layout_below="@+id/btn_take_pictures" />
+
+        <Button
+            android:id="@+id/btn_from_album"
+            android:text="从手机相册选择"
+            android:textSize="25sp"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:layout_marginLeft="40dp"
+            android:background="#ffffff"
+            android:layout_marginRight="40dp"
+            android:layout_below="@+id/layout_1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33b5e5"
+            android:layout_below="@+id/btn_from_album" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:text="退出"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:background="#33b5e5"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

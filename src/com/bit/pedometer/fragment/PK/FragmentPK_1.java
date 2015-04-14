@@ -2,7 +2,7 @@ package com.bit.pedometer.fragment.PK;
 
 import java.util.List;
 
-import com.bit.pedometer.MainActivity;
+import com.bit.pedometer.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.db.PedometerDB;
 import com.bit.pedometer.fragment.tools.MyListAdapter;
@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 
 public class FragmentPK_1 extends Fragment implements OnItemClickListener,
 		IReflashListener {
