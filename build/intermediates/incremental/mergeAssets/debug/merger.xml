@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/liyachao/AndroidStudioProjects/MyApplication/pedometer/assets"><file name="ShareSDK.xml" path="/Users/liyachao/AndroidStudioProjects/MyApplication/pedometer/assets/ShareSDK.xml"/></source></dataSet><dataSet config="debug"><source path="/Users/liyachao/AndroidStudioProjects/MyApplication/pedometer/build-types/debug/assets"/></dataSet></merger>
