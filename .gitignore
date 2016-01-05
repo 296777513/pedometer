@@ -1,8 +1,6 @@
 /bin/
-.idea
 build
 *.iml
-Anbobb.iml
-proguard/dump.txt
-proguard/mapping.txt
-proguard/seeds.txt
+gradlew
+gradlew.bat
+
