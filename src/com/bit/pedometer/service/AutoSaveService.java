@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.bit.pedometer.db.PedometerDB;
-import com.bit.pedometer.model.Step;
-import com.bit.pedometer.model.User;
+import com.bit.pedometer.data.bean.Step;
+import com.bit.pedometer.data.bean.User;
 
 import android.annotation.SuppressLint;
 import android.app.Service;

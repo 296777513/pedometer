@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="287dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/dialog_backgroud">
+
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_17dp"
+        android:text="提示"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_size_small"/>
+
+    <TextView
+        android:id="@+id/dialog_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_14dp"
+        android:gravity="center"
+        android:text="提示"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/font_size_small"/>
+
+    <TextView
+        android:id="@+id/dialog_divorce_horizon_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/dialog_content"
+        android:layout_marginLeft="@dimen/dimen_5dp"
+        android:layout_marginRight="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_17dp"
+        android:background="@color/color_858e99"/>
+
+    <TextView
+        android:id="@+id/dialog_cancel"
+        android:layout_width="143dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/dialog_divorce_horizon_line"
+        android:background="@drawable/dialog_left_btn_background"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/font_size_middle"/>
+
+    <TextView
+        android:id="@+id/dialog_divorce_vertical_line"
+        android:layout_width="1px"
+        android:layout_height="38dp"
+        android:layout_below="@id/dialog_divorce_horizon_line"
+        android:layout_marginBottom="@dimen/dimen_3dp"
+        android:layout_marginTop="@dimen/dimen_3dp"
+        android:layout_toRightOf="@+id/dialog_cancel"
+        android:background="@color/color_858e99"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/dialog_sure"
+        android:layout_width="143dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/dialog_divorce_horizon_line"
+        android:layout_toRightOf="@+id/dialog_divorce_vertical_line"
+        android:background="@drawable/dialog_right_btn_background"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/font_size_middle"/>
+</RelativeLayout>

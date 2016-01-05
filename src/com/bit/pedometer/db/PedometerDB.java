@@ -3,10 +3,10 @@ package com.bit.pedometer.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bit.pedometer.model.Group;
-import com.bit.pedometer.model.Step;
-import com.bit.pedometer.model.User;
-import com.bit.pedometer.model.Weather;
+import com.bit.pedometer.data.bean.Group;
+import com.bit.pedometer.data.bean.Step;
+import com.bit.pedometer.data.bean.User;
+import com.bit.pedometer.data.bean.Weather;
 
 import android.content.ContentValues;
 import android.content.Context;
