@@ -1,7 +1,7 @@
 package com.bit.pedometer.ui.fragment.PK;
 
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.tools.MyNumberPicker;
 import com.bit.pedometer.ui.fragment.tools.PictureUtil;
 import com.bit.pedometer.ui.fragment.tools.ToRoundBitmap;

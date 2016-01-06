@@ -3,7 +3,7 @@ package com.bit.pedometer.ui.fragment.tools;
 import java.util.List;
 
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.data.bean.Group;
 import com.bit.pedometer.data.bean.User;
 

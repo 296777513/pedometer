@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.FragmentAdapter;
 import com.bit.pedometer.ui.fragment.FragmentAnalysis;
 import com.bit.pedometer.ui.fragment.FragmentHistory;

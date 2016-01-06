@@ -4,7 +4,7 @@ package com.bit.pedometer.ui.fragment;
 import java.util.List;
 
 import com.bit.pedometer.ui.activity.MainActivity;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.data.bean.Group;
 
 import android.annotation.SuppressLint;

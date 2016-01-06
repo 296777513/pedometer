@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.bit.pedometer.ui.activity.MainActivity;
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.tools.MyListAdapter;
 import com.bit.pedometer.ui.fragment.tools.PictureUtil;
 import com.bit.pedometer.ui.fragment.tools.ReFlashListView;

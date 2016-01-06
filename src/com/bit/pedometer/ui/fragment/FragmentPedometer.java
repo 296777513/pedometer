@@ -10,7 +10,7 @@ import cn.sharesdk.framework.ShareSDK;
 
 import com.bit.pedometer.ui.activity.MainActivity;
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.onekeyshare.*;
 import com.bit.pedometer.data.bean.Group;
 import com.bit.pedometer.data.bean.Step;

@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 import com.bit.pedometer.ui.activity.MainActivity;
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.tools.DisplayUtil;
 import com.bit.pedometer.data.bean.Step;
 import com.bit.pedometer.ui.view.HistogramView;

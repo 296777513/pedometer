@@ -7,7 +7,7 @@ import java.util.Date;
 import com.bit.pedometer.ui.activity.MainActivity;
 import com.bit.pedometer.R;
 import com.bit.pedometer.ui.activity.SetToTakePicActivity;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.tools.PictureUtil;
 import com.bit.pedometer.ui.fragment.tools.ToRoundBitmap;
 import com.bit.pedometer.data.bean.Group;

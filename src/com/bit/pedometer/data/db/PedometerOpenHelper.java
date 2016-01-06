@@ -1,4 +1,4 @@
-package com.bit.pedometer.db;
+package com.bit.pedometer.data.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

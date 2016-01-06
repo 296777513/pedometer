@@ -6,7 +6,7 @@ import cn.bmob.v3.Bmob;
 
 import com.bit.pedometer.ui.activity.MainActivity;
 import com.bit.pedometer.R;
-import com.bit.pedometer.db.PedometerDB;
+import com.bit.pedometer.data.db.PedometerDB;
 import com.bit.pedometer.ui.fragment.tools.MyAdapter;
 import com.bit.pedometer.ui.fragment.tools.ReFlashListView;
 import com.bit.pedometer.ui.fragment.tools.ReFlashListView.IReflashListener;
