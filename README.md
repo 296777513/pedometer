@@ -17,6 +17,7 @@
 
 ![这里写图片描述](http://img.blog.csdn.net/20170430225516020?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTI5Njc3NzUxMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
+
 大家可以清晰的看到，图中的圆圈是一个ProgressBar（进度条）,随着圈内的数值的增加，ProgressBar也在动态的增加。
 首先进入页面的是显示步数，点击圆圈会显示消耗的卡路里，再次点击圆圈会显示当天的天气情况（现在仅仅是北京的天气），最后点击左上方的图标，是一个分享的按钮。
 这个重新定义的ProgressBar当初画了好几天，才做成的。
